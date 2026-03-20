@@ -12,33 +12,28 @@
     <style>
         /* CSS Variables for Theming */
         :root {
-            /* Default: Dark Mode */
             --accent: #00e5ff;
             --accent-purple: #9d00ff;
-            --bg-body: #000000;
+            --bg-body: #050505;
             --surface: #0f0f0f;
             --surface-bright: #1a1a1a;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
-            --nav-bg: rgba(0, 0, 0, 0.85);
+            --nav-bg: rgba(5, 5, 5, 0.85);
             --border: rgba(255, 255, 255, 0.08);
             --card-shadow: rgba(0, 0, 0, 0.8);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            
-            /* Card Colors */
-            --c1: #ff3d71; --c2: #ffaa00; --c3: #00d68f; --c4: #0095ff; --c5: #7b1fa2;
+            --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Light Mode Overrides */
         [data-theme="light"] {
-            --bg-body: #f0f4f8;
+            --bg-body: #f8fafc;
             --surface: #ffffff;
-            --surface-bright: #f8fafc;
+            --surface-bright: #f1f5f9;
             --text-main: #0f172a;
             --text-muted: #475569;
-            --nav-bg: rgba(255, 255, 255, 0.85);
+            --nav-bg: rgba(248, 250, 252, 0.85);
             --border: rgba(0, 0, 0, 0.05);
-            --card-shadow: rgba(0, 0, 0, 0.08);
+            --card-shadow: rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -53,20 +48,29 @@
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.4s ease;
         }
 
-        /* 배경 그라데이션 메시 효과 */
+        /* 마우스 트래커 효과 */
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* 배경 그라데이션 */
         .bg-mesh {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
+            top: 0; left: 0; width: 100%; height: 100vh; z-index: -2;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.12) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, rgba(157, 0, 255, 0.12) 0, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.05) 0, transparent 40%), 
+                radial-gradient(at 100% 100%, rgba(157, 0, 255, 0.05) 0, transparent 40%);
         }
 
         .container {
@@ -75,14 +79,11 @@
             padding: 0 24px;
         }
 
-        /* Navigation */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
+            top: 0; width: 100%; z-index: 1000;
             background: var(--nav-bg);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             padding: 16px 0;
         }
@@ -99,7 +100,10 @@
             letter-spacing: -1px;
             color: var(--text-main);
             text-decoration: none;
+            transition: var(--transition);
         }
+
+        .logo:hover { transform: scale(1.05); }
 
         .logo span {
             background: linear-gradient(135deg, var(--accent), var(--accent-purple));
@@ -111,7 +115,7 @@
             cursor: pointer;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 14px;
             background: var(--surface-bright);
             display: flex;
             align-items: center;
@@ -119,6 +123,11 @@
             border: 1px solid var(--border);
             color: var(--text-main);
             transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+            border-color: var(--accent);
         }
 
         nav ul {
@@ -128,34 +137,56 @@
         }
 
         nav a {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 1px;
             color: var(--text-muted);
             text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0; width: 0; height: 2px;
+            background: var(--accent);
             transition: var(--transition);
         }
 
         nav a:hover { color: var(--text-main); }
+        nav a:hover::after { width: 100%; }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 100px 20px;
+            padding: 100px 20px 40px 20px;
+        }
+
+        .hero-badge {
+            padding: 8px 16px;
+            background: var(--surface-bright);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 24px;
+            animation: fadeInDown 0.8s ease-out;
         }
 
         .hero h1 {
             font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 900;
-            color: var(--text-main);
-            line-height: 1.15;
-            margin-bottom: 32px;
-            word-break: keep-all;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.2s;
         }
 
         .text-gradient {
@@ -165,233 +196,289 @@
         }
 
         .hero p {
-            max-width: 700px;
+            max-width: 650px;
             color: var(--text-muted);
-            font-size: 1.2rem;
-            font-weight: 400;
-            margin-bottom: 48px;
-            word-break: keep-all;
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards 0.4s;
         }
 
         .btn {
-            padding: 18px 48px;
+            padding: 16px 40px;
             border-radius: 100px;
             font-weight: 700;
             text-decoration: none;
             transition: var(--transition);
-            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .btn-primary { background: var(--text-main); color: var(--bg-body); }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 10px 30px var(--card-shadow); }
+        .btn-primary:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 20px 40px var(--card-shadow); }
+
+        /* Summary Core Literacy Section */
+        .stats-section {
+            padding: 60px 0 100px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-card:hover {
+            border-color: var(--stat-accent);
+            background: var(--surface-bright);
+            box-shadow: 0 20px 40px var(--card-shadow);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--stat-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--stat-accent);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .stat-info h4 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .stat-info p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--stat-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
 
         /* Portfolio Grid */
-        .portfolio-section { padding: 120px 0; }
+        .portfolio-section { padding: 40px 0 120px 0; }
         
-        .section-header {
-            margin-bottom: 60px;
-            text-align: center;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 12px; }
 
         .assignment-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
+            gap: 28px;
         }
 
-        /* Colorful & Rounded Cards */
+        /* 3D Assignment Card */
+        .card-wrapper {
+            perspective: 1000px;
+        }
+
         .assignment-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 48px 40px;
+            border-radius: 32px;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            transition: var(--transition);
+            transition: var(--transition), transform 0.1s ease-out;
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
+            transform-style: preserve-3d;
             cursor: pointer;
         }
 
-        .assignment-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 6px;
-            background: var(--card-color, var(--accent));
-            transition: var(--transition);
+        /* Card Image Section */
+        .card-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: var(--surface-bright);
         }
 
-        .assignment-card.reveal { opacity: 1; transform: translateY(0); }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            filter: brightness(0.8);
+        }
+
+        .assignment-card:hover .card-image img {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
 
         .assignment-card:hover {
-            transform: translateY(-12px);
-            background: var(--surface-bright);
-            box-shadow: 0 30px 60px var(--card-shadow);
             border-color: var(--card-color);
+            box-shadow: 0 30px 60px var(--card-shadow);
+            background: var(--surface-bright);
         }
 
-        /* 링크가 없는 카드에 대한 비활성 스타일 */
-        .assignment-card.no-link {
-            cursor: default;
-        }
-        .assignment-card.no-link:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: var(--border);
+        .card-content {
+            padding: 32px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            transform: translateZ(30px);
         }
 
         .card-icon {
-            width: 56px;
-            height: 56px;
+            position: absolute;
+            top: 175px;
+            right: 32px;
+            width: 52px; height: 52px;
             background: var(--card-color);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 28px;
-            font-size: 18px;
-            font-weight: 900;
-            color: #fff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 900; color: #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .assignment-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg) translateZ(40px);
         }
 
         .card-tag {
-            font-size: 11px;
-            font-weight: 800;
+            font-size: 11px; font-weight: 800;
             color: var(--card-color);
             margin-bottom: 12px;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        .assignment-card h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 16px;
-        }
-
-        .assignment-card p {
-            color: var(--text-muted);
-            font-size: 15px;
-            margin-bottom: 32px;
-            flex-grow: 1;
-            line-height: 1.7;
-        }
+        .assignment-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; }
+        .assignment-card p { color: var(--text-muted); font-size: 15px; margin-bottom: 32px; flex-grow: 1; line-height: 1.7; }
 
         .card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-top: auto;
         }
 
         .btn-card {
             flex-grow: 1;
-            padding: 14px;
+            padding: 12px;
             background: transparent;
             border: 2px solid var(--border);
-            border-radius: 20px;
+            border-radius: 16px;
             color: var(--text-main);
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 13px; font-weight: 700;
             transition: var(--transition);
             text-align: center;
         }
 
         .plus-icon {
-            width: 46px;
-            height: 46px;
+            width: 44px; height: 44px;
             border: 2px solid var(--border);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
             color: var(--text-muted);
             transition: var(--transition);
+            margin-left: 12px;
         }
 
-        .assignment-card:not(.no-link):hover .btn-card {
-            background: var(--card-color);
-            border-color: var(--card-color);
-            color: #fff;
+        .assignment-card:hover .btn-card {
+            background: var(--card-color); border-color: var(--card-color); color: #fff;
         }
         
-        .assignment-card:not(.no-link):hover .plus-icon {
-            border-color: var(--card-color);
-            color: var(--card-color);
-            transform: rotate(90deg);
+        .assignment-card:hover .plus-icon {
+            border-color: var(--card-color); color: var(--card-color); transform: rotate(90deg);
         }
 
         /* About Box */
         .about-box {
             background: var(--surface);
-            border-radius: 60px;
-            padding: 80px 60px;
+            border-radius: 48px;
+            padding: 60px;
             border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 48px;
+            gap: 40px;
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 100px auto;
+            transition: var(--transition);
         }
+
+        .about-box:hover { transform: translateY(-10px); border-color: var(--accent); }
 
         @media (min-width: 768px) { .about-box { flex-direction: row; text-align: left; } }
 
         .profile-img-container {
-            width: 200px;
-            height: 200px;
+            width: 180px; height: 180px;
             flex-shrink: 0;
-            background: var(--surface-bright);
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 32px;
             overflow: hidden;
-            border: 1px solid var(--border);
+            border: 4px solid var(--surface-bright);
             box-shadow: 0 20px 40px var(--card-shadow);
         }
 
-        .profile-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
+        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .profile-img-container:hover img { transform: scale(1.1); }
 
-        .profile-img-container:hover img {
-            transform: scale(1.1);
-        }
+        footer { padding: 60px 0; text-align: center; color: var(--text-muted); font-size: 13px; }
 
-        .about-text h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            color: var(--text-main);
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        footer { padding: 60px 0; text-align: center; color: var(--text-muted); font-size: 12px; }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         @media (max-width: 768px) {
             nav { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .about-box { padding: 40px 24px; border-radius: 40px; }
-            .profile-img-container { width: 160px; height: 160px; }
+            .hero h1 { font-size: 2.8rem; }
+            .cursor-glow { display: none; }
+            .card-icon { top: 180px; }
         }
     </style>
 </head>
 <body data-theme="dark">
 
+    <div class="cursor-glow" id="cursor-glow"></div>
     <div class="bg-mesh"></div>
 
     <header>
@@ -408,21 +495,55 @@
                 <div class="theme-toggle" id="theme-toggle">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
                 </div>
-                <div class="semester-tag" style="font-size: 11px; font-weight: 700; color: var(--text-muted);">2024-1</div>
             </div>
         </div>
     </header>
 
     <main>
         <section id="hero" class="hero">
-            <span class="hero-tag" style="color: var(--accent); font-weight: 800; letter-spacing: 2px;">Course Portfolio</span>
+            <div class="hero-badge">2024-1 Semester Project</div>
             <h1>현실의 문제를 해결하고<br><span class="text-gradient">스토리로 표현</span></h1>
             <p>
                 AI를 통해 데이터를 분석하고 기술적 한계를 넘어 지능적인 혁신을 설계합니다.
                 인간의 창의성과 AI 연산 능력이 만나는 지점, 'AI리터러시의 이해' 포트폴리오입니다.
             </p>
-            <div class="btn-group">
-                <a href="#portfolio" class="btn btn-primary">과제 둘러보기</a>
+            <a href="#portfolio" class="btn btn-primary">
+                과제 둘러보기 <i class="fa-solid fa-arrow-down"></i>
+            </a>
+        </section>
+
+        <!-- Summary Core Literacy Section -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <!-- Core 1: Data -->
+                    <div class="stat-card" style="--stat-bg: rgba(0, 229, 255, 0.1); --stat-accent: #00e5ff;">
+                        <div class="stat-icon"><i class="fa-solid fa-brain"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">Critical Thinking</div>
+                            <h4>Data Literacy</h4>
+                            <p>복잡한 데이터의 맥락을 읽어내고, 정보 속에 숨겨진 본질적인 가치를 비판적으로 해석하는 능력입니다.</p>
+                        </div>
+                    </div>
+                    <!-- Core 2: Tech -->
+                    <div class="stat-card" style="--stat-bg: rgba(157, 0, 255, 0.1); --stat-accent: #9d00ff;">
+                        <div class="stat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">Technical Skill</div>
+                            <h4>AI Tooling</h4>
+                            <p>생성형 AI의 원리를 이해하고, 프롬프트 엔지니어링을 통해 상상을 현실의 결과물로 구현하는 기술입니다.</p>
+                        </div>
+                    </div>
+                    <!-- Core 3: Ethics -->
+                    <div class="stat-card" style="--stat-bg: rgba(255, 61, 113, 0.1); --stat-accent: #ff3d71;">
+                        <div class="stat-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">Social Value</div>
+                            <h4>AI Ethics</h4>
+                            <p>기술적 효용을 넘어, 인간 중심의 가치를 지키며 책임감 있게 기술을 활용하는 윤리적 태도입니다.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -438,24 +559,22 @@
             </div>
         </section>
 
-        <section id="about" style="padding: 100px 0;">
-            <div class="container">
-                <div class="about-box">
-                    <div class="profile-img-container">
-                        <img src="https://www.pusan.ac.kr/_contents/kor/_Img/07Intro/character08.png" alt="김우현 프로필 이미지">
-                    </div>
-                    <div class="about-text">
-                        <h4 style="color: var(--accent); font-weight: 800; margin-bottom: 12px;">CREATOR</h4>
-                        <h2>김우현</h2>
-                        <p style="font-size: 1.1rem; word-break: keep-all;">
-                            미디어커뮤니케이션학과에서 기술과 사람 사이의 관계를 연구합니다. 
-                            영상 연구회 <strong>&lt;작전명 청춘&gt;</strong>의 회장으로서 디지털 리터러시를 기반으로 한 새로운 영상 문법을 창조하고 있습니다.
-                        </p>
-                        <div style="margin-top: 32px;">
-                            <span style="background: var(--surface-bright); padding: 10px 24px; border-radius: 50px; border: 1px solid var(--border); font-size: 14px; display: inline-flex; align-items: center;">
-                                <i class="fa-solid fa-envelope" style="color: var(--accent); margin-right: 10px;"></i> pony0321@naver.com
-                            </span>
-                        </div>
+        <section id="about" class="container">
+            <div class="about-box">
+                <div class="profile-img-container">
+                    <img src="https://www.pusan.ac.kr/_contents/kor/_Img/07Intro/character08.png" alt="김우현 프로필 이미지">
+                </div>
+                <div class="about-text">
+                    <h4 style="color: var(--accent); font-weight: 800; margin-bottom: 12px;">CREATOR</h4>
+                    <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 16px;">김우현</h2>
+                    <p style="font-size: 1.1rem; word-break: keep-all; color: var(--text-muted);">
+                        미디어커뮤니케이션학과에서 기술과 사람 사이의 관계를 연구합니다. 
+                        영상 연구회 <strong>&lt;작전명 청춘&gt;</strong>의 회장으로서 디지털 리터러시를 기반으로 한 새로운 영상 문법을 창조하고 있습니다.
+                    </p>
+                    <div style="margin-top: 32px;">
+                        <span style="background: var(--surface-bright); padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border); font-size: 14px; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-envelope" style="color: var(--accent);"></i> pony0321@naver.com
+                        </span>
                     </div>
                 </div>
             </div>
@@ -463,53 +582,84 @@
     </main>
 
     <footer>
-        <p>© 2024 Design by Kim Woo Hyun. Powered by AI Literacy.</p>
+        <p>© 2024 Kim Woo Hyun. Crafted with passion & AI.</p>
     </footer>
 
     <script>
         const cardColors = ['#ff3d71', '#ffaa00', '#00d68f', '#0095ff', '#7b1fa2', '#6200ea', '#3d5afe', '#ff1744', '#00e676', '#ffea00'];
         
         const assignments = [
-            { id: 1, title: "AI의 이해", desc: "노트북LM을 활용하여 AI의 정의, 역사적 변천사, 그리고 최신 생성형 AI의 메커니즘을 심층 분석하고 자료를 정리하는 실습", link: "./02/index.html" },
-            { id: 2, title: "데이터 크롤링 시각화", desc: "웹상의 비정형 데이터를 수집하고 정제하여 직관적인 대시보드로 시각화하는 과정", link: null },
-            { id: 3, title: "현대 사회 페인포인트 분석", desc: "데이터를 통해 발견하지 못했던 사회적 문제를 수면 위로 끌어올리는 분석 프로젝트", link: null },
-            { id: 4, title: "AI 스토리보드 기획", desc: "생성형 AI로 시나리오를 작성하고 영상의 기초가 되는 아트워크와 스토리보드 구성", link: null },
-            { id: 5, title: "데이터 기반 해결책 제안", desc: "수치화된 근거를 바탕으로 특정 문제에 대한 창의적이고 실현 가능한 AI 솔루션 제안", link: null },
-            { id: 6, title: "LLM 비즈니스 모델링", desc: "기업 프로세스에 거대언어모델을 도입했을 때의 효과와 한계점을 다각도로 분석", link: null },
-            { id: 7, title: "멀티모달 AI 제작 실습", desc: "이미지, 텍스트, 음성 등 다양한 AI를 결합하여 하나의 통합된 콘텐츠 제작", link: null },
-            { id: 8, title: "데이터 스토리텔링 전략", desc: "단순한 숫자를 넘어 대중에게 울림을 줄 수 있는 강력한 서사 구조를 데이터에 결합", link: null },
-            { id: 9, title: "AI 윤리 가이드라인", desc: "기술 오남용 방지와 책임감 있는 AI 활용을 위해 필수적인 윤리적 원칙 연구", link: null },
-            { id: 10, title: "최종 리터러시 결과보고서", desc: "한 학기 동안의 학습을 집대성하여 리터러시 성장을 증명하는 최종 포트폴리오", link: null }
+            { id: 1, title: "AI의 이해", desc: "노트북LM을 활용하여 AI의 정의, 역사적 변천사, 생성 메커니즘을 심층 분석합니다.", link: "./02/index.html", img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" },
+            { id: 2, title: "데이터 시각화", desc: "웹상의 비정형 데이터를 수집하고 정제하여 직관적인 대시보드로 구현합니다.", link: "./03/index.html", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" },
+            { id: 3, title: "페인포인트 분석", desc: "데이터를 통해 발견하지 못했던 현대 사회의 숨겨진 문제점들을 정밀 분석합니다.", link: "./04/index.html", img: "https://images.unsplash.com/photo-1454165833767-027eeef1593e?auto=format&fit=crop&q=80&w=800" },
+            { id: 4, title: "AI 스토리보드", desc: "생성형 AI로 시나리오를 쓰고 영상의 기초가 되는 아트워크와 서사를 구성합니다.", link: "./05/index.html", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80&w=800" },
+            { id: 5, title: "데이터 해결책", desc: "수치화된 근거를 바탕으로 창의적이고 실현 가능한 AI 솔루션을 제안합니다.", link: "./06/index.html", img: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&q=80&w=800" },
+            { id: 6, title: "LLM 비즈니스", desc: "기업 프로세스에 거대언어모델을 도입했을 때의 경영적 효과와 한계를 고찰합니다.", link: "./07/index.html", img: "https://images.unsplash.com/photo-1664575602554-2087b04935a5?auto=format&fit=crop&q=80&w=800" },
+            { id: 7, title: "멀티모달 실습", desc: "이미지, 텍스트, 음성 등 다양한 인터페이스를 결합한 통합 콘텐츠를 제작합니다.", link: "./08/index.html", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" },
+            { id: 8, title: "스토리텔링 전략", desc: "데이터에 강력한 서사 구조를 결합하여 대중의 행동을 이끌어내는 전략을 수립합니다.", link: "./09/index.html", img: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&q=80&w=800" },
+            { id: 9, title: "AI 윤리 가이드", desc: "기술 오남용 방지와 인본주의적 가치 실현을 위한 필수 윤리 원칙을 정의합니다.", link: "./10/index.html", img: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&q=80&w=800" },
+            { id: 10, title: "최종 결과보고서", desc: "한 학기 동안의 모든 성과를 집대성하여 나의 AI 리터러시 역량을 증명합니다.", link: "./11/index.html", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800" }
         ];
 
         const grid = document.getElementById('assignment-grid');
         assignments.forEach((item, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'card-wrapper';
+            
             const card = document.createElement('div');
             card.className = 'assignment-card';
-            if (!item.link) card.classList.add('no-link'); // 링크 없는 카드는 시각적으로 구분
-            
             card.style.setProperty('--card-color', cardColors[index]);
             
-            // 카드 전체 클릭 이벤트: 링크가 존재할 때만 이동하도록 수정 (SyntaxError 방지)
             card.addEventListener('click', () => {
-                if(item.link && item.link.trim() !== "") {
-                    window.location.href = item.link;
-                }
+                window.location.href = item.link;
+            });
+
+            // 3D 틸트 효과
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 25;
+                const rotateY = (centerX - x) / 25;
+                
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
             });
 
             card.innerHTML = `
+                <div class="card-image">
+                    <img src="${item.img}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=800&auto=format&fit=crop'">
+                </div>
                 <div class="card-icon">${item.id}</div>
-                <div class="card-tag">Project ${item.id}</div>
-                <h3>${item.title}</h3>
-                <p>${item.desc}</p>
-                <div class="card-footer">
-                    <div class="btn-card">${item.link ? '자세히 보기' : '준비 중'}</div>
-                    <div class="plus-icon"><i class="fa-solid fa-plus"></i></div>
+                <div class="card-content">
+                    <div class="card-tag">Project ${item.id}</div>
+                    <h3>${item.title}</h3>
+                    <p>${item.desc}</p>
+                    <div class="card-footer">
+                        <div class="btn-card">자세히 보기</div>
+                        <div class="plus-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
                 </div>
             `;
-            grid.appendChild(card);
+            wrapper.appendChild(card);
+            grid.appendChild(wrapper);
         });
 
+        // Mouse Tracker
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Theme Toggle
         const toggleBtn = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
         const body = document.body;
@@ -519,33 +669,42 @@
             const newTheme = isDark ? 'light' : 'dark';
             body.setAttribute('data-theme', newTheme);
             themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            localStorage.setItem('theme', newTheme);
         });
 
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        body.setAttribute('data-theme', savedTheme);
-        themeIcon.className = savedTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-
+        // Intersection Observer for Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
+                    entry.target.classList.add('visible');
+                    // 포트폴리오 카드용 인라인 스타일 처리
+                    if(entry.target.classList.contains('card-wrapper')) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.assignment-card').forEach(card => observer.observe(card));
+        // Observe Stat Cards
+        document.querySelectorAll('.stat-card').forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.1}s`;
+            observer.observe(card);
+        });
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+        // Observe Portfolio Cards
+        document.querySelectorAll('.card-wrapper').forEach((card, i) => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+            card.style.transitionDelay = `${(i % 3) * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Smooth Scroll for "과제 둘러보기"
+        document.querySelector('a[href^="#"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
     </script>
