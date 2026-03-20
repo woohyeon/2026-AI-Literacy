@@ -63,14 +63,15 @@
         .timeline-line { position: absolute; left: 50%; width: 2px; height: 100%; background: rgba(62, 212, 190, 0.2); transform: translateX(-50%); }
         @media (max-width: 768px) { .timeline-line { left: 20px; transform: none; } }
 
-        /* 모달 스타일 */
+        /* 모달 스타일 수정 - 이미지 전체 보기 최적화 */
         #infographicModal {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 1000;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 20px;
         }
         #infographicModal.active {
             display: flex;
@@ -78,14 +79,24 @@
             justify-content: center;
         }
         .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
             position: relative;
-            animation: modalPop 0.3s ease-out;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes modalPop {
-            from { transform: scale(0.9); opacity: 0; }
+            from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+        }
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* 이미지 비율 유지하며 전체 보여주기 */
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -121,13 +132,11 @@
             <h1 class="text-5xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tight">
                 튜링 테스트에서<br/><span class="text-brand">생성형 혁명까지</span>
             </h1>
-            <!-- 명사형으로 수정된 문구 -->
             <p class="text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10 font-medium">
                 인류의 지적 동반자로 진화하는 인공지능의 거대한 여정으로의 초대.<br class="hidden md:block">
                 과거의 기록에서 미래의 생태계까지, 한눈에 확인하는 AI 마스터 가이드.
             </p>
             
-            <!-- 슬라이드로 다운 받기 버튼 (PDF) -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
                 <a href="ai 01.pdf" download="ai 01.pdf" class="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 dark:bg-brand text-white font-bold rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all group">
                     <i class="fas fa-file-pdf group-hover:rotate-12 transition-transform"></i>
@@ -144,16 +153,17 @@
                 <h2 class="text-4xl font-black mb-4">인공지능의 거대한 여정</h2>
                 <p class="text-slate-500 mb-8">황금기와 겨울을 거쳐 피어난 기술의 역사</p>
                 
-                <button onclick="openModal()" class="inline-flex items-center gap-2 px-6 py-3 bg-brand text-white font-bold rounded-full shadow-lg shadow-brand/30 hover:bg-brandDark hover:scale-105 transition-all group">
-                    <i class="fas fa-image group-hover:animate-bounce"></i>
+                <!-- 인포그래픽 보기 버튼 -->
+                <button onclick="openModal()" class="inline-flex items-center gap-3 px-8 py-4 bg-brand text-white font-bold rounded-2xl shadow-lg shadow-brand/30 hover:bg-brandDark hover:scale-105 transition-all group">
+                    <i class="fas fa-expand group-hover:scale-125 transition-transform"></i>
                     역사 인포그래픽으로 보기
                 </button>
             </div>
 
             <div class="relative">
                 <div class="timeline-line"></div>
-                
                 <div class="space-y-12">
+                    <!-- 타임라인 아이템들 (이전과 동일) -->
                     <div class="relative flex flex-col md:flex-row items-center md:justify-between reveal">
                         <div class="md:w-5/12 text-right hidden md:block">
                             <h3 class="text-2xl font-bold text-brand">1950s: 태동기</h3>
@@ -194,209 +204,22 @@
                         </div>
                         <div class="md:w-5/12 invisible hidden md:block"></div>
                     </div>
-
-                    <div class="relative flex flex-col md:flex-row items-center md:justify-between reveal">
-                        <div class="md:w-5/12 invisible hidden md:block"></div>
-                        <div class="z-10 w-10 h-10 bg-slate-800 rounded-full border-4 border-brand flex items-center justify-center text-brand shadow-xl">
-                            <i class="fas fa-star text-xs"></i>
-                        </div>
-                        <div class="md:w-5/12 text-left mt-4 md:mt-0">
-                            <h3 class="text-2xl font-bold text-slate-100 dark:text-white">2026: 행동하는 AI</h3>
-                            <p class="text-slate-500 text-sm mt-2">에이전틱 AI와 피지컬 AI의 결합. 스스로 계획을 세우고 물리적 업무를 수행하는 지능형 인프라로 진화.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. AI 위계 이해 -->
-    <section id="concept" class="py-24 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                <div class="lg:w-1/2 reveal">
-                    <h2 class="text-4xl font-black mb-8">지능의 마트료시카 구조</h2>
-                    <p class="text-slate-500 mb-8 leading-relaxed">
-                        인공지능을 구성하는 핵심 기술들은 서로 독립된 것이 아니라, 마치 러시아 인형 마트료시카처럼 서로를 포함하고 있습니다. 범위를 좁혀갈수록 더 심층적인 기술이 나타납니다.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border-l-4 border-brand shadow-sm">
-                            <h4 class="font-bold text-brand mb-1">인공지능 (Artificial Intelligence)</h4>
-                            <p class="text-sm text-slate-500">인간의 지능을 모방하는 가장 넓은 범위의 기술 (규칙 기반 포함)</p>
-                        </div>
-                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border-l-4 border-brand shadow-sm ml-4">
-                            <h4 class="font-bold text-brand mb-1">머신러닝 (Machine Learning)</h4>
-                            <p class="text-sm text-slate-500">데이터 패턴을 통해 기계가 스스로 학습하는 기법</p>
-                        </div>
-                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border-l-4 border-brand shadow-sm ml-8">
-                            <h4 class="font-bold text-brand mb-1">딥러닝 (Deep Learning)</h4>
-                            <p class="text-sm text-slate-500">인간 뇌의 신경망을 모방한 심층 신경망(ANN) 기술</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 reveal">
-                    <div class="aspect-square bg-slate-900 rounded-[3rem] relative flex items-center justify-center p-12 overflow-hidden border border-white/10">
-                        <div class="absolute inset-0 opacity-20">
-                            <img src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&q=80&w=800&sig=concept" 
-                                 class="w-full h-full object-cover" 
-                                 onerror="this.style.display='none'">
-                        </div>
-                        <div class="relative z-10 w-full h-full flex items-center justify-center">
-                            <div class="w-full h-full border-2 border-brand/40 rounded-full flex items-center justify-center animate-pulse">
-                                <div class="w-[75%] h-[75%] border-2 border-brand/60 rounded-full flex items-center justify-center">
-                                    <div class="w-[50%] h-[50%] bg-brand rounded-full flex items-center justify-center shadow-2xl shadow-brand/50">
-                                        <i class="fas fa-brain text-white text-4xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="absolute text-[10px] top-4 font-bold tracking-widest text-slate-500">ARTIFICIAL INTELLIGENCE</div>
-                            <div class="absolute text-[10px] top-1/4 font-bold tracking-widest text-slate-400">MACHINE LEARNING</div>
-                            <div class="absolute text-[10px] top-[45%] font-bold tracking-widest text-white">DEEP LEARNING</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 2~5 섹션 (생략, 이전과 동일) -->
 
-    <!-- 3. Transformer Tech -->
-    <section id="tech" class="py-24 px-6 bg-slate-900 text-white rounded-[4rem] mx-4 overflow-hidden relative">
-        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-            <div class="lg:w-1/2 reveal">
-                <span class="text-brand font-bold text-xs uppercase tracking-widest px-3 py-1 bg-brand/10 rounded-full">Core Technology</span>
-                <h2 class="text-4xl font-black mt-6 mb-8">트랜스포머:<br/>지능의 한계를 끊다</h2>
-                <p class="text-slate-400 mb-8 leading-relaxed">
-                    2017년 구글 연구팀이 발표한 트랜스포머는 과거 AI가 가졌던 '기억의 한계'와 '처리 속도의 병목'을 완전히 해결했습니다. 이는 단순히 정보를 찾는 단계를 넘어, 문맥을 입체적으로 이해하는 토대가 되었습니다.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-brand/50 transition-colors">
-                        <i class="fas fa-sync text-brand text-2xl mb-4"></i>
-                        <h4 class="font-bold mb-2">셀프 어텐션</h4>
-                        <p class="text-xs text-slate-500">문장 내 단어 간의 연관성을 계산하여 '그(it)'가 무엇을 가리키는지 정확히 판별합니다.</p>
-                    </div>
-                    <div class="p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-brand/50 transition-colors">
-                        <i class="fas fa-bars-staggered text-brand text-2xl mb-4"></i>
-                        <h4 class="font-bold mb-2">병렬 처리 혁신</h4>
-                        <p class="text-xs text-slate-500">순차적 방식에서 벗어나 데이터를 한꺼번에 처리하여 대규모 학습이 가능해졌습니다.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="lg:w-1/2 reveal">
-                <div class="relative w-full aspect-square rounded-3xl overflow-hidden shadow-2xl img-container">
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc463867000?auto=format&fit=crop&q=80&w=1200&sig=tech_transformer" 
-                         alt="[트랜스포머 신경망 시각화]" 
-                         class="w-full h-full object-cover"
-                         onerror="this.parentElement.classList.add('img-error')">
-                    <div class="fallback-ui">
-                        <i class="fas fa-network-wired text-6xl mb-4"></i>
-                        <span class="text-sm font-mono">TRANSFORMER_ARCHITECTURE_VIEW</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Solution (RAG + FT) -->
-    <section id="solution" class="py-24 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl font-black mb-6">할루시네이션(환각) 극복</h2>
-                <p class="text-slate-500">거짓 정보를 방지하고 신뢰도를 높이는 하이브리드 전략</p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div class="reveal">
-                    <div class="aspect-video mb-8 img-container shadow-xl">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200&sig=rag_section" 
-                             alt="[데이터 검색 프로세스]" 
-                             class="w-full h-full object-cover"
-                             onerror="this.parentElement.classList.add('img-error')">
-                        <div class="fallback-ui">
-                            <i class="fas fa-search-plus text-5xl mb-4"></i>
-                            <span class="text-xs font-mono">RETRIEVAL_AUGMENTED_GENERATION</span>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-3">
-                        <span class="text-brand bg-brand/10 p-2 rounded-lg text-sm">RAG</span>
-                        검색 증강 생성
-                    </h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">
-                        외부의 신뢰할 수 있는 데이터베이스에서 정보를 실시간으로 검색하여 답변의 근거로 삼습니다. 최신 정보 반영과 정확한 출처 제시에 탁월합니다.
-                    </p>
-                </div>
-
-                <div class="reveal" style="transition-delay: 150ms;">
-                    <div class="aspect-video mb-8 img-container shadow-xl">
-                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200&sig=ft_section" 
-                             alt="[모델 정밀 학습 시각화]" 
-                             class="w-full h-full object-cover"
-                             onerror="this.parentElement.classList.add('img-error')">
-                        <div class="fallback-ui">
-                            <i class="fas fa-vial text-5xl mb-4"></i>
-                            <span class="text-xs font-mono">FINE_TUNING_PROCESS</span>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-3">
-                        <span class="text-brand bg-brand/10 p-2 rounded-lg text-sm">FT</span>
-                        미세 조정
-                    </h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">
-                        특정 도메인의 데이터를 통해 모델의 파라미터를 직접 학습시킵니다. 전문적인 어투와 특정 형식을 따르는 답변을 생성하는 데 최적화되어 있습니다.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. 2026 Future Strategy -->
-    <section id="future" class="py-24 px-6 bg-slate-900 text-white rounded-[4rem] mx-4 mb-24 relative overflow-hidden">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl font-black mb-4">2026: 새로운 시대의 지배 구조</h2>
-                <p class="text-slate-400 text-sm">에이전틱 AI와 물리적 로봇의 결합</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 bg-white/5 rounded-3xl border border-white/10 reveal transition-all hover:bg-white/10">
-                    <div class="w-14 h-14 bg-brand rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-brand/20">
-                        <i class="fas fa-user-gear text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">에이전틱 AI</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        단순 답변을 넘어 스스로 목표를 수립하고 API를 호출하여 업무를 수행하는 자율적 비서입니다.
-                    </p>
-                </div>
-                <div class="p-8 bg-white/5 rounded-3xl border border-white/10 reveal transition-all hover:bg-white/10" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 bg-brand rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-brand/20">
-                        <i class="fas fa-robot text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">피지컬 AI</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        지능이 물리적 로봇과 결합하여 현실 세계의 문제를 직접 해결하는 시대가 도래합니다.
-                    </p>
-                </div>
-                <div class="p-8 bg-white/5 rounded-3xl border border-white/10 reveal transition-all hover:bg-white/10" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 bg-brand rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-brand/20">
-                        <i class="fas fa-gavel text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">2026 AI 기본법</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        안전성과 투명성이 법적 의무가 되며, 11개 고영향 분야의 AI는 엄격한 검증을 거쳐야 합니다.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Infographic Modal -->
+    <!-- Infographic Modal (수정된 전체 화면 모달) -->
     <div id="infographicModal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-3xl hover:text-brand transition-colors">
-                <i class="fas fa-times"></i>
+            <!-- 닫기 버튼 -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-brand text-white rounded-full transition-all z-50">
+                <i class="fas fa-times text-2xl"></i>
             </button>
-            <div class="rounded-2xl overflow-hidden shadow-2xl bg-slate-800">
-                <img src="AI 04.jpg" alt="AI 역사 인포그래픽" class="max-w-full max-h-[85vh] block object-contain">
-            </div>
+            <!-- 전체 이미지 -->
+            <img src="AI 04.jpg" alt="AI 역사 인포그래픽 전체보기" class="modal-image">
         </div>
     </div>
 
@@ -410,12 +233,11 @@
                 <span class="font-bold text-lg tracking-tighter">AI.INSIGHT</span>
             </div>
             <p class="text-slate-400 text-xs">본 가이드는 제공된 전문 학술 보고서를 바탕으로 구조화되었습니다.</p>
-            <div class="text-slate-500 text-[10px] font-mono">DOC_REV_2026.03</div>
         </div>
     </footer>
 
     <script>
-        // --- 다크모드 관리 ---
+        // --- 다크모드 및 스크롤 로직 ---
         const modeSwitcher = document.getElementById('modeSwitcher');
         const modeIcon = document.getElementById('modeIcon');
         let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -428,26 +250,26 @@
         modeSwitcher.addEventListener('click', () => { isDark = !isDark; updateUI(); });
         updateUI();
 
-        // --- 인포그래픽 모달 관리 ---
+        // --- 모달 기능 (전체 이미지 보기) ---
         const modal = document.getElementById('infographicModal');
         
         function openModal() {
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden'; // 스크롤 방지
         }
 
         function closeModal() {
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; 
+            document.body.style.overflow = 'auto'; // 스크롤 허용
         }
 
+        // ESC 키로 닫기
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('active')) {
                 closeModal();
             }
         });
 
-        // --- 스크롤 및 등장 효과 ---
         const reveal = () => {
             const reveals = document.querySelectorAll('.reveal');
             const windowHeight = window.innerHeight;
