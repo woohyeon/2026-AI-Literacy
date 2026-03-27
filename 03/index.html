@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산광역시 인구 구조 및 고령화 심층 분석</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!--
+    Palette: Vibrant Neon Blue & Coral (Deep Blue #1e3a8a, Coral Red #ef4444, Amber #f59e0b, Cyan #06b6d4)
+    Plan Summary: 
+    1. Navigation - Added a Home button linking to ../index.html.
+    2. Header (Hook & Title) - Introduces the severity of the demographic shift.
+    3. KPI Cards - Highlights the "Dead Cross" with absolute population and elderly milestone figures.
+    4. Line Chart - Visualizes the 5-year steady increase in the overall aging rate.
+    5. Bar Chart - Compares the 2024 aging rate across all 16 districts to pinpoint extreme areas.
+    6. Horizontal Bar Chart - Ranks the 5-year aging speed by district.
+    7. Policy Recommendations - Actionable insights formatted as visually distinct cards.
+    Visualization Choices:
+    - Data: Overall Aging Trend -> Goal: Change -> Type: Chart.js Line Chart -> Justification: Best for showing continuous temporal trends (Canvas, NO SVG).
+    - Data: 2024 District Aging % -> Goal: Compare/Organize -> Type: Chart.js Bar Chart -> Justification: Clearly compares values and highlights outliers like Yeongdo-gu (Canvas, NO SVG).
+    - Data: 5-year Aging Speed -> Goal: Compare/Organize -> Type: Chart.js Horizontal Bar Chart -> Justification: Ideal for ranking categories by growth rate (Canvas, NO SVG).
+    Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in the output.
+    -->
+
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .metric-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .nav-button {
+            transition: all 0.2s;
+        }
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <nav class="absolute top-6 left-6 z-20">
+        <a href="../index.html" class="nav-button flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-lg border border-white/20 font-medium">
+            <span class="text-xl">🏠</span>
+            <span>홈으로</span>
+        </a>
+    </nav>
+
+    <header class="bg-[#1e3a8a] text-white py-20 px-6 mb-10 shadow-lg relative overflow-hidden">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="inline-block bg-[#ef4444] text-white text-sm font-bold px-3 py-1 rounded-full mb-4">
+                DATA REPORT 2020-2024
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">부산광역시 인구 구조 및<br>고령화 심층 분석</h1>
+            <p class="text-xl md:text-2xl opacity-90 max-w-3xl">초고령 메트로폴리스로의 진입, 부산의 인구 위기 현황과 정책적 시사점을 5개년 데이터를 통해 진단합니다.</p>
+        </div>
+        <div class="absolute right-0 bottom-0 opacity-10 text-[20rem] leading-none select-none pointer-events-none transform translate-x-1/4 translate-y-1/4">
+            📊
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 space-y-16">
+
+        <section>
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-[#1e3a8a] mb-2 flex items-center">
+                    <span class="text-4xl mr-3">🚨</span> 인구 구조의 이중 압박 (핵심 지표)
+                </h2>
+                <p class="text-gray-600 text-lg">최근 5년간 부산의 총인구는 빠르게 감소하는 반면, 60세 이상 고령층은 폭발적으로 증가하며 뚜렷한 데드크로스를 보이고 있습니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="metric-card bg-white rounded-2xl shadow-md p-8 border-t-4 border-[#1e3a8a]">
+                    <div class="text-gray-500 font-semibold mb-2">5년간 총인구 감소</div>
+                    <div class="text-4xl font-extrabold text-[#1e3a8a] mb-2">-91,760<span class="text-xl font-medium"> 명</span></div>
+                    <div class="text-sm text-gray-500 bg-gray-100 inline-block px-2 py-1 rounded">2020년 대비 2.7% 감소</div>
+                </div>
+                
+                <div class="metric-card bg-white rounded-2xl shadow-md p-8 border-t-4 border-[#ef4444]">
+                    <div class="text-gray-500 font-semibold mb-2">5년간 60세 이상 증가</div>
+                    <div class="text-4xl font-extrabold text-[#ef4444] mb-2">+128,277<span class="text-xl font-medium"> 명</span></div>
+                    <div class="text-sm text-gray-500 bg-gray-100 inline-block px-2 py-1 rounded">2020년 대비 14.4% 급증</div>
+                </div>
+
+                <div class="metric-card bg-[#1e3a8a] text-white rounded-2xl shadow-md p-8 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-blue-200 font-semibold mb-2">2024년 고령인구 마일스톤</div>
+                        <div class="text-5xl font-extrabold mb-2 text-[#facc15]">102만<span class="text-xl font-medium text-white"> 명 돌파</span></div>
+                        <div class="text-sm text-blue-100">시민 10명 중 3명이 60세 이상</div>
+                    </div>
+                    <div class="absolute right-4 bottom-4 text-6xl opacity-20 select-none">👵</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl shadow-lg p-8 md:p-10 border border-gray-100">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-[#1e3a8a] mb-2 flex items-center">
+                    <span class="text-4xl mr-3">📈</span> 가파른 고령화 가속도
+                </h2>
+                <p class="text-gray-600 text-lg">부산 전체의 고령 인구 점유율은 매년 약 1%p 이상 상승하며, 이미 초고령사회(20%) 기준을 훌쩍 넘은 31.3%를 기록했습니다.</p>
+            </div>
+            
+            <div class="w-full">
+                <div class="chart-container">
+                    <canvas id="overallTrendChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="bg-white rounded-3xl shadow-lg p-8 border border-gray-100">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-[#1e3a8a] mb-2">행정구역별 고령 인구 점유율 (2024)</h2>
+                    <p class="text-gray-600">영도구는 40%에 도달하며 초고령화의 극단을 보여줍니다. 반면 강서구는 유일하게 10%대를 유지하고 있습니다.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="districtAgingChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-lg p-8 border border-gray-100">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-[#1e3a8a] mb-2">행정구역별 고령화 속도 (5년 변화)</h2>
+                    <p class="text-gray-600">사상구, 영도구 등에서 고령화 비중이 5%p 이상 급격히 상승하며 도시 전체로 현상이 평준화되고 있습니다.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="agingSpeedChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-[#1e3a8a] mb-2 flex items-center">
+                    <span class="text-4xl mr-3">💡</span> 전략적 제언 및 대응 방안
+                </h2>
+                <p class="text-gray-600 text-lg">단순한 현상 진단을 넘어, 각 지역의 인구 구조 특성에 맞춘 차별화된 정책 설계가 시급합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-[#1e3a8a] to-blue-800 text-white rounded-2xl p-8 shadow-lg">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold mb-3 text-[#facc15]">구별 맞춤형 대응 전략</h3>
+                    <ul class="space-y-3 opacity-90 leading-relaxed">
+                        <li><strong class="text-white">극초고령 지역 (영도구, 원도심):</strong> 고령자 집중 돌봄, 의료 특화 지구 지정 등 보건·복지 밀착형 인프라 재편.</li>
+                        <li><strong class="text-white">급증 지역 (사상구, 해운대구):</strong> 신규 은퇴 세대를 위한 활동적 노년(Active Aging) 일자리 창출 및 시니어 복합 센터 확충.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-white to-gray-50 text-gray-800 border border-gray-200 rounded-2xl p-8 shadow-lg">
+                    <div class="text-4xl mb-4">🏗️</div>
+                    <h3 class="text-xl font-bold mb-3 text-[#ef4444]">인프라 가이드라인 전면 수정</h3>
+                    <ul class="space-y-3 text-gray-600 leading-relaxed">
+                        <li>부산 전체 평균이 31%를 넘어섬에 따라, 모든 공공 시설물과 교통 체계를 <strong class="text-[#1e3a8a]">고령자 친화적 디자인(Universal Design)</strong>으로 의무화해야 합니다.</li>
+                        <li>산복도로 등 고지대 행정동의 이동권 보장을 위한 수요응답형 모빌리티(DRT) 및 경사형 엘리베이터 확충이 필요합니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-sm">
+        <p>본 인포그래픽은 「부산광역시 5개년 인구 및 고령화 상세 분석 보고서(2020-2024)」를 기반으로 작성되었습니다.</p>
+        <p class="mt-2">데이터 출처: 부산광역시 시군구별 총인구 및 고령자 통계</p>
+    </footer>
+
+    <script>
+        const wrapLabel = (label) => {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (let i = 0; i < words.length; i++) {
+                if ((currentLine + words[i]).length > 16) {
+                    if (currentLine !== '') lines.push(currentLine.trim());
+                    currentLine = words[i] + ' ';
+                } else {
+                    currentLine += words[i] + ' ';
+                }
+            }
+            if (currentLine !== '') lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const tooltipConfig = {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        Chart.defaults.font.family = "'Pretendard', sans-serif";
+        Chart.defaults.color = '#64748b';
+
+        const years = ['2020년', '2021년', '2022년', '2023년', '2024년'].map(wrapLabel);
+        const overallAgingRates = [26.6, 28.1, 29.3, 30.4, 31.3];
+
+        new Chart(document.getElementById('overallTrendChart'), {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: '부산광역시 고령 인구 점유율 (%)',
+                    data: overallAgingRates,
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#ef4444',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 3,
+                    pointRadius: 8,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...tooltipConfig,
+                    legend: {
+                        position: 'top',
+                        labels: { font: { size: 14, weight: 'bold' }, color: '#1e3a8a' }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 24,
+                        max: 34,
+                        grid: { color: '#f1f5f9' },
+                        ticks: { font: { size: 12 }, callback: function(value) { return value + '%'; } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 14, weight: '500' } }
+                    }
+                }
+            }
+        });
+
+        const rawDistrictData = [
+            { name: '영도구', rate2024: 40.0, speed: 5.7 },
+            { name: '중구', rate2024: 37.9, speed: 4.3 },
+            { name: '동구', rate2024: 37.0, speed: 3.3 },
+            { name: '서구', rate2024: 36.6, speed: 4.1 },
+            { name: '금정구', rate2024: 33.9, speed: 5.0 },
+            { name: '수영구', rate2024: 32.7, speed: 4.5 },
+            { name: '남구', rate2024: 32.4, speed: 4.7 },
+            { name: '사하구', rate2024: 31.0, speed: 5.5 },
+            { name: '사상구', rate2024: 30.8, speed: 5.9 },
+            { name: '동래구', rate2024: 30.8, speed: 4.6 },
+            { name: '부산진구', rate2024: 30.7, speed: 4.4 },
+            { name: '북구', rate2024: 30.5, speed: 5.4 },
+            { name: '연제구', rate2024: 30.4, speed: 4.6 },
+            { name: '해운대구', rate2024: 29.9, speed: 5.3 },
+            { name: '기장군', rate2024: 26.7, speed: 4.7 },
+            { name: '강서구', rate2024: 19.3, speed: 3.0 }
+        ];
+
+        const districtsSortedByRate = [...rawDistrictData].sort((a, b) => b.rate2024 - a.rate2024);
+        const rateLabels = districtsSortedByRate.map(d => wrapLabel(d.name));
+        const rateData = districtsSortedByRate.map(d => d.rate2024);
+        const rateColors = rateData.map(val => val >= 40 ? '#ef4444' : (val < 20 ? '#06b6d4' : '#1e3a8a'));
+
+        new Chart(document.getElementById('districtAgingChart'), {
+            type: 'bar',
+            data: {
+                labels: rateLabels,
+                datasets: [{
+                    label: '2024년 고령인구 비중 (%)',
+                    data: rateData,
+                    backgroundColor: rateColors,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...tooltipConfig,
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' },
+                        ticks: { callback: function(value) { return value + '%'; } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        const districtsSortedBySpeed = [...rawDistrictData].sort((a, b) => b.speed - a.speed);
+        const speedLabels = districtsSortedBySpeed.map(d => wrapLabel(d.name));
+        const speedData = districtsSortedBySpeed.map(d => d.speed);
+        
+        new Chart(document.getElementById('agingSpeedChart'), {
+            type: 'bar',
+            data: {
+                labels: speedLabels,
+                datasets: [{
+                    label: '5년간 고령화 비중 증가율 (%p)',
+                    data: speedData,
+                    backgroundColor: '#facc15',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...tooltipConfig,
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' },
+                        ticks: { callback: function(value) { return '+' + value + '%p'; } }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
