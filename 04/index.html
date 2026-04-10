@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 기술의 이해 - 인터렉티브 심화 리포트</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
+
+        :root {
+            --primary-yellow: #ffec3d;
+            --emerald-blue: #40e0d0;
+            --bg-color: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-dim: #475569;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --accent: #0ea5e9;
+            --section-gap: 50px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #020617;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --nav-bg: rgba(2, 6, 23, 0.85);
+            --accent: #fbbf24;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nanum Square Round', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+            line-height: 1.8;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--emerald-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+            display: none;
+        }
+
+        @media (hover: hover) {
+            #cursor { display: block; }
+        }
+
+        /* Scroll Progress Bar */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            z-index: 1001;
+        }
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-yellow), var(--emerald-blue));
+            width: 0%;
+        }
+
+        /* Navigation Menu */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: fit-content;
+            padding: 0.6rem 2rem;
+            display: flex;
+            gap: 1.5rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            color: var(--emerald-blue);
+            background: rgba(64, 224, 208, 0.1);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--primary-yellow);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+
+        /* Hero Section */
+        header {
+            height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(64, 224, 208, 0.1) 0%, transparent 70%);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        header h1 span {
+            color: var(--emerald-blue);
+            border-bottom: 6px solid var(--primary-yellow);
+        }
+
+        /* Container & Sections */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            margin-bottom: var(--section-gap);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            color: var(--emerald-blue);
+        }
+
+        /* Info Boxes */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-box {
+            background: rgba(64, 224, 208, 0.05);
+            padding: 1.8rem;
+            border-radius: 24px;
+            border: 1px solid rgba(64, 224, 208, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: scale(1.02);
+            border-color: var(--emerald-blue);
+        }
+
+        /* Deep Timeline */
+        .deep-history {
+            margin-top: 2rem;
+            padding-left: 2rem;
+            border-left: 3px solid var(--primary-yellow);
+        }
+
+        .history-node {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .history-node::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem - 9px);
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            background: var(--emerald-blue);
+            border: 3px solid var(--bg-color);
+            border-radius: 50%;
+        }
+
+        .history-year {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--emerald-blue);
+            margin-bottom: 0.8rem;
+        }
+
+        .history-content {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+        }
+
+        .history-content b {
+            color: var(--text-main);
+        }
+
+        /* Example Cards */
+        .example-card {
+            display: flex;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 24px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .example-icon {
+            background: var(--emerald-blue);
+            color: white;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Detail List */
+        .limit-list {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .limit-item {
+            padding-left: 1.5rem;
+            border-left: 2px solid #ff4757;
+        }
+
+        .limit-item h4 {
+            color: #ff4757;
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-dim);
+            opacity: 0.7;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            nav { width: 95%; gap: 0.3rem; padding: 0.5rem; font-size: 0.7rem; }
+            .glass-card { padding: 1.5rem; }
+            body { cursor: auto; }
+            #cursor { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
+    <nav>
+        <a href="#definition">정의</a>
+        <a href="#history">역사</a>
+        <a href="#examples">예시</a>
+        <a href="#limits">한계</a>
+        <a href="#significance">의의</a>
+    </nav>
+
+    <button class="theme-toggle" id="theme-btn">
+        <i data-lucide="sun" id="theme-icon"></i>
+    </button>
+
+    <header>
+        <h1><span>웹 기술</span> 심화 아카이브</h1>
+        <p style="color: var(--text-dim); max-width: 650px; padding: 0 20px;">
+            단순한 정보 전달을 넘어 지능형 플랫폼으로 진화한 웹의 본질을 탐구합니다.<br>
+            역사와 한계, 그리고 미래의 가치까지 아우르는 기술 리포트입니다.
+        </p>
+    </header>
+
+    <div class="container">
+        <!-- 01. 정의 섹션 -->
+        <section id="definition">
+            <div class="glass-card">
+                <div class="section-title">
+                    <i data-lucide="component"></i>
+                    <h2>01. 웹의 기술적 구조</h2>
+                </div>
+                <p>현대의 웹은 **브라우저라는 실행 환경(Runtime)**에서 돌아가는 거대한 애플리케이션 플랫폼입니다. 단순히 텍스트를 보여주는 기술에서 벗어나, 하드웨어 자원을 제어하고 고도의 그래픽을 렌더링하는 수준에 도달했습니다.</p>
+                
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h3>Semantic HTML</h3>
+                        <p>단순 디자인을 넘어 데이터의 '의미'를 규정합니다. 이는 인공지능이 웹 데이터를 수집하고 검색 엔진이 최적의 답변을 내놓는 기반이 됩니다.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Fluid Layout</h3>
+                        <p>반응형 디자인은 이제 기본입니다. 모든 디바이스 환경에서 일관된 UX를 제공하기 위해 CSS Grid와 Flexbox 기술이 중점적으로 사용됩니다.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Dynamic Logic</h3>
+                        <p>JavaScript는 엔진의 최적화(JIT 컴파일)를 통해 네이티브 언어에 가까운 속도를 냅니다. 복잡한 계산과 비동기 통신을 담당합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. 역사 섹션 (상세 보강) -->
+        <section id="history">
+            <div class="glass-card">
+                <div class="section-title">
+                    <i data-lucide="scroll-text"></i>
+                    <h2>02. 웹의 기술적 연대기</h2>
+                </div>
+                <div class="deep-history">
+                    <div class="history-node">
+                        <div class="history-year">Web 1.0: Read-Only (1990 ~ 2004)</div>
+                        <p class="history-content">
+                            <b>특징:</b> 정보의 단방향 전달. <b>기술 스택:</b> 정적 HTML, 기초적인 CSS. <br>
+                            사용자는 서버가 제공하는 문서를 읽기만 했으며, 하이퍼텍스트를 통해 문서 사이를 이동하는 것이 핵심이었습니다. 데이터는 파편화되어 있었고 인터랙션은 거의 없었습니다.
+                        </p>
+                    </div>
+                    <div class="history-node">
+                        <div class="history-year">Web 2.0: Social & Interaction (2005 ~ 현재)</div>
+                        <p class="history-content">
+                            <b>특징:</b> 사용자 참여와 동적 데이터. <b>기술 스택:</b> AJAX, JSON, REST API. <br>
+                            사용자가 데이터를 생성하고(블로그, SNS), 페이지 새로고침 없이 실시간으로 소통하는 시대입니다. **중앙화된 플랫폼(Big Tech)**이 데이터를 독점하며 웹 생태계를 주도하고 있습니다.
+                        </p>
+                    </div>
+                    <div class="history-node">
+                        <div class="history-year">Web 3.0: Intelligent & Decentralized (미래)</div>
+                        <p class="history-content">
+                            <b>특징:</b> 데이터 주권과 지능형 자동화. <b>기술 스택:</b> Blockchain, AI, Semantic Web. <br>
+                            개인이 데이터를 소유하고 암호화 기술을 통해 보안을 강화하는 분산형 웹을 지향합니다. 인공지능이 웹의 맥락을 이해하여 사용자에게 맞춤형 경험을 자동으로 제공하는 단계입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. 예시 섹션 -->
+        <section id="examples">
+            <div class="glass-card">
+                <div class="section-title">
+                    <i data-lucide="monitor-play"></i>
+                    <h2>03. 최신 기술 적용 사례</h2>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon"><i data-lucide="database"></i></div>
+                    <div>
+                        <strong>실시간 협업 (CRDTs 기술)</strong>
+                        Notion이나 Figma에서 여러 명이 동시에 편집해도 데이터 충돌 없이 동기화되는 원리입니다.
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon"><i data-lucide="cpu"></i></div>
+                    <div>
+                        <strong>브라우저 내 고성능 연산 (WebAssembly)</strong>
+                        웹 브라우저에서 포토샵 수준의 이미지 편집이나 고사양 게임을 실행할 수 있게 하는 마법 같은 기술입니다.
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon"><i data-lucide="message-square"></i></div>
+                    <div>
+                        <strong>푸시 알림 및 오프라인 모드 (Service Workers)</strong>
+                        인터넷이 끊겨도 작동하고 스마트폰 앱처럼 알림을 보내는 웹 기술의 진화입니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04. 한계 섹션 (상세 보강) -->
+        <section id="limits">
+            <div class="glass-card" style="border-top: 6px solid #ff4757;">
+                <div class="section-title" style="color: #ff4757;">
+                    <i data-lucide="flame"></i>
+                    <h2>04. 기술적 임계점과 해결 과제</h2>
+                </div>
+                <p>웹 기술이 비약적으로 발전했음에도 불구하고, 여전히 극복해야 할 구조적 한계들이 존재합니다.</p>
+                
+                <div class="limit-list">
+                    <div class="limit-item">
+                        <h4>보안의 취약성 (Security Vulnerability)</h4>
+                        <p>브라우저에서 소스 코드를 누구나 볼 수 있는 구조적 특성상, XSS(크로스 사이트 스크립팅)나 CSRF 공격에 노출되기 쉽습니다. 이를 막기 위해 엄격한 **Content Security Policy(CSP)**와 보안 헤더 설정이 필수적입니다.</p>
+                    </div>
+                    <div class="limit-item">
+                        <h4>성능의 병목 (Performance Bottleneck)</h4>
+                        <p>자바스크립트는 싱글 스레드 언어입니다. 대규모 연산 시 브라우저의 UI가 멈추는 현상이 발생할 수 있으며, 가비지 컬렉션(GC)으로 인한 순간적인 프리징 현상도 네이티브 앱 대비 약점으로 꼽힙니다.</p>
+                    </div>
+                    <div class="limit-item">
+                        <h4>파편화와 호환성 (Fragmented Standards)</h4>
+                        <p>다양한 브라우저 엔진(Blink, WebKit, Gecko)마다 최신 기술을 지원하는 속도가 다릅니다. 이로 인해 개발자는 여전히 구형 브라우저를 위한 폴리필(Polyfill)을 작성해야 하는 비용을 지불합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05. 의의 섹션 (상세 보강) -->
+        <section id="significance">
+            <div class="glass-card" style="background: linear-gradient(135deg, var(--emerald-blue), var(--accent)); color: white;">
+                <div class="section-title" style="color: white;">
+                    <i data-lucide="landmark"></i>
+                    <h2>05. 웹 기술이 가지는 다각적 의의</h2>
+                </div>
+                <div class="limit-list" style="color: rgba(255,255,255,0.9);">
+                    <div class="limit-item" style="border-color: white;">
+                        <h4 style="color: white;">사회적: 정보의 보편적 접근권</h4>
+                        <p>웹은 전 세계 어디서나, 저사양 기기로도 지식에 접근할 수 있게 함으로써 **'디지털 문맹'** 해소에 기여합니다. 이는 인류 지성사에서 가장 큰 규모의 지식 공유 실험입니다.</p>
+                    </div>
+                    <div class="limit-item" style="border-color: white;">
+                        <h4 style="color: white;">경제적: 비즈니스 장벽의 파괴</h4>
+                        <p>누구나 웹 기술만 있다면 전 세계를 대상으로 비즈니스를 시작할 수 있습니다. 이는 물리적 상점의 한계를 넘어 전 지구적 경제 생태계를 재편하는 엔진 역할을 합니다.</p>
+                    </div>
+                    <div class="limit-item" style="border-color: white;">
+                        <h4 style="color: white;">기술적: 개방형 표준의 승리</h4>
+                        <p>특정 기업의 독점 기술이 아닌, 전 세계가 합의한 **'표준'**이 승리한 드문 사례입니다. 이러한 개방성은 기술의 파편화를 막고 인류 공통의 기술적 자산을 쌓아가는 토대가 됩니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Interactive Web Tech Deep Report. <br>본 리포트는 현대 웹 표준을 준수하여 제작되었습니다.</p>
+    </footer>
+
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                body.removeAttribute('data-theme');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        });
+
+        // Scroll Logic
+        const progressBar = document.getElementById('progress-bar');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+
+            sections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8) {
+                    sec.classList.add('visible');
+                }
+            });
+        });
+
+        // Initial check for visible sections
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
