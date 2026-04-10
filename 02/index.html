@@ -52,27 +52,25 @@
         .timeline-line { position: absolute; left: 50%; width: 2px; height: 100%; background: rgba(62, 212, 190, 0.2); transform: translateX(-50%); }
         @media (max-width: 768px) { .timeline-line { left: 20px; transform: none; } }
 
-        #infographicModal {
+        /* 공통 모달 스타일 */
+        .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
             padding: 20px;
         }
-        #infographicModal.active {
+        .modal-overlay.active {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .modal-content {
+        .modal-container {
             position: relative;
             width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            max-width: 1000px;
             animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes modalPop {
@@ -81,10 +79,21 @@
         }
         .modal-image {
             max-width: 100%;
-            max-height: 100%;
+            max-height: 90vh;
             object-fit: contain;
             border-radius: 8px;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .video-wrapper video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
     </style>
 </head>
@@ -96,7 +105,6 @@
     <nav class="fixed top-0 w-full z-50 glass">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <!-- 홈 버튼 추가 -->
                 <a href="../index.html" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors group">
                     <i class="fas fa-home text-slate-500 group-hover:text-brand transition-colors"></i>
                     <span class="text-sm font-semibold">홈</span>
@@ -138,6 +146,11 @@
                     <i class="fas fa-file-pdf group-hover:rotate-12 transition-transform"></i>
                     슬라이드로 다운 받기
                 </a>
+                <!-- 영상보기 버튼 추가 -->
+                <button onclick="openVideoModal()" class="inline-flex items-center gap-3 px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 hover:scale-105 active:scale-95 transition-all group">
+                    <i class="fas fa-play-circle text-brand group-hover:scale-110 transition-transform"></i>
+                    영상보기
+                </button>
             </div>
         </div>
     </section>
@@ -369,12 +382,29 @@
     </section>
 
     <!-- Infographic Modal -->
-    <div id="infographicModal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button onclick="closeModal()" class="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-brand text-white rounded-full transition-all z-50">
+    <div id="infographicModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white hover:text-brand transition-colors">
                 <i class="fas fa-times text-2xl"></i>
             </button>
-            <img src="AI 04.png" alt="AI 역사 인포그래픽 전체보기" class="modal-image">
+            <div class="flex items-center justify-center">
+                <img src="AI 04.png" alt="AI 역사 인포그래픽" class="modal-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal-overlay" onclick="closeVideoModal()">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <button onclick="closeVideoModal()" class="absolute -top-12 right-0 text-white hover:text-brand transition-colors">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <div class="video-wrapper">
+                <video id="aiVideo" controls>
+                    <source src="./ai0404.mp4" type="video/mp4">
+                    브라우저가 동영상 재생을 지원하지 않습니다.
+                </video>
+            </div>
         </div>
     </div>
 
@@ -404,21 +434,38 @@
         modeSwitcher.addEventListener('click', () => { isDark = !isDark; updateUI(); });
         updateUI();
 
-        const modal = document.getElementById('infographicModal');
-        
+        // 인포그래픽 모달 로직
+        const infoModal = document.getElementById('infographicModal');
         function openModal() {
-            modal.classList.add('active');
+            infoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
-            modal.classList.remove('active');
+            infoModal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
+        // 비디오 모달 로직
+        const videoModal = document.getElementById('videoModal');
+        const videoElement = document.getElementById('aiVideo');
+        
+        function openVideoModal() {
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            videoElement.play(); // 열릴 때 자동 재생 시도
+        }
+
+        function closeVideoModal() {
+            videoModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            videoElement.pause(); // 닫힐 때 정지
+            videoElement.currentTime = 0; // 처음으로 되돌리기
+        }
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
+            if (e.key === 'Escape') {
                 closeModal();
+                closeVideoModal();
             }
         });
 
