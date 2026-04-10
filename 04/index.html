@@ -89,7 +89,8 @@
             width: fit-content;
             padding: 0.6rem 2rem;
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
+            gap: 1.2rem;
             background: var(--nav-bg);
             backdrop-filter: blur(20px);
             z-index: 1000;
@@ -106,11 +107,135 @@
             transition: all 0.3s ease;
             padding: 5px 12px;
             border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         nav a:hover {
             color: var(--emerald-blue);
             background: rgba(64, 224, 208, 0.1);
+        }
+
+        .home-link {
+            border-right: 1px solid rgba(0,0,0,0.1);
+            padding-right: 1.2rem;
+            border-radius: 0;
+        }
+        [data-theme="dark"] .home-link {
+            border-right-color: rgba(255,255,255,0.1);
+        }
+
+        /* Header Action Buttons */
+        .header-action-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 2rem;
+            animation: fadeInDown 1.2s ease;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--emerald-blue);
+            color: var(--emerald-blue);
+        }
+
+        .action-btn.primary { background: var(--emerald-blue); color: white; border: none; }
+        .action-btn.secondary { background: var(--primary-yellow); color: #854d0e; border: none; }
+
+        .action-btn.primary:hover { color: white; filter: brightness(1.05); }
+        .action-btn.secondary:hover { color: #854d0e; filter: brightness(1.05); }
+
+        /* Modal / Popup Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 95%;
+            max-height: 90%;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 24px;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -55px;
+            right: 0;
+            background: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--primary-yellow);
         }
 
         /* Theme Toggle */
@@ -135,7 +260,7 @@
 
         /* Hero Section */
         header {
-            height: 55vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -143,6 +268,7 @@
             text-align: center;
             background: radial-gradient(circle at center, rgba(64, 224, 208, 0.1) 0%, transparent 70%);
             position: relative;
+            padding: 100px 20px;
         }
 
         header h1 {
@@ -188,7 +314,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: var(--emerald-blue);
         }
 
@@ -308,10 +434,16 @@
         }
 
         @media (max-width: 768px) {
-            nav { width: 95%; gap: 0.3rem; padding: 0.5rem; font-size: 0.7rem; }
+            nav { width: 95%; gap: 0.2rem; padding: 0.5rem; font-size: 0.65rem; }
+            nav a { padding: 4px 8px; }
+            .home-link { padding-right: 0.5rem; }
             .glass-card { padding: 1.5rem; }
             body { cursor: auto; }
             #cursor { display: none; }
+            .header-action-btns { flex-direction: column; width: 80%; }
+            .action-btn { width: 100%; justify-content: center; }
+            .modal-content { max-width: 95%; padding: 10px; }
+            .modal-close { top: -50px; right: 5px; }
         }
     </style>
 </head>
@@ -320,7 +452,20 @@
     <div id="cursor"></div>
     <div id="progress-container"><div id="progress-bar"></div></div>
 
+    <!-- 이미지 모달 오버레이 -->
+    <div class="modal-overlay" id="image-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close-btn" title="닫기"><i data-lucide="x"></i></button>
+            <img src="web01.png" alt="[웹 개발의 3총사 인포그래픽]" id="modal-img" onerror="this.alt='이미지를 불러올 수 없습니다 (web01.png)'">
+            <div style="margin-top: 15px; text-align: center;">
+                <p style="font-weight: 800; font-size: 1.1rem; color: var(--emerald-blue);">웹 개발의 3총사: HTML, CSS, JavaScript</p>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">바깥 영역을 클릭하면 닫힙니다.</p>
+            </div>
+        </div>
+    </div>
+
     <nav>
+        <a href="../index.html" class="home-link"><i data-lucide="home" style="width: 16px; height: 16px;"></i> 홈</a>
         <a href="#definition">정의</a>
         <a href="#history">역사</a>
         <a href="#examples">예시</a>
@@ -338,6 +483,13 @@
             단순한 정보 전달을 넘어 지능형 플랫폼으로 진화한 웹의 본질을 탐구합니다.<br>
             역사와 한계, 그리고 미래의 가치까지 아우르는 기술 리포트입니다.
         </p>
+        
+        <div class="header-action-btns">
+            <button class="action-btn primary" id="btn-infographic"><i data-lucide="bar-chart-3" style="width:18px;"></i> 인포그래픽 보기</button>
+            <!-- web02.pdf 다운로드 링크 설정 -->
+            <a href="web02.pdf" download="웹기술리포트_슬라이드.pdf" class="action-btn secondary"><i data-lucide="download" style="width:18px;"></i> 슬라이드 다운 받기</a>
+            <a href="#" class="action-btn"><i data-lucide="play-circle" style="width:18px;"></i> 영상 보러 가기</a>
+        </div>
     </header>
 
     <div class="container">
@@ -367,7 +519,7 @@
             </div>
         </section>
 
-        <!-- 02. 역사 섹션 (상세 보강) -->
+        <!-- 02. 역사 섹션 -->
         <section id="history">
             <div class="glass-card">
                 <div class="section-title">
@@ -407,7 +559,6 @@
                     <i data-lucide="monitor-play"></i>
                     <h2>03. 최신 기술 적용 사례</h2>
                 </div>
-                
                 <div class="example-card">
                     <div class="example-icon"><i data-lucide="database"></i></div>
                     <div>
@@ -432,7 +583,7 @@
             </div>
         </section>
 
-        <!-- 04. 한계 섹션 (상세 보강) -->
+        <!-- 04. 한계 섹션 -->
         <section id="limits">
             <div class="glass-card" style="border-top: 6px solid #ff4757;">
                 <div class="section-title" style="color: #ff4757;">
@@ -440,7 +591,6 @@
                     <h2>04. 기술적 임계점과 해결 과제</h2>
                 </div>
                 <p>웹 기술이 비약적으로 발전했음에도 불구하고, 여전히 극복해야 할 구조적 한계들이 존재합니다.</p>
-                
                 <div class="limit-list">
                     <div class="limit-item">
                         <h4>보안의 취약성 (Security Vulnerability)</h4>
@@ -458,7 +608,7 @@
             </div>
         </section>
 
-        <!-- 05. 의의 섹션 (상세 보강) -->
+        <!-- 05. 의의 섹션 -->
         <section id="significance">
             <div class="glass-card" style="background: linear-gradient(135deg, var(--emerald-blue), var(--accent)); color: white;">
                 <div class="section-title" style="color: white;">
@@ -488,17 +638,37 @@
     </footer>
 
     <script>
-        // Init Lucide Icons
+        // 루시드 아이콘 초기화
         lucide.createIcons();
 
-        // Custom Cursor
+        // 모달 관련 로직
+        const modal = document.getElementById('image-modal');
+        const infoBtn = document.getElementById('btn-infographic');
+        const closeBtn = document.getElementById('modal-close-btn');
+
+        infoBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // 커스텀 커서 효과
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Theme Toggle
+        // 테마 토글 로직
         const themeBtn = document.getElementById('theme-btn');
         const themeIcon = document.getElementById('theme-icon');
         const body = document.body;
@@ -515,7 +685,7 @@
             lucide.createIcons();
         });
 
-        // Scroll Logic
+        // 스크롤 로직
         const progressBar = document.getElementById('progress-bar');
         const sections = document.querySelectorAll('section');
 
@@ -533,7 +703,6 @@
             });
         });
 
-        // Initial check for visible sections
         window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
