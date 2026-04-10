@@ -7,23 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!--
-    Palette: Vibrant Neon Blue & Coral (Deep Blue #1e3a8a, Coral Red #ef4444, Amber #f59e0b, Cyan #06b6d4)
-    Plan Summary: 
-    1. Navigation - Added a Home button linking to ../index.html.
-    2. Header (Hook & Title) - Introduces the severity of the demographic shift.
-    3. KPI Cards - Highlights the "Dead Cross" with absolute population and elderly milestone figures.
-    4. Line Chart - Visualizes the 5-year steady increase in the overall aging rate.
-    5. Bar Chart - Compares the 2024 aging rate across all 16 districts to pinpoint extreme areas.
-    6. Horizontal Bar Chart - Ranks the 5-year aging speed by district.
-    7. Policy Recommendations - Actionable insights formatted as visually distinct cards.
-    Visualization Choices:
-    - Data: Overall Aging Trend -> Goal: Change -> Type: Chart.js Line Chart -> Justification: Best for showing continuous temporal trends (Canvas, NO SVG).
-    - Data: 2024 District Aging % -> Goal: Compare/Organize -> Type: Chart.js Bar Chart -> Justification: Clearly compares values and highlights outliers like Yeongdo-gu (Canvas, NO SVG).
-    - Data: 5-year Aging Speed -> Goal: Compare/Organize -> Type: Chart.js Horizontal Bar Chart -> Justification: Ideal for ranking categories by growth rate (Canvas, NO SVG).
-    Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in the output.
-    -->
-
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         body {
@@ -59,6 +42,36 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
+        .story-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .story-button:hover {
+            background-color: #facc15;
+            color: #1e3a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+        }
+        .video-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .video-button:hover {
+            background-color: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* 비디오 모달 스타일 */
+        #videoModal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #videoModal.hidden {
+            opacity: 0;
+            visibility: hidden;
+            display: flex; /* 숨겨져 있어도 flex 유지 */
+        }
     </style>
 </head>
 <body class="antialiased pb-20">
@@ -70,8 +83,35 @@
         </a>
     </nav>
 
+    <!-- 비디오 모달 팝업 -->
+    <div id="videoModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl">
+            <button id="closeVideo" class="absolute top-4 right-4 z-10 text-white bg-black/50 hover:bg-red-500 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <span class="text-2xl">&times;</span>
+            </button>
+            <div class="aspect-video w-full">
+                <video id="mainVideo" class="w-full h-full" controls>
+                    <source src="./BusanBusan.mp4" type="video/mp4">
+                    브라우저가 비디오 태그를 지원하지 않습니다.
+                </video>
+            </div>
+        </div>
+    </div>
+
     <header class="bg-[#1e3a8a] text-white py-20 px-6 mb-10 shadow-lg relative overflow-hidden">
         <div class="max-w-6xl mx-auto relative z-10">
+            <!-- 우측 상단 버튼 그룹 -->
+            <div class="flex flex-wrap gap-3 mb-6">
+                <!-- 스토리북 보기 버튼 -->
+                <a href="https://gemini.google.com/share/94ddb1651b2f" target="_blank" class="story-button inline-flex items-center gap-2 bg-transparent border-2 border-[#facc15] text-[#facc15] px-5 py-2 rounded-full font-bold text-sm tracking-wide uppercase">
+                    <span>📖</span> 스토리북 보기
+                </a>
+                <!-- 영상보기 버튼 (모달 트리거) -->
+                <button id="openVideo" class="video-button inline-flex items-center gap-2 bg-transparent border-2 border-white text-white px-5 py-2 rounded-full font-bold text-sm tracking-wide uppercase">
+                    <span>🎬</span> 영상보기
+                </button>
+            </div>
+
             <div class="inline-block bg-[#ef4444] text-white text-sm font-bold px-3 py-1 rounded-full mb-4">
                 DATA REPORT 2020-2024
             </div>
@@ -191,6 +231,31 @@
     </footer>
 
     <script>
+        // 비디오 모달 제어
+        const videoModal = document.getElementById('videoModal');
+        const openVideoBtn = document.getElementById('openVideo');
+        const closeVideoBtn = document.getElementById('closeVideo');
+        const mainVideo = document.getElementById('mainVideo');
+
+        openVideoBtn.addEventListener('click', () => {
+            videoModal.classList.remove('hidden');
+            mainVideo.play();
+        });
+
+        const closeVideo = () => {
+            videoModal.classList.add('hidden');
+            mainVideo.pause();
+            mainVideo.currentTime = 0;
+        };
+
+        closeVideoBtn.addEventListener('click', closeVideo);
+        
+        // 모달 바깥쪽 클릭 시 닫기
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) closeVideo();
+        });
+
+        // 차트 관련 스크립트
         const wrapLabel = (label) => {
             if (label.length <= 16) return label;
             const words = label.split(' ');
