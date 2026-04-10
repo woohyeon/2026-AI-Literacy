@@ -95,13 +95,21 @@
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 glass">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center shadow-lg shadow-brand/20">
-                    <i class="fas fa-brain text-white text-xl"></i>
+            <div class="flex items-center gap-4">
+                <!-- 홈 버튼 추가 -->
+                <a href="../index.html" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors group">
+                    <i class="fas fa-home text-slate-500 group-hover:text-brand transition-colors"></i>
+                    <span class="text-sm font-semibold">홈</span>
+                </a>
+                <div class="h-4 w-[1px] bg-slate-300 dark:bg-slate-700"></div>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center shadow-lg shadow-brand/20">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tighter">AI.INSIGHT</span>
                 </div>
-                <span class="font-bold text-xl tracking-tighter">AI.INSIGHT</span>
             </div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+            <div class="hidden lg:flex items-center gap-8 text-sm font-medium">
                 <a href="#history" class="hover:text-brand transition-colors">역사</a>
                 <a href="#concept" class="hover:text-brand transition-colors">본질</a>
                 <a href="#tech" class="hover:text-brand transition-colors">기술</a>
@@ -149,7 +157,6 @@
             <div class="relative">
                 <div class="timeline-line"></div>
                 <div class="space-y-12">
-                    <!-- Timeline items remain the same -->
                     <div class="relative flex flex-col md:flex-row items-center md:justify-between reveal">
                         <div class="md:w-5/12 text-right hidden md:block">
                             <h3 class="text-2xl font-bold text-brand">1950s: 태동기</h3>
@@ -367,7 +374,6 @@
             <button onclick="closeModal()" class="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-brand text-white rounded-full transition-all z-50">
                 <i class="fas fa-times text-2xl"></i>
             </button>
-            <!-- 이미지 확장자를 png로 수정 -->
             <img src="AI 04.png" alt="AI 역사 인포그래픽 전체보기" class="modal-image">
         </div>
     </div>
