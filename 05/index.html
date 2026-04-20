@@ -112,12 +112,10 @@
 </head>
 <body class="transition-theme bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 overflow-x-hidden">
 
-    <!-- Navigation Bar -->
     <nav id="nav" class="fixed top-0 w-full z-50 transition-theme border-b border-transparent bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-10">
-                <!-- 홈 버튼: 내부 앵커 이동 및 스크롤 함수 호출로 복구 -->
-                <a href="#home" onclick="scrollToTop(event)" class="group flex items-center gap-2 font-black text-emeraldBlue hover:text-passionOrange transition-colors">
+                <a href="../index.html" class="group flex items-center gap-2 font-black text-emeraldBlue hover:text-passionOrange transition-colors">
                     <div class="p-2 rounded-lg bg-emeraldBlue/10 group-hover:bg-passionOrange/10 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                     </div>
@@ -139,14 +137,13 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 bg-slate-50 dark:bg-slate-950 relative overflow-hidden px-6">
+    <header class="min-h-screen flex items-center justify-center pt-24 pb-12 bg-slate-50 dark:bg-slate-950 relative overflow-hidden px-6">
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="flex justify-center mb-10 reveal">
                 <div class="profile-card animate-float shadow-2xl group" onclick="openModal('profile-modal')">
                     <div class="w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-slate-900 rounded-[1.5rem] overflow-hidden border-4 border-emeraldBlue/20 p-1">
                         <div class="w-full h-full rounded-[1.2rem] overflow-hidden bg-slate-200 dark:bg-slate-800 flex items-center justify-center relative">
-                            <img src="woo01.jpg" alt="김우현 프로필" class="w-full h-full object-cover z-10" onerror="this.style.display='none'">
+                            <img src="KakaoTalk_20260416_092039778.jpg" alt="김우현 프로필" class="w-full h-full object-cover z-10" onerror="this.style.display='none'">
                             <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                 <span class="text-[10px] font-bold mt-2 opacity-50 uppercase tracking-widest">Profile</span>
@@ -170,9 +167,6 @@
                 <p>
                     새로운 연결을 창조하는 <strong>김우현</strong>이 누구인지, 그리고 사회의 흐름을 분석하고 메시지의 가치를 탐구하는 <strong>미디어커뮤니케이션학과</strong>는 어떤 학문인지 깊이 있게 들여다봅니다.
                 </p>
-                <p>
-                    나아가, 이론적 통찰을 실천적 패기로 승화시키는 김우현과 미디어커뮤니케이션 사이의 <strong>필연적 동행과 시너지</strong>를 소개합니다.
-                </p>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
@@ -180,72 +174,33 @@
                     여정 시작하기
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
-                <a href="#major-intro" class="inline-flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-800 px-10 py-5 rounded-2xl font-bold text-xl hover-lift transition-all">
-                    전공 알아보기
-                </a>
             </div>
         </div>
-        
-        <div class="absolute top-[10%] right-[-5%] w-[400px] h-[400px] bg-emeraldBlue/5 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-[5%] left-[-5%] w-[400px] h-[400px] bg-passionOrange/5 rounded-full blur-[100px]"></div>
     </header>
 
-    <!-- Modal (Profile) -->
     <div id="profile-modal" class="custom-modal" onclick="closeModal('profile-modal')">
         <div class="relative max-w-lg w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
             <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('profile-modal')">
                 CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div class="rounded-[1.5rem] overflow-hidden aspect-square bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                <img src="woo01.jpg" alt="김우현 큰 이미지" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600?text=Image+Not+Found';">
+                <img src="KakaoTalk_20260416_092039778.jpg" alt="김우현 프로필" class="w-full h-full object-cover">
             </div>
             <div class="mt-6 text-center">
                 <h4 class="text-xl font-black text-emeraldBlue uppercase tracking-tighter italic">Kim Woohyeon</h4>
-                <p class="text-sm opacity-50 font-bold mt-1">Profile Master Shot</p>
+                <p class="text-sm opacity-50 font-bold mt-1">Profile View</p>
             </div>
         </div>
     </div>
 
-    <!-- Modal (Infographic) -->
-    <div id="infographic-modal" class="custom-modal" onclick="closeModal('infographic-modal')">
-        <div class="relative max-w-4xl w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
-            <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('infographic-modal')">
-                CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div class="rounded-[1.5rem] overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center max-h-[80vh]">
-                <img src="woo02.png" alt="김우현 인포그래픽" class="max-w-full h-auto object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x800?text=Infographic+Not+Found';">
-            </div>
-            <div class="mt-6 text-center">
-                <h4 class="text-xl font-black text-passionOrange uppercase tracking-tighter italic">Infographic Insight</h4>
-                <p class="text-sm opacity-50 font-bold mt-1">한눈에 보는 김우현의 가치</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- About Me Section -->
     <section id="about-me" class="py-32 px-6 reveal">
         <div class="max-w-6xl mx-auto">
-            <div class="flex flex-wrap justify-center gap-4 mb-20">
-                <button onclick="openModal('infographic-modal')" class="px-8 py-4 rounded-2xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white font-black text-lg border-2 border-transparent hover:border-passionOrange hover:text-passionOrange transition-all flex items-center gap-3 group">
-                    <span class="p-2 rounded-lg bg-passionOrange/10 group-hover:bg-passionOrange text-passionOrange group-hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 12v5"/><path d="M12 9v8"/><path d="M17 14v3"/></svg>
-                    </span>
-                    인포그래픽으로 김우현 보기
-                </button>
-                <button class="px-8 py-4 rounded-2xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white font-black text-lg border-2 border-transparent hover:border-emeraldBlue hover:text-emeraldBlue transition-all flex items-center gap-3 group">
-                    <span class="p-2 rounded-lg bg-emeraldBlue/10 group-hover:bg-emeraldBlue text-emeraldBlue group-hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg>
-                    </span>
-                    영상으로 김우현 보기
-                </button>
-            </div>
-
             <div class="flex flex-col md:flex-row gap-20 items-center">
                 <div class="flex-1">
                     <div class="relative group">
                         <div class="absolute -inset-4 bg-gradient-to-tr from-emeraldBlue to-passionOrange rounded-[3rem] opacity-20 blur-2xl group-hover:opacity-30 transition-opacity"></div>
                         <div class="relative w-full aspect-[4/5] bg-slate-100 dark:bg-slate-900 rounded-[2.5rem] overflow-hidden hover-lift shadow-2xl border border-slate-200 dark:border-slate-800 cursor-zoom-in" onclick="openModal('profile-modal')">
-                             <img src="woo01.jpg" alt="김우현" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" onerror="this.src='https://via.placeholder.com/800x1000?text=Profile+Image';">
+                             <img src="KakaoTalk_20260416_092039778.jpg" alt="김우현" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
                         </div>
                     </div>
                 </div>
@@ -254,116 +209,55 @@
                     <h2 class="text-5xl md:text-6xl font-black mb-8 leading-tight break-keep">끊임없이 확장하는<br>커뮤니케이터 김우현</h2>
                     <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed font-medium break-keep">
                         저는 미디어를 통해 사람과 사람 사이의 온도를 높이는 일을 합니다. 
-                        단순한 지식 습득에 그치지 않고, 사회의 흐름을 읽어내어 의미 있는 메시지를 창조하는 과정에 큰 기쁨을 느꼈습니다.
+                        진심이 닿는 메시지로 세상을 연결하는 진정성 있는 소통을 지향합니다.
                     </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-colors hover:border-emeraldBlue">
-                            <div class="text-4xl mb-4">🔥</div>
-                            <div class="font-black text-xl mb-2">패기 넘치는 도전</div>
-                            <p class="opacity-60 text-sm">한계에 굴하지 않고 새로운 미디어를 탐구합니다.</p>
-                        </div>
-                        <div class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-colors hover:border-passionOrange">
-                            <div class="text-4xl mb-4">🤝</div>
-                            <div class="font-black text-xl mb-2">진정성 있는 소통</div>
-                            <p class="opacity-60 text-sm">진심이 닿는 메시지로 세상을 연결합니다.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Major Section -->
     <section id="major-intro" class="bg-slate-50 dark:bg-slate-900/50 py-32 px-6 reveal">
         <div class="max-w-6xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-20">
                 <h3 class="text-emeraldBlue font-black tracking-widest text-lg mb-4 uppercase">02. My Major</h3>
                 <h2 class="text-5xl font-black mb-6">시대를 읽는 학문, <br>미디어커뮤니케이션</h2>
-                <p class="text-lg opacity-70 font-medium break-keep">우리는 단순히 기술을 배우는 것이 아니라, 세상의 목소리를 어떻게 담아내고 전달할 것인가를 고민합니다.</p>
             </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-emeraldBlue">
-                    <div class="w-16 h-16 bg-emeraldBlue/10 text-emeraldBlue rounded-2xl flex items-center justify-center mb-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4">Media Strategy</h4>
-                    <p class="opacity-60 leading-relaxed font-medium break-keep">변화하는 미디어 생태계를 분석하여 효과적인 커뮤니케이션 전략을 설계합니다.</p>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 shadow-xl">
+                    <h4 class="text-2xl font-black mb-4 text-emeraldBlue">Media Strategy</h4>
+                    <p class="opacity-60 font-medium">변화하는 미디어 생태계를 분석하고 전략을 설계합니다.</p>
                 </div>
-                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-passionOrange">
-                    <div class="w-16 h-16 bg-passionOrange/10 text-passionOrange rounded-2xl flex items-center justify-center mb-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19 9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4">Communication</h4>
-                    <p class="opacity-60 leading-relaxed font-medium break-keep">다양한 플랫폼을 넘나들며 메시지의 본질을 가장 진정성 있게 전달하는 법을 연구합니다.</p>
+                <div class="p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 shadow-xl">
+                    <h4 class="text-2xl font-black mb-4 text-passionOrange">Communication</h4>
+                    <p class="opacity-60 font-medium">메시지의 본질을 가장 진정성 있게 전달하는 법을 연구합니다.</p>
                 </div>
-                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-emeraldBlue">
-                    <div class="w-16 h-16 bg-emeraldBlue/10 text-emeraldBlue rounded-2xl flex items-center justify-center mb-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4">Ethics & Insight</h4>
-                    <p class="opacity-60 leading-relaxed font-medium break-keep">사회를 바라보는 날카로운 통찰력과 미디어 종사자로서의 윤리적 책임을 배웁니다.</p>
+                <div class="p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 shadow-xl">
+                    <h4 class="text-2xl font-black mb-4 text-emeraldBlue">Ethics</h4>
+                    <p class="opacity-60 font-medium">사회를 바라보는 통찰력과 윤리적 책임을 배웁니다.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Vision Section -->
-    <section id="me-and-major" class="py-32 px-6 reveal overflow-hidden">
+    <section id="me-and-major" class="py-32 px-6 reveal">
         <div class="max-w-6xl mx-auto">
-            <div class="relative bg-emeraldBlue rounded-[3.5rem] p-12 md:p-24 text-white overflow-hidden group shadow-2xl">
-                <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h3 class="text-passionOrange font-black tracking-[0.2em] text-sm mb-6 uppercase">03. Perfect Match</h3>
-                        <h2 class="text-5xl md:text-6xl font-black mb-8 leading-[1.2] break-keep">김우현의 패기,<br>전공을 만나다</h2>
-                        <p class="text-xl opacity-90 leading-relaxed font-medium mb-10 break-keep">
-                            미디어커뮤니케이션이라는 광활한 운동장에서 저는 누구보다 뜨겁게 뛰어놀 준비가 되어 있습니다. 
-                            이론으로 다져진 논리는 저의 패기에 날개를 달아주었습니다.
-                        </p>
-                        <div class="space-y-6">
-                            <div class="flex items-center gap-4 group/item transition-all hover:translate-x-2">
-                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover/item:bg-passionOrange transition-colors">✓</div>
-                                <span class="text-lg font-bold italic">미디어 전략 기획의 전문성 확보</span>
-                            </div>
-                            <div class="flex items-center gap-4 group/item transition-all hover:translate-x-2">
-                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover/item:bg-passionOrange transition-colors">✓</div>
-                                <span class="text-lg font-bold italic">커뮤니케이션 역량의 극대화</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="relative flex justify-center">
-                         <div class="w-64 h-64 md:w-80 md:h-80 border-2 border-white/30 rounded-full flex items-center justify-center p-8 backdrop-blur-md relative overflow-hidden group-hover:scale-105 transition-transform duration-700">
-                            <div class="text-center relative z-10">
-                                <div class="text-6xl font-black mb-2 animate-pulse tracking-tighter">100%</div>
-                                <div class="text-sm tracking-[0.3em] opacity-70 font-bold">SYNERGY RATE</div>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-tr from-passionOrange to-transparent opacity-30 animate-spin-slow"></div>
-                         </div>
-                    </div>
-                </div>
+            <div class="relative bg-emeraldBlue rounded-[3.5rem] p-12 md:p-24 text-white text-center shadow-2xl">
+                <h2 class="text-5xl md:text-6xl font-black mb-8 leading-[1.2] italic uppercase">Perfect Synergy</h2>
+                <p class="text-xl opacity-90 max-w-2xl mx-auto leading-relaxed">
+                    미디어커뮤니케이션이라는 광활한 운동장에서 김우현의 패기는 이론과 실전이 결합된 강력한 에너지가 됩니다.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="py-20 border-t border-slate-100 dark:border-slate-900 text-center px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-3xl font-black text-emeraldBlue mb-6 italic tracking-tighter uppercase">Woohyeon.</div>
-            <p class="text-slate-500 dark:text-slate-400 font-medium">&copy; 2024 Kim Woohyeon. All rights reserved.</p>
+            <p class="text-slate-500 dark:text-slate-400 font-medium">&copy; 2026 Kim Woohyeon. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // 최상단 이동 함수 (복구됨)
-        function scrollToTop(event) {
-            event.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            history.pushState("", document.title, window.location.pathname + window.location.search);
-        }
-
         // 모달 기능
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -377,35 +271,29 @@
         // 테마 설정
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
-        }
+        if (localStorage.getItem('theme') === 'dark') html.classList.add('dark');
 
         themeToggle.addEventListener('click', () => {
             html.classList.toggle('dark');
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
         });
 
-        // 네비게이션 효과
+        // 스크롤 효과
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('nav');
             if (window.scrollY > 50) {
-                nav.classList.add('bg-white/90', 'dark:bg-slate-950/90', 'shadow-xl', 'border-slate-200', 'dark:border-slate-800');
+                nav.classList.add('bg-white/90', 'dark:bg-slate-950/90', 'shadow-xl');
             } else {
-                nav.classList.remove('bg-white/90', 'dark:bg-slate-950/90', 'shadow-xl', 'border-slate-200', 'dark:border-slate-800');
+                nav.classList.remove('bg-white/90', 'dark:bg-slate-950/90', 'shadow-xl');
             }
         });
 
         // 등장 애니메이션
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                if (elementTop < window.innerHeight - 100) {
-                    element.classList.add("active");
+            reveals.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                    el.classList.add("active");
                 }
             });
         }
