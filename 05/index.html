@@ -25,11 +25,16 @@
                     animation: {
                         'spin-slow': 'spin 8s linear infinite',
                         'float': 'floating 3s ease-in-out infinite',
+                        'pulse-gentle': 'pulse-gentle 2s ease-in-out infinite',
                     },
                     keyframes: {
                         floating: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        'pulse-gentle': {
+                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(0.98)' },
                         }
                     }
                 }
@@ -126,7 +131,6 @@
             border-radius: 50%;
         }
 
-        /* 탭 스타일 */
         .tab-btn.active {
             background-color: #0077B6;
             color: white;
@@ -143,6 +147,15 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* 통계 바 애니메이션 */
+        .stat-bar-fill {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        .reveal.active .stat-bar-fill {
+            width: var(--target-width);
+        }
     </style>
 </head>
 <body class="transition-theme bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 overflow-x-hidden">
@@ -151,7 +164,6 @@
     <nav id="nav" class="fixed top-0 w-full z-50 transition-theme border-b border-transparent bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-10">
-                <!-- 수정된 부분: 홈 버튼 링크를 ../index.html로 변경 -->
                 <a href="../index.html" class="group flex items-center gap-2 font-black text-emeraldBlue hover:text-passionOrange transition-colors">
                     <div class="p-2 rounded-lg bg-emeraldBlue/10 group-hover:bg-passionOrange/10 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -225,19 +237,16 @@
         <div class="absolute bottom-[5%] left-[-5%] w-[400px] h-[400px] bg-passionOrange/5 rounded-full blur-[100px]"></div>
     </header>
 
-    <!-- About Me Section (Highly Interactive) -->
+    <!-- About Me Section -->
     <section id="about-me" class="py-32 px-6 bg-white dark:bg-slate-950 overflow-hidden">
         <div class="max-w-6xl mx-auto">
-            <!-- Header -->
             <div class="text-center mb-20 reveal">
                 <h3 class="text-passionOrange font-black tracking-[0.2em] text-lg mb-4 uppercase">01. Who is He?</h3>
                 <h2 class="text-5xl md:text-6xl font-black mb-6 leading-tight break-keep">전설의 시작, <br><span class="text-emeraldBlue">김우현</span>의 스토리</h2>
                 <p class="text-xl opacity-60 font-medium">Born in Busan, 2004. 10. 15</p>
             </div>
 
-            <!-- Content Grid -->
             <div class="grid lg:grid-cols-12 gap-12 items-start">
-                <!-- Left: Interactive Profile Selector -->
                 <div class="lg:col-span-5 space-y-6 reveal">
                     <div class="relative group mb-8">
                         <div class="absolute -inset-4 bg-gradient-to-tr from-emeraldBlue to-passionOrange rounded-[3rem] opacity-20 blur-2xl"></div>
@@ -250,7 +259,6 @@
                         </div>
                     </div>
 
-                    <!-- Interactive Tabs -->
                     <div class="flex flex-col gap-3">
                         <button onclick="switchTab('tab-profile')" class="tab-btn active w-full flex items-center justify-between px-6 py-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 font-bold transition-all hover:bg-slate-50 dark:hover:bg-slate-900">
                             <span>기본 프로필</span>
@@ -267,9 +275,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Content Display Area -->
                 <div class="lg:col-span-7 reveal">
-                    <!-- Tab 1: Profile -->
                     <div id="tab-profile" class="tab-content active space-y-8">
                         <div class="bg-slate-50 dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800">
                             <h4 class="text-3xl font-black mb-6 flex items-center gap-3">
@@ -299,7 +305,6 @@
                         </div>
                     </div>
 
-                    <!-- Tab 2: Passion (Baseball & Movies) -->
                     <div id="tab-passion" class="tab-content space-y-8">
                         <div class="grid sm:grid-cols-2 gap-6">
                             <div class="bg-passionOrange/5 p-8 rounded-[2rem] border border-passionOrange/10">
@@ -328,7 +333,6 @@
                         </div>
                     </div>
 
-                    <!-- Tab 3: History (Leadership) -->
                     <div id="tab-history" class="tab-content space-y-8">
                         <div class="space-y-4">
                             <div class="timeline-item">
@@ -365,68 +369,122 @@
         </div>
     </section>
 
-    <!-- Modal (Profile) -->
-    <div id="profile-modal" class="custom-modal" onclick="closeModal('profile-modal')">
-        <div class="relative max-w-lg w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
-            <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('profile-modal')">
-                CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div class="rounded-[1.5rem] overflow-hidden aspect-square bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                <img src="woo01.jpg" alt="김우현 큰 이미지" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600?text=Image+Not+Found';">
-            </div>
-            <div class="mt-6 text-center">
-                <h4 class="text-xl font-black text-emeraldBlue uppercase tracking-tighter italic">Kim Woohyeon</h4>
-                <p class="text-sm opacity-50 font-bold mt-1">The Future Media Leader</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal (Infographic) -->
-    <div id="infographic-modal" class="custom-modal" onclick="closeModal('infographic-modal')">
-        <div class="relative max-w-4xl w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
-            <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('infographic-modal')">
-                CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div class="rounded-[1.5rem] overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center max-h-[80vh]">
-                <img src="woo02.png" alt="김우현 인포그래픽" class="max-w-full h-auto object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x800?text=Infographic+Not+Found';">
-            </div>
-            <div class="mt-6 text-center">
-                <h4 class="text-xl font-black text-passionOrange uppercase tracking-tighter italic">Infographic Insight</h4>
-                <p class="text-sm opacity-50 font-bold mt-1">데이터로 보는 김우현의 비전</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Major Section -->
-    <section id="major-intro" class="bg-slate-50 dark:bg-slate-900/50 py-32 px-6 reveal">
+    <!-- [수정된 전공 소개 섹션] Major Intro Section -->
+    <section id="major-intro" class="bg-slate-50 dark:bg-slate-900/50 py-32 px-6">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <h3 class="text-emeraldBlue font-black tracking-widest text-lg mb-4 uppercase">02. My Major</h3>
-                <h2 class="text-5xl font-black mb-6">시대를 읽는 학문, <br>미디어커뮤니케이션</h2>
-                <p class="text-lg opacity-70 font-medium break-keep">우리는 단순히 기술을 배우는 것이 아니라, 세상의 목소리를 어떻게 담아내고 전달할 것인가를 고민합니다.</p>
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <h3 class="text-emeraldBlue font-black tracking-widest text-lg mb-4 uppercase">02. Major Insight</h3>
+                <h2 class="text-5xl font-black mb-6">융합공학으로 진화하는<br>미디어커뮤니케이션</h2>
+                <p class="text-lg opacity-70 font-medium break-keep">
+                    과거의 언론정보학을 넘어 ICT, AI, UX 디자인이 결합된 **융합공학적 패러다임**으로 시대를 선도합니다.
+                </p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-emeraldBlue">
+            <!-- 3C's Core Competencies -->
+            <div class="grid md:grid-cols-3 gap-8 mb-24">
+                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-emeraldBlue reveal">
                     <div class="w-16 h-16 bg-emeraldBlue/10 text-emeraldBlue rounded-2xl flex items-center justify-center mb-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <h4 class="text-2xl font-black mb-4">Media Strategy</h4>
-                    <p class="opacity-60 leading-relaxed font-medium break-keep">변화하는 미디어 생태계를 분석하여 효과적인 커뮤니케이션 전략을 설계합니다.</p>
+                    <h4 class="text-2xl font-black mb-4">Convergent</h4>
+                    <p class="text-sm font-bold text-emeraldBlue mb-3 uppercase">융합 전문 인재</p>
+                    <p class="opacity-60 leading-relaxed font-medium break-keep italic">"정보통신 기술을 실무에 결합하여 복잡한 미디어 환경 내 문제를 다각도로 분석하고 해결하는 능력"</p>
                 </div>
-                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-passionOrange">
+                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-passionOrange reveal">
                     <div class="w-16 h-16 bg-passionOrange/10 text-passionOrange rounded-2xl flex items-center justify-center mb-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19 9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="M2 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="M12 22v-4"/><path d="m19.07 19.07-2.83-2.83"/><path d="M22 12h-4"/><path d="m19.07 4.93-2.83 2.83"/></svg>
                     </div>
-                    <h4 class="text-2xl font-black mb-4">Communication</h4>
-                    <p class="opacity-60 leading-relaxed font-medium break-keep">다양한 플랫폼을 넘나들며 메시지의 본질을 가장 진정성 있게 전달하는 법을 연구합니다.</p>
+                    <h4 class="text-2xl font-black mb-4">Creative</h4>
+                    <p class="text-sm font-bold text-passionOrange mb-3 uppercase">창의 전문 인재</p>
+                    <p class="opacity-60 leading-relaxed font-medium break-keep italic">"인문학적 소양을 바탕으로 비판적 사고와 디지털 스토리텔링 능력을 갖춘 기획 제작 역량"</p>
                 </div>
-                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-emeraldBlue">
+                <div class="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-950 hover-lift shadow-xl border border-slate-100 dark:border-slate-800 transition-all hover:border-emeraldBlue reveal">
                     <div class="w-16 h-16 bg-emeraldBlue/10 text-emeraldBlue rounded-2xl flex items-center justify-center mb-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg>
                     </div>
-                    <h4 class="text-2xl font-black mb-4">Ethics & Insight</h4>
-                    <p class="opacity-60 leading-relaxed font-medium break-keep">사회를 바라보는 날카로운 통찰력과 미디어 종사자로서의 윤리적 책임을 배웁니다.</p>
+                    <h4 class="text-2xl font-black mb-4">Communicative</h4>
+                    <p class="text-sm font-bold text-emeraldBlue mb-3 uppercase">소통 전문 인재</p>
+                    <p class="opacity-60 leading-relaxed font-medium break-keep italic">"협업 능력을 기반으로 건전한 미디어 생태계를 조성하는 클린 미디어 운동 선도 능력"</p>
+                </div>
+            </div>
+
+            <!-- Employment Data Section -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                <div class="space-y-8">
+                    <h4 class="text-3xl font-black italic">데이터로 증명되는 <br><span class="text-emeraldBlue">전공의 가치</span></h4>
+                    <p class="text-lg opacity-70 break-keep font-medium">
+                        산업체와 연계된 <strong>산학협력형 교육 과정</strong>은 이론 중심 교육보다 압도적으로 높은 취업 성과를 보여줍니다.
+                    </p>
+                    
+                    <!-- Stat Bars -->
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between font-bold mb-2 text-sm uppercase tracking-widest">
+                                <span>전국 주요 대학 평균 취업률</span>
+                                <span class="text-emeraldBlue">65.2%</span>
+                            </div>
+                            <div class="h-3 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="stat-bar-fill h-full bg-slate-400" style="--target-width: 65.2%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between font-bold mb-2 text-sm uppercase tracking-widest">
+                                <span>성균관대 미커과 취업률</span>
+                                <span class="text-emeraldBlue">81.8%</span>
+                            </div>
+                            <div class="h-3 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="stat-bar-fill h-full bg-emeraldBlue" style="--target-width: 81.8%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between font-bold mb-2 text-sm uppercase tracking-widest">
+                                <span>산학형 대학(건국대 등) 평균</span>
+                                <span class="text-passionOrange">87.5% +</span>
+                            </div>
+                            <div class="h-3 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="stat-bar-fill h-full bg-passionOrange" style="--target-width: 87.5%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-emeraldBlue/5 border-l-4 border-emeraldBlue rounded-r-2xl">
+                        <div class="font-black text-emeraldBlue mb-1">Expert's Insight</div>
+                        <p class="text-sm opacity-70 italic font-medium break-keep">"기술을 도구로 활용해 고부가가치 콘텐츠를 창출하는 하이브리드 인재만이 미래 미디어 시장의 주역이 됩니다."</p>
+                    </div>
+                </div>
+
+                <!-- Market Data Card -->
+                <div class="bg-white dark:bg-slate-950 p-10 rounded-[3rem] shadow-2xl border border-slate-100 dark:border-slate-800 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <h5 class="text-xl font-black mb-8 border-b border-slate-100 dark:border-slate-800 pb-4">노동 시장 통계 (2022-2024)</h5>
+                        <ul class="space-y-6">
+                            <li class="flex items-start gap-4">
+                                <span class="w-10 h-10 rounded-full bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center shrink-0 font-bold italic">1</span>
+                                <div>
+                                    <div class="font-bold">평균 연봉 데이터</div>
+                                    <p class="text-sm opacity-60">연 평균 약 5,659만 원 (잡코리아 추정치)</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="w-10 h-10 rounded-full bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center shrink-0 font-bold italic">2</span>
+                                <div>
+                                    <div class="font-bold">가장 선호되는 직무</div>
+                                    <p class="text-sm opacity-60">PR 전문가, SNS 콘텐츠 기획자, 마케터 (산업 수요 급증)</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="w-10 h-10 rounded-full bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center shrink-0 font-bold italic">3</span>
+                                <div>
+                                    <div class="font-bold">필수 보유 역량 (Tools)</div>
+                                    <p class="text-sm opacity-60">Adobe Creative, UX 디자인, 데이터 분석(ADsP)</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -477,8 +535,38 @@
         </div>
     </footer>
 
+    <!-- Modals -->
+    <div id="profile-modal" class="custom-modal" onclick="closeModal('profile-modal')">
+        <div class="relative max-w-lg w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
+            <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('profile-modal')">
+                CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="rounded-[1.5rem] overflow-hidden aspect-square bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                <img src="woo01.jpg" alt="김우현 큰 이미지" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600?text=Image+Not+Found';">
+            </div>
+            <div class="mt-6 text-center">
+                <h4 class="text-xl font-black text-emeraldBlue uppercase tracking-tighter italic">Kim Woohyeon</h4>
+                <p class="text-sm opacity-50 font-bold mt-1">The Future Media Leader</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="infographic-modal" class="custom-modal" onclick="closeModal('infographic-modal')">
+        <div class="relative max-w-4xl w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
+            <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('infographic-modal')">
+                CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="rounded-[1.5rem] overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center max-h-[80vh]">
+                <img src="woo02.png" alt="김우현 인포그래픽" class="max-w-full h-auto object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x800?text=Infographic+Not+Found';">
+            </div>
+            <div class="mt-6 text-center">
+                <h4 class="text-xl font-black text-passionOrange uppercase tracking-tighter italic">Infographic Insight</h4>
+                <p class="text-sm opacity-50 font-bold mt-1">데이터로 보는 김우현의 비전</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // 모달 기능
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden'; 
@@ -488,31 +576,18 @@
             document.body.style.overflow = 'auto'; 
         }
 
-        // 탭 전환 기능
         function switchTab(tabId) {
-            // 모든 탭 버튼 비활성화
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            // 선택된 버튼 활성화
+            document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('active'); });
             event.currentTarget.classList.add('active');
-
-            // 모든 탭 컨텐츠 숨기기
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            // 선택된 컨텐츠 보이기
+            document.querySelectorAll('.tab-content').forEach(content => { content.classList.remove('active'); });
             document.getElementById(tabId).classList.add('active');
         }
 
-        // 테마 설정
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
         }
 
         themeToggle.addEventListener('click', () => {
@@ -520,7 +595,6 @@
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
         });
 
-        // 네비게이션 효과
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('nav');
             if (window.scrollY > 50) {
@@ -530,12 +604,11 @@
             }
         });
 
-        // 등장 애니메이션
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
-                if (elementTop < window.innerHeight - 100) {
+                if (elementTop < window.innerHeight - 50) {
                     element.classList.add("active");
                 }
             });
