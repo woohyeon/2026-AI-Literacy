@@ -118,7 +118,8 @@
     <nav id="nav" class="fixed top-0 w-full z-50 transition-theme border-b border-transparent bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-10">
-                <a href="#" class="group flex items-center gap-2 font-black text-emeraldBlue hover:text-passionOrange transition-colors">
+                <!-- 홈 버튼 수정: scrollToTop 함수 호출 및 href="#home" 설정 -->
+                <a href="#home" onclick="scrollToTop(event)" class="group flex items-center gap-2 font-black text-emeraldBlue hover:text-passionOrange transition-colors">
                     <div class="p-2 rounded-lg bg-emeraldBlue/10 group-hover:bg-passionOrange/10 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                     </div>
@@ -140,8 +141,8 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="min-h-screen flex items-center justify-center pt-24 pb-12 bg-slate-50 dark:bg-slate-950 relative overflow-hidden px-6">
+    <!-- Hero Section: id="home" 추가 -->
+    <header id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 bg-slate-50 dark:bg-slate-950 relative overflow-hidden px-6">
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="flex justify-center mb-10 reveal">
                 <!-- 사각형 프로필 박스 -->
@@ -357,7 +358,18 @@
     </footer>
 
     <script>
-        // 모달 기능 (ID를 매개변수로 받아 범용성 있게 수정)
+        // 최상단 이동 함수
+        function scrollToTop(event) {
+            event.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            // URL 해시 제거
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
+
+        // 모달 기능
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden'; 
