@@ -13,9 +13,9 @@
                 extend: {
                     colors: {
                         emeraldBlue: {
-                            DEFAULT: '#0077B6', 
-                            light: '#00B4D8',
-                            dark: '#023E8A',
+                            DEFAULT: '#00AFFA', 
+                            light: '#33BFFF',
+                            dark: '#008CCC',
                         },
                         passionOrange: {
                             DEFAULT: '#FB8500', 
@@ -67,7 +67,7 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
-            background: #0077B6;
+            background: #00AFFA;
             border-radius: 10px;
         }
 
@@ -80,7 +80,7 @@
             content: 'VIEW PHOTO';
             position: absolute;
             inset: 0;
-            background: rgba(0, 119, 182, 0.8);
+            background: rgba(0, 175, 250, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -113,7 +113,7 @@
         .timeline-item {
             position: relative;
             padding-left: 2rem;
-            border-left: 2px solid #0077B6;
+            border-left: 2px solid #00AFFA;
             padding-bottom: 2rem;
         }
         .timeline-item::before {
@@ -128,9 +128,9 @@
         }
 
         .tab-btn.active {
-            background-color: #0077B6;
+            background-color: #00AFFA;
             color: white;
-            border-color: #0077B6;
+            border-color: #00AFFA;
         }
         .tab-content {
             display: none;
@@ -145,7 +145,7 @@
         }
 
         .progress-bar-container { height: 12px; background: #e2e8f0; border-radius: 6px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(0,0,0,0.05); }
-        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #0077B6, #00B4D8); width: 0; transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #00AFFA, #33BFFF); width: 0; transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .active .progress-bar-fill { width: var(--fill); }
 
         .stat-card:hover .stat-value { transform: scale(1.1); transition: transform 0.3s ease; }
@@ -160,7 +160,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* [Interactive Enhancements for Major Section] */
         .card-flip {
             perspective: 1000px;
             height: 220px;
@@ -196,22 +195,21 @@
             cursor: pointer;
         }
         .career-step.active {
-            background-color: #0077B6;
+            background-color: #00AFFA;
             color: white;
             transform: translateX(10px);
         }
         .career-step.active .icon-box {
             background-color: white;
-            color: #0077B6;
+            color: #00AFFA;
         }
 
-        /* 3C Model Highlight Effect */
         .c-card {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .c-card:hover {
-            box-shadow: 0 20px 40px -10px rgba(0, 119, 182, 0.3);
-            border-color: #0077B6;
+            box-shadow: 0 20px 40px -10px rgba(0, 175, 250, 0.3);
+            border-color: #00AFFA;
         }
     </style>
 </head>
@@ -243,7 +241,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section (절대 수정 금지) -->
+    <!-- Hero Section (절대 수정 금지 - 색상만 변경) -->
     <header id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 bg-slate-50 dark:bg-slate-950 relative overflow-hidden px-6">
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="flex justify-center mb-10 reveal">
@@ -291,7 +289,7 @@
         </div>
     </header>
 
-    <!-- About Me Section (절대 수정 금지) -->
+    <!-- About Me Section (절대 수정 금지 - 색상만 변경) -->
     <section id="about-me" class="py-32 px-6 bg-white dark:bg-slate-950 overflow-hidden">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-20 reveal">
@@ -423,7 +421,7 @@
         </div>
     </section>
 
-    <!-- [Major Intro Section] - INTERACTIVE VERSION (UPGRADED TALENT SECTION) -->
+    <!-- Major Intro Section (절대 수정 금지 - 색상만 변경) -->
     <section id="major-intro" class="bg-slate-100 dark:bg-slate-900/80 py-32 px-6 relative overflow-hidden transition-theme">
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-24 reveal">
@@ -437,7 +435,7 @@
                 </p>
             </div>
 
-            <!-- 1. 학문적 패러다임 (Interactive Flip Cards) -->
+            <!-- 1. 학문적 패러다임 -->
             <div class="grid lg:grid-cols-2 gap-12 mb-32 reveal">
                 <div class="card-flip">
                     <div class="card-inner">
@@ -484,7 +482,7 @@
                 </div>
             </div>
 
-            <!-- 2. 인재상: The 3C Model (UPGRADED INTERACTIVE) -->
+            <!-- 2. 인재상: The 3C Model -->
             <div class="mb-32 reveal">
                 <div class="text-center mb-16">
                     <span class="inline-block px-4 py-1 rounded-full bg-emeraldBlue/10 text-emeraldBlue font-bold text-xs uppercase tracking-widest mb-4">Talent Model</span>
@@ -493,7 +491,6 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Critical Thinking -->
                     <div class="c-card bg-white dark:bg-slate-950 p-10 rounded-[3rem] border-2 border-transparent shadow-xl relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-emeraldBlue/5 rounded-bl-[4rem] flex items-center justify-center">
                             <span class="text-4xl font-black text-emeraldBlue/20">C1</span>
@@ -511,7 +508,6 @@
                         </ul>
                     </div>
 
-                    <!-- Creative Content -->
                     <div class="c-card bg-white dark:bg-slate-950 p-10 rounded-[3rem] border-2 border-transparent shadow-xl relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-passionOrange/5 rounded-bl-[4rem] flex items-center justify-center">
                             <span class="text-4xl font-black text-passionOrange/20">C2</span>
@@ -529,7 +525,6 @@
                         </ul>
                     </div>
 
-                    <!-- Convergence Tech -->
                     <div class="c-card bg-white dark:bg-slate-950 p-10 rounded-[3rem] border-2 border-transparent shadow-xl relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-emeraldBlue/5 rounded-bl-[4rem] flex items-center justify-center">
                             <span class="text-4xl font-black text-emeraldBlue/20">C3</span>
@@ -549,7 +544,7 @@
                 </div>
             </div>
 
-            <!-- 3. 취업 로드맵 (Interactive Step Accordion) -->
+            <!-- 3. 취업 로드맵 -->
             <div class="mb-32 reveal">
                 <div class="bg-white dark:bg-slate-950 rounded-[3.5rem] shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row">
                     <div class="lg:w-1/3 bg-slate-50 dark:bg-slate-900/50 p-10 lg:p-16 border-r border-slate-200 dark:border-slate-800">
@@ -578,7 +573,6 @@
                     </div>
                     <div class="lg:w-2/3 p-10 lg:p-20 flex flex-col justify-center">
                         <div id="career-detail" class="space-y-8 animate-fadeIn">
-                            <!-- Dynamic Content Rendered Here -->
                             <div class="text-center py-10 opacity-30 italic">직군을 클릭하여 상세 정보를 확인하세요.</div>
                         </div>
                     </div>
@@ -641,7 +635,7 @@
         </div>
     </section>
 
-    <!-- Me and Major (절대 수정 금지) -->
+    <!-- Me and Major (절대 수정 금지 - 색상만 변경) -->
     <section id="me-and-major" class="py-32 px-6 reveal overflow-hidden">
         <div class="max-w-6xl mx-auto">
             <div class="relative bg-emeraldBlue rounded-[3.5rem] p-12 md:p-24 text-white overflow-hidden group shadow-2xl">
@@ -686,7 +680,7 @@
         </div>
     </footer>
 
-    <!-- Modals (절대 수정 금지) -->
+    <!-- Modals -->
     <div id="profile-modal" class="custom-modal" onclick="closeModal('profile-modal')">
         <div class="relative max-w-lg w-full bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-2xl" onclick="event.stopPropagation()">
             <button class="absolute -top-12 right-0 text-white font-bold flex items-center gap-2 hover:text-passionOrange transition-colors" onclick="closeModal('profile-modal')">
@@ -710,7 +704,6 @@
     </div>
 
     <script>
-        // Career Data for Interactive Section
         const careerData = [
             {
                 title: "방송 & 저널리즘",
@@ -770,7 +763,6 @@
             `;
         }
 
-        // Initialize first career step
         selectCareerStep(0);
 
         function openModal(modalId) {
@@ -783,13 +775,9 @@
         }
 
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
         }
 
