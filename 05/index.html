@@ -241,7 +241,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section (절대 수정 금지 - 색상만 변경) -->
+    <!-- Hero Section -->
     <header id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 bg-slate-50 dark:bg-slate-950 relative overflow-hidden px-6">
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="flex justify-center mb-10 reveal">
@@ -289,7 +289,7 @@
         </div>
     </header>
 
-    <!-- About Me Section (절대 수정 금지 - 색상만 변경) -->
+    <!-- About Me Section -->
     <section id="about-me" class="py-32 px-6 bg-white dark:bg-slate-950 overflow-hidden">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-20 reveal">
@@ -410,10 +410,16 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-center pt-8">
-                        <button onclick="openModal('infographic-modal')" class="px-10 py-5 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black text-xl hover-lift shadow-2xl flex items-center gap-4 group">
+                    <!-- Buttons Row -->
+                    <div class="flex flex-wrap justify-center gap-4 pt-8">
+                        <button onclick="openModal('infographic-modal')" class="px-8 py-4 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black text-lg hover-lift shadow-2xl flex items-center gap-4 group">
                             상세 인포그래픽 보기
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </button>
+                        <!-- New Video Button -->
+                        <button onclick="openModal('video-modal')" class="px-8 py-4 rounded-2xl bg-emeraldBlue text-white font-black text-lg hover-lift shadow-2xl shadow-emeraldBlue/20 flex items-center gap-4 group">
+                            영상으로 보기
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </button>
                     </div>
                 </div>
@@ -421,7 +427,7 @@
         </div>
     </section>
 
-    <!-- Major Intro Section (절대 수정 금지 - 색상만 변경) -->
+    <!-- Major Intro Section -->
     <section id="major-intro" class="bg-slate-100 dark:bg-slate-900/80 py-32 px-6 relative overflow-hidden transition-theme">
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-24 reveal">
@@ -435,7 +441,6 @@
                 </p>
             </div>
 
-            <!-- 1. 학문적 패러다임 -->
             <div class="grid lg:grid-cols-2 gap-12 mb-32 reveal">
                 <div class="card-flip">
                     <div class="card-inner">
@@ -482,7 +487,6 @@
                 </div>
             </div>
 
-            <!-- 2. 인재상: The 3C Model -->
             <div class="mb-32 reveal">
                 <div class="text-center mb-16">
                     <span class="inline-block px-4 py-1 rounded-full bg-emeraldBlue/10 text-emeraldBlue font-bold text-xs uppercase tracking-widest mb-4">Talent Model</span>
@@ -502,10 +506,6 @@
                         <p class="text-sm opacity-60 leading-relaxed mb-6 break-keep">
                             정보의 홍수 속에서 현상의 본질을 꿰뚫어보는 <strong>비판적 사고력</strong>입니다. 가짜 뉴스를 판별하고 사회적 의제를 설정하는 힘입니다.
                         </p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-xs font-bold opacity-80"><span class="w-1.5 h-1.5 bg-emeraldBlue rounded-full"></span> 팩트체크 및 검증</li>
-                            <li class="flex items-center gap-2 text-xs font-bold opacity-80"><span class="w-1.5 h-1.5 bg-emeraldBlue rounded-full"></span> 미디어 리터러시</li>
-                        </ul>
                     </div>
 
                     <div class="c-card bg-white dark:bg-slate-950 p-10 rounded-[3rem] border-2 border-transparent shadow-xl relative overflow-hidden group">
@@ -519,10 +519,6 @@
                         <p class="text-sm opacity-60 leading-relaxed mb-6 break-keep">
                             대중의 마음을 움직이는 <strong>독창적 콘텐츠 제작 능력</strong>입니다. 스토리텔링을 통해 메시지에 생명력을 불어넣는 창의성입니다.
                         </p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-xs font-bold opacity-80"><span class="w-1.5 h-1.5 bg-passionOrange rounded-full"></span> 뉴미디어 기획</li>
-                            <li class="flex items-center gap-2 text-xs font-bold opacity-80"><span class="w-1.5 h-1.5 bg-passionOrange rounded-full"></span> 비주얼 스토리텔링</li>
-                        </ul>
                     </div>
 
                     <div class="c-card bg-white dark:bg-slate-950 p-10 rounded-[3rem] border-2 border-transparent shadow-xl relative overflow-hidden group">
@@ -536,15 +532,10 @@
                         <p class="text-sm opacity-60 leading-relaxed mb-6 break-keep">
                             기술 변화에 유연하게 대응하는 <strong>융합적 기술 활용 능력</strong>입니다. AI, 데이터 분석 등 첨단 기술을 미디어에 접목하는 역량입니다.
                         </p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-xs font-bold opacity-80"><span class="w-1.5 h-1.5 bg-emeraldBlue rounded-full"></span> 데이터 분석 (Python/R)</li>
-                            <li class="flex items-center gap-2 text-xs font-bold opacity-80"><span class="w-1.5 h-1.5 bg-emeraldBlue rounded-full"></span> 알고리즘 및 UX 이해</li>
-                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. 취업 로드맵 -->
             <div class="mb-32 reveal">
                 <div class="bg-white dark:bg-slate-950 rounded-[3.5rem] shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row">
                     <div class="lg:w-1/3 bg-slate-50 dark:bg-slate-900/50 p-10 lg:p-16 border-r border-slate-200 dark:border-slate-800">
@@ -579,7 +570,6 @@
                 </div>
             </div>
 
-            <!-- 4. 실무 역량 인포그래픽 & 대시보드 -->
             <div class="reveal">
                 <div class="grid lg:grid-cols-2 gap-8 items-stretch">
                     <div class="bg-gradient-to-br from-emeraldBlue to-emeraldBlue-dark p-12 rounded-[3rem] text-white flex flex-col justify-between">
@@ -635,7 +625,7 @@
         </div>
     </section>
 
-    <!-- Me and Major (절대 수정 금지 - 색상만 변경) -->
+    <!-- Me and Major -->
     <section id="me-and-major" class="py-32 px-6 reveal overflow-hidden">
         <div class="max-w-6xl mx-auto">
             <div class="relative bg-emeraldBlue rounded-[3.5rem] p-12 md:p-24 text-white overflow-hidden group shadow-2xl">
@@ -703,6 +693,21 @@
         </div>
     </div>
 
+    <!-- New Video Modal -->
+    <div id="video-modal" class="custom-modal" onclick="closeVideoModal()">
+        <div class="relative max-w-4xl w-full bg-black rounded-[2rem] p-2 shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+            <button class="absolute top-4 right-4 z-20 text-white bg-black/50 hover:bg-passionOrange p-2 rounded-full transition-colors" onclick="closeVideoModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="rounded-[1.5rem] overflow-hidden bg-black flex items-center justify-center aspect-video">
+                <video id="main-video" controls class="w-full h-full">
+                    <source src="woo04.mp4" type="video/mp4">
+                    브라우저가 비디오 재생을 지원하지 않습니다.
+                </video>
+            </div>
+        </div>
+    </div>
+
     <script>
         const careerData = [
             {
@@ -737,30 +742,33 @@
 
         function selectCareerStep(index) {
             document.querySelectorAll('.career-step').forEach(s => s.classList.remove('active'));
-            document.getElementById(`step-${index}`).classList.add('active');
+            const stepEl = document.getElementById(`step-${index}`);
+            if (stepEl) stepEl.classList.add('active');
             
             const data = careerData[index];
             const container = document.getElementById('career-detail');
             
-            container.innerHTML = `
-                <div class="animate-fadeIn">
-                    <h5 class="text-passionOrange font-black tracking-widest text-sm mb-2 uppercase">${data.sub}</h5>
-                    <h4 class="text-4xl font-black mb-6">${data.title}</h4>
-                    <p class="text-lg opacity-70 mb-10 leading-relaxed break-keep">${data.desc}</p>
-                    <div class="grid sm:grid-cols-2 gap-8">
-                        <div>
-                            <div class="text-xs font-black opacity-30 uppercase tracking-widest mb-4">Core Skills</div>
-                            <div class="flex flex-wrap gap-2">
-                                ${data.skills.map(s => `<span class="px-3 py-1 bg-emeraldBlue/10 text-emeraldBlue rounded-full text-xs font-bold">${s}</span>`).join('')}
+            if (container) {
+                container.innerHTML = `
+                    <div class="animate-fadeIn">
+                        <h5 class="text-passionOrange font-black tracking-widest text-sm mb-2 uppercase">${data.sub}</h5>
+                        <h4 class="text-4xl font-black mb-6">${data.title}</h4>
+                        <p class="text-lg opacity-70 mb-10 leading-relaxed break-keep">${data.desc}</p>
+                        <div class="grid sm:grid-cols-2 gap-8">
+                            <div>
+                                <div class="text-xs font-black opacity-30 uppercase tracking-widest mb-4">Core Skills</div>
+                                <div class="flex flex-wrap gap-2">
+                                    ${data.skills.map(s => `<span class="px-3 py-1 bg-emeraldBlue/10 text-emeraldBlue rounded-full text-xs font-bold">${s}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-xs font-black opacity-30 uppercase tracking-widest mb-4">Vision Roadmap</div>
+                                <p class="text-sm font-bold opacity-80 break-keep">${data.roadmap}</p>
                             </div>
                         </div>
-                        <div>
-                            <div class="text-xs font-black opacity-30 uppercase tracking-widest mb-4">Vision Roadmap</div>
-                            <p class="text-sm font-bold opacity-80 break-keep">${data.roadmap}</p>
-                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            }
         }
 
         selectCareerStep(0);
@@ -768,10 +776,20 @@
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden'; 
+            if (modalId === 'video-modal') {
+                const video = document.getElementById('main-video');
+                video.currentTime = 0;
+                video.play();
+            }
         }
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
             document.body.style.overflow = 'auto'; 
+        }
+        function closeVideoModal() {
+            const video = document.getElementById('main-video');
+            video.pause();
+            closeModal('video-modal');
         }
 
         function switchTab(tabId) {
