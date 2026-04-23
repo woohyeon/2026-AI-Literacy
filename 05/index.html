@@ -277,7 +277,6 @@
                 </p>
             </div>
 
-            <!-- Buttons Section (Modified) -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
                 <a href="#about-me" class="inline-flex items-center justify-center gap-3 bg-emeraldBlue hover:bg-emeraldBlue-dark text-white px-10 py-5 rounded-2xl font-bold text-xl hover-lift shadow-xl shadow-emeraldBlue/20 transition-all">
                     여정 시작하기
@@ -416,13 +415,11 @@
                         </div>
                     </div>
 
-                    <!-- Buttons Row -->
                     <div class="flex flex-wrap justify-center gap-4 pt-8">
                         <button onclick="openModal('infographic-modal')" class="px-8 py-4 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black text-lg hover-lift shadow-2xl flex items-center gap-4 group">
                             상세 인포그래픽 보기
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                         </button>
-                        <!-- New Video Button -->
                         <button onclick="openModal('video-modal')" class="px-8 py-4 rounded-2xl bg-emeraldBlue text-white font-black text-lg hover-lift shadow-2xl shadow-emeraldBlue/20 flex items-center gap-4 group">
                             영상으로 보기
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -631,37 +628,120 @@
         </div>
     </section>
 
-    <!-- Me and Major -->
-    <section id="me-and-major" class="py-32 px-6 reveal overflow-hidden">
+    <!-- Me and Major Section (RECONSTRUCTED from Analysis Report) -->
+    <section id="me-and-major" class="py-32 px-6 bg-slate-50 dark:bg-slate-950 overflow-hidden">
         <div class="max-w-6xl mx-auto">
-            <div class="relative bg-emeraldBlue rounded-[3.5rem] p-12 md:p-24 text-white overflow-hidden group shadow-2xl">
-                <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h3 class="text-passionOrange font-black tracking-[0.2em] text-sm mb-6 uppercase">03. Perfect Match</h3>
-                        <h2 class="text-5xl md:text-6xl font-black mb-8 leading-[1.2] break-keep">김우현의 패기,<br>전공을 만나다</h2>
-                        <p class="text-xl opacity-90 leading-relaxed font-medium mb-10 break-keep">
-                            미디어커뮤니케이션이라는 광활한 운동장에서 저는 누구보다 뜨겁게 뛰어놀 준비가 되어 있습니다. 
-                            이론으로 다져진 논리는 저의 패기에 날개를 달아주었습니다.
-                        </p>
-                        <div class="space-y-6">
-                            <div class="flex items-center gap-4 group/item transition-all hover:translate-x-2">
-                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover/item:bg-passionOrange transition-colors">✓</div>
-                                <span class="text-lg font-bold italic">미디어 전략 기획의 전문성 확보</span>
+            <div class="text-center mb-20 reveal">
+                <h3 class="text-passionOrange font-black tracking-[0.2em] text-sm mb-4 uppercase">03. Future Vision</h3>
+                <h2 class="text-5xl md:text-6xl font-black mb-8 leading-tight break-keep">미래 미디어 생태계의 <br><span class="text-emeraldBlue">가치 설계자</span>, 김우현</h2>
+                <p class="text-xl opacity-70 max-w-3xl mx-auto break-keep">단순한 영상 제작자를 넘어, 기술에 인간의 온기를 불어넣는 <strong>'공적 설계자'</strong>로 성장하는 여정입니다.</p>
+            </div>
+
+            <!-- Analysis Cards: Connection -->
+            <div class="grid md:grid-cols-3 gap-8 mb-24">
+                <div class="reveal bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 hover-lift group">
+                    <div class="w-14 h-14 rounded-2xl bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center text-2xl mb-8 group-hover:bg-emeraldBlue group-hover:text-white transition-all">🤝</div>
+                    <h4 class="text-xl font-black mb-4 group-hover:text-emeraldBlue transition-colors">휴먼 커뮤니케이션</h4>
+                    <p class="text-sm opacity-60 leading-relaxed break-keep">
+                        개인적 경험을 타인의 행복을 위한 에너지로 승화시키는 능력. <strong>진정성 있는 소통</strong>을 통해 정서적 연결과 의미를 창출합니다.
+                    </p>
+                </div>
+                <div class="reveal bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 hover-lift group" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-passionOrange/10 text-passionOrange flex items-center justify-center text-2xl mb-8 group-hover:bg-passionOrange group-hover:text-white transition-all">📈</div>
+                    <h4 class="text-xl font-black mb-4 group-hover:text-passionOrange transition-colors">전략적 분석력</h4>
+                    <p class="text-sm opacity-60 leading-relaxed break-keep">
+                        스포츠 팬덤 경험을 통해 체득한 <strong>충성 수용자(Loyal Audience)</strong> 확보 원리. 미디어 경영과 광고 기획의 탄탄한 기초가 됩니다.
+                    </p>
+                </div>
+                <div class="reveal bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 hover-lift group" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center text-2xl mb-8 group-hover:bg-emeraldBlue group-hover:text-white transition-all">🔥</div>
+                    <h4 class="text-xl font-black mb-4 group-hover:text-emeraldBlue transition-colors">실전적 리더십</h4>
+                    <p class="text-sm opacity-60 leading-relaxed break-keep">
+                        방송부와 '작전명 청춘'의 기록들. 이론적 통찰을 실무로 전환하는 <strong>살아있는 포트폴리오</strong>이자 실행력의 증거입니다.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Deep Vision: Gradient Section -->
+            <div class="reveal relative bg-emeraldBlue rounded-[4rem] p-12 md:p-24 text-white overflow-hidden shadow-2xl mb-24">
+                <div class="absolute inset-0 bg-gradient-to-br from-emeraldBlue via-emeraldBlue-dark to-slate-900 opacity-90"></div>
+                <!-- Abstract BG Elements -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div>
+                
+                <div class="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="space-y-10">
+                        <div>
+                            <span class="inline-block px-4 py-1 rounded-full bg-white/20 text-white font-bold text-xs uppercase tracking-widest mb-6">Social Role</span>
+                            <h3 class="text-4xl md:text-5xl font-black mb-6 leading-tight break-keep">사회적 통제탑으로서의 <br>전공자적 지향점</h3>
+                        </div>
+                        <div class="space-y-8">
+                            <div class="flex gap-6 group">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center font-black text-xl group-hover:bg-passionOrange transition-colors">01</div>
+                                <div>
+                                    <h5 class="text-xl font-bold mb-2">윤리적 엔지니어링 마인드</h5>
+                                    <p class="opacity-70 text-sm leading-relaxed break-keep">콘텐츠의 재미를 넘어, 사회적 소수자와 약자에게 미칠 영향을 먼저 고민하는 '윤리적 민감성'을 견지합니다.</p>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-4 group/item transition-all hover:translate-x-2">
-                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover/item:bg-passionOrange transition-colors">✓</div>
-                                <span class="text-lg font-bold italic">커뮤니케이션 역량의 극대화</span>
+                            <div class="flex gap-6 group">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center font-black text-xl group-hover:bg-passionOrange transition-colors">02</div>
+                                <div>
+                                    <h5 class="text-xl font-bold mb-2">솔루션 지향적 크리에이터</h5>
+                                    <p class="opacity-70 text-sm leading-relaxed break-keep">사회 문제를 지적하는 것에 그치지 않고, 콘텐츠를 통해 실질적인 해결책을 제시하며 대중의 참여를 이끌어냅니다.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6 group">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center font-black text-xl group-hover:bg-passionOrange transition-colors">03</div>
+                                <div>
+                                    <h5 class="text-xl font-bold mb-2">문화적 가치 번역가</h5>
+                                    <p class="opacity-70 text-sm leading-relaxed break-keep">급격한 기술 트렌드를 따뜻한 '문화적 언어'로 번역하여 기술 소외 현상을 해결하는 가교 역할을 수행합니다.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="relative flex justify-center">
-                         <div class="w-64 h-64 md:w-80 md:h-80 border-2 border-white/30 rounded-full flex items-center justify-center p-8 backdrop-blur-md relative overflow-hidden group-hover:scale-105 transition-transform duration-700">
-                            <div class="text-center relative z-10">
-                                <div class="text-6xl font-black mb-2 animate-pulse tracking-tighter">100%</div>
-                                <div class="text-sm tracking-[0.3em] opacity-70 font-bold">SYNERGY RATE</div>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-tr from-passionOrange to-transparent opacity-30 animate-spin-slow"></div>
-                         </div>
+                    <div class="flex justify-center relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 border-2 border-white/30 rounded-full flex items-center justify-center p-8 backdrop-blur-md relative overflow-hidden group hover:scale-105 transition-transform duration-700">
+                           <div class="text-center relative z-10">
+                               <div class="text-6xl font-black mb-2 animate-pulse tracking-tighter">100%</div>
+                               <div class="text-sm tracking-[0.3em] opacity-70 font-bold uppercase">Value Matching</div>
+                           </div>
+                           <div class="absolute inset-0 bg-gradient-to-tr from-passionOrange to-transparent opacity-30 animate-spin-slow"></div>
+                        </div>
+                        <!-- Decorative Stats -->
+                        <div class="absolute -bottom-10 -right-4 bg-white text-slate-950 p-6 rounded-3xl shadow-2xl reveal">
+                            <div class="text-xs font-black opacity-30 uppercase mb-1">Humanity Score</div>
+                            <div class="text-2xl font-black text-emeraldBlue">EXCELLENT</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Roadmap List -->
+            <div class="reveal max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-16 border border-slate-200 dark:border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-12 opacity-5 text-9xl font-black">VISION</div>
+                <h4 class="text-3xl font-black mb-10 flex items-center gap-4">
+                    <span class="w-2 h-10 bg-passionOrange rounded-full"></span>
+                    김우현의 성장을 위한 To-Do List
+                </h4>
+                <div class="grid sm:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>데이터 리터러시의 실체화:</strong> SQL, Python 등을 활용해 수용자 데이터를 직접 기획에 반영하는 역량 확보</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>알고리즘의 비판적 제어:</strong> 추천 시스템의 메커니즘을 이해하고 이를 윤리적으로 제어하는 지식 함양</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>디지털 복지 모델 연구:</strong> 소외 계층 없이 정보에 평등하게 접근하는 콘텐츠 생태계 기획</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>정서적 연결의 가치 증명:</strong> 고독을 해결하고 삶의 의미를 전달하는 가치 중심적 콘텐츠 제작</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -699,7 +779,6 @@
         </div>
     </div>
 
-    <!-- New Video Modal -->
     <div id="video-modal" class="custom-modal" onclick="closeVideoModal()">
         <div class="relative max-w-4xl w-full bg-black rounded-[2rem] p-2 shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
             <button class="absolute top-4 right-4 z-20 text-white bg-black/50 hover:bg-passionOrange p-2 rounded-full transition-colors" onclick="closeVideoModal()">
