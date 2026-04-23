@@ -82,18 +82,11 @@
             inset: 0;
             background: rgba(0, 175, 250, 0.8);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 0.875rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 1.5rem;
+            align-items: center; justify-content: center;
+            color: white; font-weight: 800; font-size: 0.875rem;
+            opacity: 0; transition: opacity 0.3s ease; border-radius: 1.5rem;
         }
-        .profile-card:hover::after {
-            opacity: 1;
-        }
+        .profile-card:hover::after { opacity: 1; }
 
         .custom-modal {
             display: none;
@@ -106,9 +99,7 @@
             justify-content: center;
             padding: 1rem;
         }
-        .custom-modal.active {
-            display: flex;
-        }
+        .custom-modal.active { display: flex; }
         
         .timeline-item {
             position: relative;
@@ -132,13 +123,8 @@
             color: white;
             border-color: #00AFFA;
         }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -148,8 +134,6 @@
         .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #00AFFA, #33BFFF); width: 0; transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .active .progress-bar-fill { width: var(--fill); }
 
-        .stat-card:hover .stat-value { transform: scale(1.1); transition: transform 0.3s ease; }
-        
         .glass-panel {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
@@ -160,10 +144,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .card-flip {
-            perspective: 1000px;
-            height: 220px;
-        }
+        .card-flip { perspective: 1000px; height: 220px; }
         .card-inner {
             position: relative;
             width: 100%;
@@ -172,9 +153,7 @@
             transform-style: preserve-3d;
             cursor: pointer;
         }
-        .card-flip:hover .card-inner {
-            transform: rotateY(180deg);
-        }
+        .card-flip:hover .card-inner { transform: rotateY(180deg); }
         .card-front, .card-back {
             position: absolute;
             width: 100%;
@@ -186,27 +165,13 @@
             justify-content: center;
             padding: 2rem;
         }
-        .card-back {
-            transform: rotateY(180deg);
-        }
+        .card-back { transform: rotateY(180deg); }
 
-        .career-step {
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-        .career-step.active {
-            background-color: #00AFFA;
-            color: white;
-            transform: translateX(10px);
-        }
-        .career-step.active .icon-box {
-            background-color: white;
-            color: #00AFFA;
-        }
+        .career-step { transition: all 0.4s ease; cursor: pointer; }
+        .career-step.active { background-color: #00AFFA; color: white; transform: translateX(10px); }
+        .career-step.active .icon-box { background-color: white; color: #00AFFA; }
 
-        .c-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .c-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .c-card:hover {
             box-shadow: 0 20px 40px -10px rgba(0, 175, 250, 0.3);
             border-color: #00AFFA;
@@ -420,7 +385,7 @@
                             상세 인포그래픽 보기
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                         </button>
-                        <button onclick="openModal('video-modal')" class="px-8 py-4 rounded-2xl bg-emeraldBlue text-white font-black text-lg hover-lift shadow-2xl shadow-emeraldBlue/20 flex items-center gap-4 group">
+                        <button onclick="openVideoModal('woo04.mp4')" class="px-8 py-4 rounded-2xl bg-emeraldBlue text-white font-black text-lg hover-lift shadow-2xl shadow-emeraldBlue/20 flex items-center gap-4 group">
                             영상으로 보기
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </button>
@@ -573,6 +538,14 @@
                 </div>
             </div>
 
+            <!-- Report Download Button Added Here -->
+            <div class="flex justify-center mb-32 reveal">
+                <a href="woo03.pdf" download class="inline-flex items-center justify-center gap-4 bg-slate-900 dark:bg-white text-white dark:text-slate-950 px-12 py-6 rounded-[2rem] font-black text-xl hover-lift shadow-2xl transition-all group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-y-1 transition-transform"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    전공 심층 분석 보고서 다운받기
+                </a>
+            </div>
+
             <div class="reveal">
                 <div class="grid lg:grid-cols-2 gap-8 items-stretch">
                     <div class="bg-gradient-to-br from-emeraldBlue to-emeraldBlue-dark p-12 rounded-[3rem] text-white flex flex-col justify-between">
@@ -637,37 +610,28 @@
                 <p class="text-xl opacity-70 max-w-3xl mx-auto break-keep">단순한 영상 제작자를 넘어, 기술에 인간의 온기를 불어넣는 <strong>'공적 설계자'</strong>로 성장하는 여정입니다.</p>
             </div>
 
-            <!-- Analysis Cards: Connection -->
+            <!-- Analysis Cards -->
             <div class="grid md:grid-cols-3 gap-8 mb-24">
                 <div class="reveal bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 hover-lift group">
                     <div class="w-14 h-14 rounded-2xl bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center text-2xl mb-8 group-hover:bg-emeraldBlue group-hover:text-white transition-all">🤝</div>
                     <h4 class="text-xl font-black mb-4 group-hover:text-emeraldBlue transition-colors">휴먼 커뮤니케이션</h4>
-                    <p class="text-sm opacity-60 leading-relaxed break-keep">
-                        개인적 경험을 타인의 행복을 위한 에너지로 승화시키는 능력. <strong>진정성 있는 소통</strong>을 통해 정서적 연결과 의미를 창출합니다.
-                    </p>
+                    <p class="text-sm opacity-60 leading-relaxed break-keep">개인적 경험을 타인의 행복을 위한 에너지로 승화시키는 능력. <strong>진정성 있는 소통</strong>을 통해 정서적 연결과 의미를 창출합니다.</p>
                 </div>
                 <div class="reveal bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 hover-lift group" style="transition-delay: 100ms;">
                     <div class="w-14 h-14 rounded-2xl bg-passionOrange/10 text-passionOrange flex items-center justify-center text-2xl mb-8 group-hover:bg-passionOrange group-hover:text-white transition-all">📈</div>
                     <h4 class="text-xl font-black mb-4 group-hover:text-passionOrange transition-colors">전략적 분석력</h4>
-                    <p class="text-sm opacity-60 leading-relaxed break-keep">
-                        스포츠 팬덤 경험을 통해 체득한 <strong>충성 수용자(Loyal Audience)</strong> 확보 원리. 미디어 경영과 광고 기획의 탄탄한 기초가 됩니다.
-                    </p>
+                    <p class="text-sm opacity-60 leading-relaxed break-keep">스포츠 팬덤 경험을 통해 체득한 <strong>충성 수용자(Loyal Audience)</strong> 확보 원리. 미디어 경영과 광고 기획의 탄탄한 기초가 됩니다.</p>
                 </div>
                 <div class="reveal bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 hover-lift group" style="transition-delay: 200ms;">
                     <div class="w-14 h-14 rounded-2xl bg-emeraldBlue/10 text-emeraldBlue flex items-center justify-center text-2xl mb-8 group-hover:bg-emeraldBlue group-hover:text-white transition-all">🔥</div>
                     <h4 class="text-xl font-black mb-4 group-hover:text-emeraldBlue transition-colors">실전적 리더십</h4>
-                    <p class="text-sm opacity-60 leading-relaxed break-keep">
-                        방송부와 '작전명 청춘'의 기록들. 이론적 통찰을 실무로 전환하는 <strong>살아있는 포트폴리오</strong>이자 실행력의 증거입니다.
-                    </p>
+                    <p class="text-sm opacity-60 leading-relaxed break-keep">방송부와 '작전명 청춘'의 기록들. 이론적 통찰을 실무로 전환하는 <strong>살아있는 포트폴리오</strong>이자 실행력의 증거입니다.</p>
                 </div>
             </div>
 
             <!-- Deep Vision: Gradient Section -->
             <div class="reveal relative bg-emeraldBlue rounded-[4rem] p-12 md:p-24 text-white overflow-hidden shadow-2xl mb-24">
                 <div class="absolute inset-0 bg-gradient-to-br from-emeraldBlue via-emeraldBlue-dark to-slate-900 opacity-90"></div>
-                <!-- Abstract BG Elements -->
-                <div class="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div>
-                
                 <div class="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
                     <div class="space-y-10">
                         <div>
@@ -706,17 +670,12 @@
                            </div>
                            <div class="absolute inset-0 bg-gradient-to-tr from-passionOrange to-transparent opacity-30 animate-spin-slow"></div>
                         </div>
-                        <!-- Decorative Stats -->
-                        <div class="absolute -bottom-10 -right-4 bg-white text-slate-950 p-6 rounded-3xl shadow-2xl reveal">
-                            <div class="text-xs font-black opacity-30 uppercase mb-1">Humanity Score</div>
-                            <div class="text-2xl font-black text-emeraldBlue">EXCELLENT</div>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Future Roadmap List -->
-            <div class="reveal max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-16 border border-slate-200 dark:border-slate-800 shadow-2xl relative overflow-hidden">
+            <div class="reveal max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-16 border border-slate-200 dark:border-slate-800 shadow-2xl relative overflow-hidden mb-24">
                 <div class="absolute top-0 right-0 p-12 opacity-5 text-9xl font-black">VISION</div>
                 <h4 class="text-3xl font-black mb-10 flex items-center gap-4">
                     <span class="w-2 h-10 bg-passionOrange rounded-full"></span>
@@ -726,24 +685,34 @@
                     <div class="space-y-4">
                         <div class="flex items-start gap-4">
                             <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
-                            <p class="text-sm font-bold opacity-70 break-keep"><strong>데이터 리터러시의 실체화:</strong> SQL, Python 등을 활용해 수용자 데이터를 직접 기획에 반영하는 역량 확보</p>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>데이터 리터러시의 실체화:</strong> 수용자 데이터를 직접 기획에 반영하는 역량 확보</p>
                         </div>
                         <div class="flex items-start gap-4">
                             <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
-                            <p class="text-sm font-bold opacity-70 break-keep"><strong>알고리즘의 비판적 제어:</strong> 추천 시스템의 메커니즘을 이해하고 이를 윤리적으로 제어하는 지식 함양</p>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>알고리즘의 비판적 제어:</strong> 추천 시스템을 윤리적으로 제어하는 지식 함양</p>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div class="flex items-start gap-4">
                             <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
-                            <p class="text-sm font-bold opacity-70 break-keep"><strong>디지털 복지 모델 연구:</strong> 소외 계층 없이 정보에 평등하게 접근하는 콘텐츠 생태계 기획</p>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>디지털 복지 모델 연구:</strong> 정보에 평등하게 접근하는 콘텐츠 생태계 기획</p>
                         </div>
                         <div class="flex items-start gap-4">
                             <div class="mt-1 w-6 h-6 rounded-full bg-emeraldBlue/20 text-emeraldBlue flex items-center justify-center text-xs">✓</div>
-                            <p class="text-sm font-bold opacity-70 break-keep"><strong>정서적 연결의 가치 증명:</strong> 고독을 해결하고 삶의 의미를 전달하는 가치 중심적 콘텐츠 제작</p>
+                            <p class="text-sm font-bold opacity-70 break-keep"><strong>정서적 연결의 가치 증명:</strong> 고독을 해결하고 삶의 의미를 전달하는 콘텐츠 제작</p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Video Popup Button Added Here -->
+            <div class="flex justify-center reveal">
+                <button onclick="openVideoModal('woo05.mp4')" class="inline-flex items-center justify-center gap-4 bg-passionOrange hover:bg-passionOrange-hover text-white px-12 py-6 rounded-[2rem] font-black text-xl hover-lift shadow-2xl transition-all group">
+                    <div class="w-10 h-10 rounded-full bg-white text-passionOrange flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </div>
+                    미래 비전 영상으로 이해하기
+                </button>
             </div>
         </div>
     </section>
@@ -763,7 +732,7 @@
                 CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div class="rounded-[1.5rem] overflow-hidden aspect-square bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                <img src="woo01.jpg" alt="김우현 큰 이미지" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600?text=Image+Not+Found';">
+                <img src="woo01.jpg" alt="프로필 사진" class="w-full h-full object-cover">
             </div>
         </div>
     </div>
@@ -774,11 +743,12 @@
                 CLOSE <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div class="rounded-[1.5rem] overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center max-h-[80vh]">
-                <img src="woo02.png" alt="김우현 인포그래픽" class="max-w-full h-auto object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x800?text=Infographic+Not+Found';">
+                <img src="woo02.png" alt="인포그래픽" class="max-w-full h-auto object-contain">
             </div>
         </div>
     </div>
 
+    <!-- Video Modal with Dynamic Source -->
     <div id="video-modal" class="custom-modal" onclick="closeVideoModal()">
         <div class="relative max-w-4xl w-full bg-black rounded-[2rem] p-2 shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
             <button class="absolute top-4 right-4 z-20 text-white bg-black/50 hover:bg-passionOrange p-2 rounded-full transition-colors" onclick="closeVideoModal()">
@@ -786,7 +756,7 @@
             </button>
             <div class="rounded-[1.5rem] overflow-hidden bg-black flex items-center justify-center aspect-video">
                 <video id="main-video" controls class="w-full h-full">
-                    <source src="woo04.mp4" type="video/mp4">
+                    <source id="video-source" src="" type="video/mp4">
                     브라우저가 비디오 재생을 지원하지 않습니다.
                 </video>
             </div>
@@ -799,28 +769,28 @@
                 title: "방송 & 저널리즘",
                 sub: "스토리텔링과 취재의 정수",
                 desc: "지상파 및 종편 PD, 기자, 아나운서, 방송 작가, 영상 편집 전문가로 진출합니다.",
-                skills: ["스토리텔링", "현장 취재력", "Final Cut / Edius"],
+                skills: ["스토리텔링", "현장 취재력", "영상 편집"],
                 roadmap: "콘텐츠 크리에이터 및 모바일 저널리스트로의 성장 가속화"
             },
             {
                 title: "광고 & 마케팅/PR",
                 sub: "브랜드 가치를 설계하는 전략가",
                 desc: "광고 기획자(AE), 카피라이터, 기업 홍보팀, PR 매니저, 미디어 플래너로 활동합니다.",
-                skills: ["브랜딩 전략", "GA 활용 능력", "광고 기획"],
+                skills: ["브랜딩 전략", "마케팅 데이터", "광고 기획"],
                 roadmap: "데이터 기반 홍보마케팅 전문가 및 사회조사 분석 역량 확보"
             },
             {
                 title: "뉴미디어 & 플랫폼",
                 sub: "디지털 생태계의 아키텍트",
                 desc: "플랫폼 서비스 기획, 소셜 미디어 전략가, 데이터 저널리스트, OTT 서비스 기획자로 진출합니다.",
-                skills: ["Python / R 분석", "UX 디자인", "알고리즘 이해"],
+                skills: ["데이터 분석", "UX 디자인", "알고리즘 이해"],
                 roadmap: "AI 기반 미디어 플랫폼 설계 및 사용자 도달률 분석 전문가"
             },
             {
                 title: "공공기관 & 정책",
                 sub: "미디어 질서를 확립하는 감시자",
                 desc: "방통위, 문체부 공무원, 미디어 정책 연구원, 교수직 등 학계 및 정계로 진출합니다.",
-                skills: ["미디어 윤리", "정책 설계", "공공 커뮤니케이션"],
+                skills: ["미디어 윤리", "정책 설계", "공공 소통"],
                 roadmap: "지속 가능한 미디어 생태계 조성을 위한 정책 전문가 양성"
             }
         ];
@@ -832,7 +802,6 @@
             
             const data = careerData[index];
             const container = document.getElementById('career-detail');
-            
             if (container) {
                 container.innerHTML = `
                     <div class="animate-fadeIn">
@@ -861,16 +830,25 @@
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden'; 
-            if (modalId === 'video-modal') {
-                const video = document.getElementById('main-video');
-                video.currentTime = 0;
-                video.play();
-            }
         }
+
+        function openVideoModal(videoSrc) {
+            const modal = document.getElementById('video-modal');
+            const video = document.getElementById('main-video');
+            const source = document.getElementById('video-source');
+            
+            source.src = videoSrc;
+            video.load(); 
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            video.play();
+        }
+
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
             document.body.style.overflow = 'auto'; 
         }
+
         function closeVideoModal() {
             const video = document.getElementById('main-video');
             video.pause();
