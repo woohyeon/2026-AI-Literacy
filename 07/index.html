@@ -1,1 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>음주운전 사고 월별 분석 리포트</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+    margin: 0;
+    padding: 0;
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 350px;
+    max-height: 450px;
+}
+@media (min-width: 768px) {
+    .chart-container {
+        height: 450px;
+    }
+}
+.glass-card {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    border-radius: 1rem;
+}
+.peak-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.peak-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(239, 68, 68, 0.15), 0 8px 10px -6px rgba(239, 68, 68, 0.1);
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 2% auto;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+/* Table Styles for Modal */
+.article-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+}
+.article-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 700;
+    padding: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: center;
+}
+.article-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: center;
+}
+.article-table tr:hover {
+    background-color: #f8fafc;
+}
+.highlight-row {
+    background-color: #fff1f2 !important;
+    font-weight: 600;
+}
+</style>
+</head>
+<body class="antialiased">
 
+<nav class="bg-blue-950 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex-shrink-0 flex items-center font-bold text-xl tracking-tight">
+                <span class="mr-2 text-2xl">🚔</span> 교통안전 리포트
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#overview" class="hover:text-blue-300 transition-colors">데이터 개요</a>
+                <a href="#peaks" class="hover:text-red-300 transition-colors">세 번의 정점</a>
+                <a href="#baseline" class="hover:text-blue-300 transition-colors">상시 위험성</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <header class="text-center mb-16">
+        <div class="inline-block py-1.5 px-4 rounded-full bg-red-100 text-red-700 font-extrabold text-sm tracking-widest mb-6 border border-red-200">
+            기획보도 특별 분석
+        </div>
+        <h1 class="text-4xl md:text-5xl font-black text-blue-950 tracking-tight leading-tight mb-6">
+            "집중 단속도 소용없나"<br>
+            데이터로 본 음주운전 사고의 <span class="text-red-600 border-b-4 border-red-600">세 번의 정점</span>
+        </h1>
+        <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            최근 5년간(2020년~2024년) 발생한 음주운전 사고 데이터 7만 1,279건 전수 분석. 처벌 강화 기조 속에서도 휴가, 단풍, 연말이라는 계절적 요인에 의해 반복되는 음주 범죄의 위험성을 파헤칩니다.
+        </p>
+    </header>
+
+    <section id="overview" class="mb-20 scroll-mt-24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 border-t-4 border-blue-600 flex flex-col items-center justify-center text-center">
+                <div class="text-5xl mb-4">📊</div>
+                <p class="text-sm text-slate-500 font-bold uppercase tracking-widest mb-2">5년 누적 사고 건수</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-800">71,279<span class="text-2xl font-medium text-slate-500 ml-1">건</span></h2>
+            </div>
+            <div class="glass-card p-8 border-t-4 border-red-500 flex flex-col items-center justify-center text-center bg-red-50">
+                <div class="text-5xl mb-4">🔥</div>
+                <p class="text-sm text-red-500 font-bold uppercase tracking-widest mb-2">연중 최대 발생 월 (1위)</p>
+                <h2 class="text-4xl md:text-5xl font-black text-red-600">7월<span class="text-xl font-bold text-red-400 ml-2">(6,197건)</span></h2>
+            </div>
+            <div class="glass-card p-8 border-t-4 border-slate-400 flex flex-col items-center justify-center text-center">
+                <div class="text-5xl mb-4">📉</div>
+                <p class="text-sm text-slate-500 font-bold uppercase tracking-widest mb-2">연중 최소 발생 월</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-700">2월<span class="text-xl font-medium text-slate-500 ml-2">(5,507건)</span></h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="peaks" class="mb-24 scroll-mt-24">
+        <div class="mb-10">
+            <h2 class="text-3xl font-black text-slate-800 flex items-center mb-4">
+                <span class="w-2 h-8 bg-red-500 mr-3 rounded-full"></span>
+                '7·10·12월'에 쏠린 비극
+            </h2>
+            <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">
+                데이터에 따르면 사고가 가장 빈번한 달은 7월과 10월, 그리고 12월이었습니다. 평균 발생 건수를 훌쩍 뛰어넘는 이 세 번의 정점은 단순한 우연이 아닌 우리 사회의 활동 패턴과 깊은 연관이 있습니다. 월별 발생 건수를 비교해 보십시오.
+            </p>
+        </div>
+
+        <div class="glass-card p-4 md:p-8 mb-10">
+            <div class="chart-container">
+                <canvas id="monthlyBarChart"></canvas>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card peak-card p-8 border-b-4 border-blue-400">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-2xl font-black text-slate-800">1위. 7월</h3>
+                    <span class="text-4xl">🏖️</span>
+                </div>
+                <h4 class="text-blue-600 font-bold text-lg mb-3">'휴가지의 해방감'이 부른 참사</h4>
+                <p class="text-slate-600 leading-relaxed">
+                    여름 휴가가 본격화되는 시기입니다. 평소 거주지를 벗어나 낯선 휴양지에서 갖는 해방감이 '한 잔쯤은 괜찮겠지'라는 판단으로 이어집니다. 야외 음주가 잦아지고 대리운전 호출이 어려운 지역적 특성이 사고를 키웁니다.
+                </p>
+            </div>
+            
+            <div class="glass-card peak-card p-8 border-b-4 border-orange-400">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-2xl font-black text-slate-800">2위. 10월</h3>
+                    <span class="text-4xl">🍁</span>
+                </div>
+                <h4 class="text-orange-600 font-bold text-lg mb-3">'가을 행락철' 단체 이동의 함정</h4>
+                <p class="text-slate-600 leading-relaxed">
+                    단풍철을 맞아 나들이객이 몰립니다. 낮술을 곁들인 산행이나 지역 축제 참여 후 운전대를 잡는 경우가 많으며, 도로가 혼잡한 상황에서 음주 운전자가 유입되어 대형 연쇄 추돌 사고 위험이 매우 높습니다.
+                </p>
+            </div>
+
+            <div class="glass-card peak-card p-8 border-b-4 border-indigo-400">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-2xl font-black text-slate-800">3위. 12월</h3>
+                    <span class="text-4xl">🥂</span>
+                </div>
+                <h4 class="text-indigo-600 font-bold text-lg mb-3">'연말 모임'의 숙명적 위험</h4>
+                <p class="text-slate-600 leading-relaxed">
+                    송년회와 연말 행사가 집중됩니다. 경찰의 집중 단속에도 불구하고 절대적인 음주 빈도가 가장 높습니다. '강추위로 인한 대리 호출 기피'와 '짧은 거리 이동'이라는 변명이 빈번하게 발생하는 시기입니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="baseline" class="mb-24 scroll-mt-24">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5">
+                <h2 class="text-3xl font-black text-slate-800 flex items-center mb-6">
+                    <span class="w-2 h-8 bg-blue-600 mr-3 rounded-full"></span>
+                    2월의 '수치적 착시'
+                </h2>
+                <div class="prose prose-lg text-slate-600">
+                    <p class="mb-4">
+                        누적 데이터상 사고가 가장 적은 달은 <strong>2월(5,507건, 7.73%)</strong>이었습니다. 7월과 비교하면 비중이 낮아 보입니다.
+                    </p>
+                    <p class="mb-4">
+                        하지만 이는 2월의 일수가 다른 달보다 2~3일 적은 데 따른 <strong>'수치적 착시'</strong>일 가능성이 높습니다. 일평균 사고를 따져보면 다른 달과 큰 차이가 없는 위험 수준을 유지하고 있습니다.
+                    </p>
+                    <p class="font-bold text-red-600 bg-red-50 p-4 rounded-lg border border-red-200">
+                        결과적으로 전체 사고 비율은 매월 7.7% ~ 8.7% 사이를 맴돕니다. 음주운전은 특정 시기에만 조심해야 할 이벤트가 아니라 365일 상시 우리 곁을 위협하고 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="lg:col-span-7 glass-card p-4 md:p-8">
+                <div class="chart-container">
+                    <canvas id="monthlyTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="flex flex-col sm:flex-row justify-center items-center gap-4 py-8 border-t border-slate-200">
+        <button id="viewArticleBtn" class="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center">
+            <span class="mr-2">📄</span> 기사 전문 보기
+        </button>
+        <button id="downloadPdfBtn" class="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-black text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center">
+            <span class="mr-2">📥</span> 기사 전문 다운 받기
+        </button>
+    </section>
+
+</div>
+
+<div id="articleModal" class="modal">
+    <div class="modal-content shadow-2xl relative animate-in fade-in zoom-in duration-300">
+        <button id="closeModalBtn" class="absolute top-4 right-6 text-3xl text-slate-400 hover:text-slate-800 transition-colors">&times;</button>
+        <div id="fullArticleText" class="prose prose-slate max-w-none">
+            <h2 class="text-3xl font-black text-blue-950 mb-4">[기획보도] "집중 단속도 소용없나"… 데이터로 본 음주운전 사고의 '세 번의 정점'</h2>
+            <div class="space-y-6 text-slate-700 leading-relaxed">
+                <p class="font-bold text-lg text-slate-900 italic">최근 5년간 7월·10월·12월 사고 집중… 휴가·단풍·연말이 '음주 범죄' 부추겨</p>
+                
+                <p>음주운전에 대한 사회적 처벌 수위는 높아지고 있지만, 특정 시기마다 반복되는 사고의 굴레는 여전한 것으로 나타났다. 최근 5년간(2020년~2024년) 발생한 음주운전 사고 데이터 7만 1,279건을 전수 분석한 결과, 우리 사회의 음주 사고는 특정 '계절적 정점'을 그리며 반복되고 있었다.</p>
+                
+                <h3 class="text-xl font-bold text-slate-900">■ '7·10·12월'에 쏠린 비극… 왜 이 시기인가?</h3>
+                <p>데이터에 따르면 사고가 가장 빈번한 달은 7월(6,197건)과 10월(6,195건), 그리고 12월(6,146건)이었다. 이 세 시기에 사고가 집중되는 이유는 사회적 활동 패턴과 밀접한 관련이 있다.</p>
+                <p><strong>① 7월:</strong> 여름 휴가가 본격화되는 시기다. 낯선 휴양지에서 갖는 해방감이 '한 잔쯤은 괜찮겠지'라는 안일한 판단으로 이어진다. 야외 음주가 잦고 대리운전 호출이 어려운 지역적 한계가 사고를 키운다.</p>
+                <p><strong>② 10월:</strong> 가을 행락철 단풍철을 맞아 나들이객이 몰리는 시기다. 낮술을 곁들인 산행이나 지역 축제 참여 후 운전대를 잡는 경우가 많으며, 도로 혼잡 상황과 겹쳐 대형 참사로 이어지기 쉽다.</p>
+                <p><strong>③ 12월:</strong> 송년회와 연말 행사가 집중되는 시기다. 경찰의 대대적인 특별 단속에도 불구하고 절대적인 음주 빈도가 높아지며 사고 건수 또한 상위권을 기록했다.</p>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8">■ 월별 상세 발생 데이터 분석 (2020-2024 누적)</h3>
+                <div class="overflow-x-auto">
+                    <table class="article-table">
+                        <thead>
+                            <tr>
+                                <th>월</th>
+                                <th>누적 사고 건수</th>
+                                <th>비율 (%)</th>
+                                <th>위험 요소 및 특징</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>01월</td><td>5,887건</td><td>8.26%</td><td>신년 모임 및 연초 분위기</td></tr>
+                            <tr><td>02월</td><td>5,507건</td><td>7.73%</td><td>연중 최저치 (일수 부족 효과)</td></tr>
+                            <tr><td>03월</td><td>5,819건</td><td>8.16%</td><td>봄철 야외 활동 시작</td></tr>
+                            <tr><td>04월</td><td>5,896건</td><td>8.27%</td><td>봄 나들이객 증가</td></tr>
+                            <tr><td>05월</td><td>5,937건</td><td>8.33%</td><td>가정의 달 행사 및 모임</td></tr>
+                            <tr><td>06월</td><td>5,724건</td><td>8.03%</td><td>초여름 야외 활동</td></tr>
+                            <tr class="highlight-row"><td>07월</td><td>6,197건</td><td>8.69%</td><td>여름 휴가철 집중 발생 (1위)</td></tr>
+                            <tr><td>08월</td><td>6,052건</td><td>8.49%</td><td>휴가철 지속 및 여름 모임</td></tr>
+                            <tr><td>09월</td><td>5,919건</td><td>8.30%</td><td>추석 연휴 및 이동량 증가</td></tr>
+                            <tr class="highlight-row"><td>10월</td><td>6,195건</td><td>8.69%</td><td>가을 행락철 단풍 시즌 (2위)</td></tr>
+                            <tr><td>11월</td><td>5,998건</td><td>8.41%</td><td>연말 진입 전 모임 증가</td></tr>
+                            <tr class="highlight-row"><td>12월</td><td>6,146건</td><td>8.62%</td><td>연말 송년회 및 행사 집중 (3위)</td></tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="font-bold bg-slate-50"><td>합계</td><td>71,279건</td><td>100.0%</td><td>데이터 전수 분석 결과</td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8">■ 2월의 '수치적 착시'… 일평균 사고율은 여전히 높아</h3>
+                <p>누적 데이터상 사고가 가장 적은 달은 2월(5,507건)이었다. 하지만 이는 2월의 일수가 다른 달보다 적은 데 따른 '수치적 착시'일 가능성이 높다. 일평균 사고율로 환산하면 다른 달과 큰 차이가 없는 위험 수준을 유지하고 있어 연중 상시적인 경각심이 요구된다.</p>
+                
+                <h3 class="text-xl font-bold text-slate-900">■ "단속보다 무서운 것은 본인의 방심"</h3>
+                <p>경찰 관계자는 "데이터가 보여주듯 휴가철이나 나들이철에는 운전자들이 스스로 '오늘 같은 날은 예외'라고 생각하는 경향이 강하다"며 주의를 당부했다. 정부는 사고가 집중되는 시기에 고속도로 나들목 및 유원지 인근 단속을 더욱 강화할 방침이다.</p>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-200 text-sm text-slate-500">
+                &copy; 2026 교통안전 데이터 분석 팀. 본 데이터는 공공데이터포털 및 도로교통공단 통계를 재구성하였습니다.
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-slate-900 text-slate-400 py-12 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+        <h3 class="text-2xl font-bold text-white mb-4">"단속보다 무서운 것은 본인의 방심입니다"</h3>
+        <p class="mb-6 max-w-2xl mx-auto">
+            정부는 본 데이터를 기반으로 사고가 집중되는 7월과 10월, 고속도로 나들목(IC) 및 유원지 인근에서의 주·야간 불시 단속을 더욱 강화할 방침입니다. 음주운전은 계절적 이벤트가 아니라 언제든 가정을 파괴할 수 있는 범죄입니다.
+        </p>
+        <div class="inline-block py-2 px-6 border border-slate-700 rounded-lg text-sm text-slate-500">
+            데이터 출처: 2020년-2024년 도로교통공단 음주운전 사고 월별 통계 재구성
+        </div>
+    </div>
+</footer>
+
+<script>
+const modal = document.getElementById('articleModal');
+const viewBtn = document.getElementById('viewArticleBtn');
+const downloadBtn = document.getElementById('downloadPdfBtn');
+const closeBtn = document.getElementById('closeModalBtn');
+
+viewBtn.onclick = () => { modal.style.display = 'block'; document.body.style.overflow = 'hidden'; };
+closeBtn.onclick = () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; };
+window.onclick = (event) => { if (event.target == modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; } };
+
+// 사용자가 준비한 음주운전.pdf 파일을 다운로드하도록 수정된 로직
+downloadBtn.onclick = () => {
+    // 실제 파일 경로로 연결 (파일이 같은 경로에 있다고 가정)
+    const fileName = '음주운전.pdf';
+    const link = document.createElement('a');
+    link.href = fileName; // 준비하신 pdf 파일 경로
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+// 차트 로직
+const wrapLabel = (label) => {
+    const limit = 16;
+    if (label.length <= limit) return label;
+    const words = label.split(' ');
+    let lines = [];
+    let currentLine = '';
+    for (let word of words) {
+        if ((currentLine + word).length > limit) {
+            if (currentLine) lines.push(currentLine.trim());
+            currentLine = word + ' ';
+        } else {
+            currentLine += word + ' ';
+        }
+    }
+    if (currentLine) lines.push(currentLine.trim());
+    return lines;
+};
+
+const tooltipConfig = {
+    callbacks: {
+        title: function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            return Array.isArray(label) ? label.join(' ') : label;
+        }
+    }
+};
+
+const commonOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        tooltip: tooltipConfig,
+        legend: { labels: { font: { family: "sans-serif", size: 13 }, color: '#475569' } }
+    }
+};
+
+const rawLabels = ['01월 (새해 모임 등)', '02월 (연중 최저치)', '03월 (활동 시작)', '04월 (나들이 증가)', '05월 (가정의 달)', '06월 (외부 활동)', '07월 (여름 휴가철)', '08월 (휴가 지속)', '09월 (추석 연휴)', '10월 (단풍 시즌)', '11월 (모임 증가)', '12월 (송년회 집중)'];
+const chartLabels = rawLabels.map(wrapLabel);
+const dataCounts = [5887, 5507, 5819, 5896, 5937, 5724, 6197, 6052, 5919, 6195, 5998, 6146];
+const dataPercents = [8.26, 7.73, 8.16, 8.27, 8.33, 8.03, 8.69, 8.49, 8.30, 8.69, 8.41, 8.62];
+
+const ctxBar = document.getElementById('monthlyBarChart').getContext('2d');
+new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+        labels: chartLabels,
+        datasets: [{
+            label: '월별 사고 건수 (2020-2024)',
+            data: dataCounts,
+            backgroundColor: dataCounts.map((_, i) => [6, 9, 11].includes(i) ? 'rgba(239, 68, 68, 0.9)' : 'rgba(59, 130, 246, 0.4)'),
+            borderRadius: 6
+        }]
+    },
+    options: {
+        ...commonOptions,
+        scales: { y: { min: 5000 }, x: { grid: { display: false } } }
+    }
+});
+
+const ctxLine = document.getElementById('monthlyTrendChart').getContext('2d');
+new Chart(ctxLine, {
+    type: 'line',
+    data: {
+        labels: chartLabels,
+        datasets: [{
+            label: '전체 대비 비율 (%)',
+            data: dataPercents,
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            pointBackgroundColor: dataPercents.map((_, i) => [6, 9, 11].includes(i) ? '#ef4444' : '#1e3a8a'),
+            tension: 0.4
+        }]
+    },
+    options: {
+        ...commonOptions,
+        scales: { y: { min: 7.0, max: 9.0, ticks: { callback: v => v + '%' } }, x: { grid: { display: false } } }
+    }
+});
+</script>
+</body>
+</html>
