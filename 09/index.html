@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎈 부산대학교 80주년 축하 놀이터 🎈</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts (Noto Sans KR & Gaegu & Song Myung) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Song+Myung&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pnuBlue: {
+              light: '#EBF3FE',
+              DEFAULT: '#2B6CB0', // 차분하고 깊은 파스텔 블루
+              dark: '#1A365D'
+            },
+            pnuGreen: {
+              light: '#E6F4EA',
+              DEFAULT: '#1E6B52', // 편안한 메론-포레스트 그린
+              dark: '#0F4131'
+            },
+            pastelYellow: '#FFFBEB',
+            pastelPink: '#FFF5F5',
+            candyPink: '#FF8A9A',
+            candyOrange: '#FF9F43'
+          },
+          fontFamily: {
+            sans: ['Noto Sans KR', 'sans-serif'],
+            cute: ['Gaegu', 'sans-serif'],
+            serif: ['Song Myung', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* 뽀송뽀송하고 귀여운 그리드 도트 배경 */
+    .cute-dot-bg {
+      background-color: #f7fbf9;
+      background-image: radial-gradient(#cadad2 1.2px, transparent 1.2px), radial-gradient(#c6d5e7 1.2px, #f7fbf9 1.2px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+    }
+
+    /* 젤리 같은 쫀득쫀득한 호버 애니메이션 */
+    .jelly-btn {
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+    }
+    .jelly-btn:hover {
+      transform: scale(1.06) rotate(-1.5deg);
+    }
+    .jelly-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* 둥둥 떠다니는 귀여운 무동력 풍선 효과 */
+    @keyframes bobble {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+    .bobble-item {
+      animation: bobble 4s ease-in-out infinite;
+    }
+    .bobble-item-delay {
+      animation: bobble 5s ease-in-out infinite;
+      animation-delay: 1.5s;
+    }
+
+    /* 구름 둥실둥실 애니메이션 */
+    @keyframes floatCloud {
+      0% { transform: translateX(-10px); }
+      100% { transform: translateX(10px); }
+    }
+    .cloud-move {
+      animation: floatCloud 3s ease-in-out infinite alternate;
+    }
+
+    /* 폭죽 이펙트 스타일 */
+    .emoji-particle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 24px;
+      transition: transform 0.8s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.8s;
+    }
+
+    /* 음표 둥둥 애니메이션 (음악 재생 시) */
+    @keyframes noteFloat {
+      0% { transform: translateY(0px) scale(0.8) rotate(0deg); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-40px) scale(1.2) rotate(15deg); opacity: 0; }
+    }
+    .floating-note {
+      animation: noteFloat 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="font-sans text-slate-700 cute-dot-bg min-h-screen flex flex-col justify-between">
+
+  <!-- ================= AUDIO RESOURCE ================= -->
+  <audio id="pnu-audio" src="PNU.mp3" preload="auto" loop></audio>
+
+  <!-- ================= TOP NAVIGATION BAR (아기자기한 구름 구도) ================= -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b-2 border-dashed border-teal-100 px-4">
+    <div class="max-w-5xl mx-auto flex items-center justify-between h-16">
+      <!-- 홈 버튼 및 대학교 로고 엠블럼 -->
+      <div class="flex items-center space-x-3">
+        <a href="../index.html" class="flex items-center space-x-1.5 px-3 py-1.5 bg-pnuGreen text-white rounded-full hover:bg-pnuGreen-dark jelly-btn shadow-md">
+          <i data-lucide="home" class="w-4 h-4"></i>
+          <span class="text-xs font-bold font-cute text-sm">홈으로가기</span>
+        </a>
+        <span class="font-cute font-bold text-2xl text-pnuGreen tracking-wider flex items-center">
+          <span class="text-pnuBlue mr-1">PNU</span> 80주년 축하광장 🎈
+        </span>
+      </div>
+      
+      <!-- 네비게이션 메뉴 (동글동글한 알약 형태) -->
+      <div class="hidden md:flex items-center space-x-1 bg-teal-50/50 p-1 rounded-full border border-teal-100">
+        <a href="#intro" class="px-4 py-1 text-sm font-cute font-bold text-slate-600 hover:text-pnuGreen hover:bg-white rounded-full transition-all">안녕! 부산대</a>
+        <a href="#history" class="px-4 py-1 text-sm font-cute font-bold text-slate-600 hover:text-pnuGreen hover:bg-white rounded-full transition-all">우리의 발자취</a>
+        <a href="#swot" class="px-4 py-1 text-sm font-cute font-bold text-slate-600 hover:text-pnuGreen hover:bg-white rounded-full transition-all">강점 카트</a>
+        <a href="#game" class="px-4 py-1 text-sm font-cute font-bold text-slate-600 hover:text-pnuGreen hover:bg-white rounded-full transition-all">80주년 미니퀴즈</a>
+        <a href="#woo-hyun" class="px-4 py-1 text-sm font-cute font-bold text-pnuBlue bg-blue-100 hover:bg-pnuBlue hover:text-white rounded-full transition-all">우현이의 편지 💌</a>
+      </div>
+
+      <!-- 모바일 햄버거 메뉴 버튼 -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-btn" class="p-2 rounded-full text-slate-600 hover:bg-teal-50">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 모바일 드롭다운 메뉴 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-b-2 border-dashed border-teal-100 px-4 pt-2 pb-4 space-y-1 font-cute text-lg">
+      <a href="#intro" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-teal-50">안녕! 부산대</a>
+      <a href="#history" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-teal-50">우리의 발자취</a>
+      <a href="#swot" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-teal-50">강점 카트</a>
+      <a href="#game" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-teal-50">80주년 미니퀴즈</a>
+      <a href="#woo-hyun" class="block px-3 py-2 rounded-lg text-pnuBlue bg-blue-50 font-bold">우현이의 편지 💌</a>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION (아기자기한 축제 분위기) ================= -->
+  <header id="intro" class="pt-28 pb-12 px-4 max-w-4xl mx-auto text-center relative">
+    <!-- 아기자기한 이모티콘 요정들 둥둥 -->
+    <div class="absolute -top-4 left-6 text-4xl bobble-item cloud-move hidden md:block">☁️</div>
+    <div class="absolute top-20 right-4 text-4xl bobble-item-delay hidden md:block">🎈</div>
+    <div class="absolute bottom-4 left-10 text-3xl bobble-item hidden md:block">🦉</div>
+    <div class="absolute bottom-16 right-12 text-3xl bobble-item-delay hidden md:block">✨</div>
+
+    <!-- 산이 마스코트의 환영 버블 -->
+    <div class="inline-flex items-center space-x-3 bg-white border-2 border-teal-200 px-5 py-2 rounded-2xl shadow-sm mb-6 relative">
+      <span class="text-2xl">🦅</span>
+      <div class="text-left">
+        <p class="text-xs font-bold text-teal-600">부산대 지킴이 '산이'가 주는 환영 인사</p>
+        <p class="text-sm font-cute font-bold text-slate-700">"야호! 부산대학교가 벌써 80살 생일을 맞이했어! 축하 음악도 들어볼래?"</p>
+      </div>
+      <div class="absolute -bottom-2.5 left-8 w-4 h-4 bg-white border-r-2 border-b-2 border-teal-200 transform rotate-45"></div>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black font-cute text-slate-800 leading-none">
+      푸른 꿈이 날아오르는,<br>
+      <span class="text-pnuGreen bg-teal-100 px-3 rounded-xl inline-block my-2">부산대학교 80주년</span> 놀이터!
+    </h1>
+
+    <!-- ================= MUSIC CONTROLLER WIDGET (추가된 축하 음악 듣기) ================= -->
+    <div class="mt-6 inline-flex flex-col items-center">
+      <button id="btn-play-music" class="jelly-btn inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-pnuBlue text-white rounded-full shadow-lg font-cute font-bold text-lg border-2 border-white">
+        <span id="music-icon-wrapper" class="relative flex items-center justify-center">
+          <i id="music-btn-icon" data-lucide="music" class="w-5 h-5"></i>
+          <!-- 음악 재생시 둥둥 떠다니는 음표 효과 -->
+          <span id="note-effect-1" class="hidden absolute -top-4 -left-2 text-[10px] floating-note">🎵</span>
+          <span id="note-effect-2" class="hidden absolute -top-3 -right-2 text-[10px] floating-note" style="animation-delay: 0.5s;">🎶</span>
+        </span>
+        <span id="music-btn-text">부산대 축하 음악 듣기 (PNU.mp3)</span>
+      </button>
+      <p class="text-[11px] text-slate-400 font-cute mt-1.5">버튼을 한 번 더 누르면 노래가 멈춰요! 📻</p>
+    </div>
+    
+    <p class="mt-8 text-sm sm:text-base text-slate-500 max-w-xl mx-auto leading-relaxed">
+      우리가 매일 걷던 새벽벌 도서관, 금정산 아래 낭만 가득한 미리내 계곡... 🌱<br>
+      딱딱하고 지루한 역사서 대신, 귀여운 그림 카드로 80년의 매력을 꺼내볼까요?
+    </p>
+
+    <!-- 인터랙티브 삼총사 이념 구슬 -->
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-2xl mx-auto">
+      <!-- 진리 -->
+      <div class="bg-teal-50 border-2 border-teal-200 rounded-3xl p-5 hover:bg-teal-100/50 transition-all shadow-sm group">
+        <span class="text-4xl block group-hover:scale-125 transition-transform duration-300">🔍</span>
+        <h3 class="font-cute font-bold text-xl text-pnuGreen mt-2">진리 (Truth)</h3>
+        <p class="text-xs text-slate-500 mt-1">학문의 깊고 푸른 샘물 속에서 세상의 감춰진 지혜를 찾아요!</p>
+      </div>
+      <!-- 자유 -->
+      <div class="bg-blue-50 border-2 border-blue-200 rounded-3xl p-5 hover:bg-blue-100/50 transition-all shadow-sm group">
+        <span class="text-4xl block group-hover:scale-125 transition-transform duration-300">🦅</span>
+        <h3 class="font-cute font-bold text-xl text-pnuBlue mt-2">자유 (Liberty)</h3>
+        <p class="text-xs text-slate-500 mt-1">금정산의 넓은 품처럼 얽매이지 않는 맑고 곧은 목소리를 지켜내요!</p>
+      </div>
+      <!-- 봉사 -->
+      <div class="bg-rose-50 border-2 border-rose-200 rounded-3xl p-5 hover:bg-rose-100/50 transition-all shadow-sm group">
+        <span class="text-4xl block group-hover:scale-125 transition-transform duration-300">💖</span>
+        <h3 class="font-cute font-bold text-xl text-rose-600 mt-2">봉사 (Service)</h3>
+        <p class="text-xs text-slate-500 mt-1">나의 배움과 작은 온기로 어두운 세상을 따스하고 환하게 넓혀요!</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SECTION 1: HISTORY TIMELINE (PDF 상세 정보 적극 보완) ================= -->
+  <section id="history" class="py-12 px-4 bg-white/80 border-y-2 border-dashed border-teal-100">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <span class="text-3xl">🕰️</span>
+        <h2 class="text-3xl font-cute font-bold text-pnuGreen mt-1">귀여운 일러스트로 보는 역사 정거장</h2>
+        <p class="text-slate-400 text-xs mt-1">시민들의 손길로 틔워낸 소중한 새싹이 80년 거목으로 자랐어요</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 1946 -->
+        <div class="bg-gradient-to-b from-teal-50 to-white p-5 rounded-3xl border-2 border-teal-100 hover:border-teal-300 transition-all relative">
+          <div class="absolute -top-4 left-6 bg-pnuGreen text-white text-xs font-cute font-bold px-3 py-1 rounded-full shadow-sm">
+            정거장 #1 · 1946년
+          </div>
+          <span class="text-3xl block mt-2">🌱</span>
+          <h4 class="font-cute font-bold text-lg text-pnuGreen mt-2">윤인구 초대 총장과 시민의 정성</h4>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+            해방 직후 <strong>'교육구국'</strong>의 일념 하나로, 윤인구 초대 총장과 부울경 시민·기업들이 손수 쌈짓돈과 터를 기증하여 세운 <strong>대한민국 제1호 종합 국립대</strong>예요. 지성이 깃든 기적의 첫걸음입니다.
+          </p>
+        </div>
+
+        <!-- 부마민주항쟁 -->
+        <div class="bg-gradient-to-b from-blue-50 to-white p-5 rounded-3xl border-2 border-blue-100 hover:border-blue-300 transition-all relative">
+          <div class="absolute -top-4 left-6 bg-pnuBlue text-white text-xs font-cute font-bold px-3 py-1 rounded-full shadow-sm">
+            정거장 #2 · 민주화
+          </div>
+          <span class="text-3xl block mt-2">🔥</span>
+          <h4 class="font-cute font-bold text-lg text-pnuBlue mt-2">불의에 맞선 든든한 등대</h4>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+            시대의 어둠 속에서도 진리와 자유를 잃지 않고 <strong>부마민주항쟁</strong>의 심장이 되어 정의의 횃불을 지폈어요. 학문과 실천이 함께 숨 쉬는 살아있는 민주주의의 영원한 요람입니다!
+          </p>
+        </div>
+
+        <!-- 4개 멀티캠퍼스 -->
+        <div class="bg-gradient-to-b from-amber-50 to-white p-5 rounded-3xl border-2 border-amber-100 hover:border-amber-300 transition-all relative">
+          <div class="absolute -top-4 left-6 bg-amber-500 text-white text-xs font-cute font-bold px-3 py-1 rounded-full shadow-sm">
+            정거장 #3 · 현재
+          </div>
+          <span class="text-3xl block mt-2">🌐</span>
+          <h4 class="font-cute font-bold text-lg text-amber-700 mt-2">4개 특화 캠퍼스 초연결망</h4>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+            부산(학술연구), 양산(의생명과학), 밀양(나노융합바이오), 아미(임상보건의료)의 4각 협력 벨트를 완성! 지역균형 발전을 주도하고 <strong>'글로컬대학 30'</strong>에 당당히 서며 세계와 연결되고 있어요!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2: SWOT CARDS (말랑한 아코디언 스타일) ================= -->
+  <section id="swot" class="py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-8">
+        <span class="text-3xl">🧩</span>
+        <h2 class="text-3xl font-cute font-bold text-slate-800 mt-1">우리의 기회를 찾는 '강점 카트'</h2>
+        <p class="text-slate-400 text-xs mt-1">데이터를 기반으로 더 영리하고 힘차게 도약하는 길을 그려보아요!</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- 강점 카드 -->
+        <div class="bg-white p-5 rounded-2xl border-2 border-teal-200 hover:shadow-lg hover:shadow-teal-100 transition-all duration-300">
+          <div class="flex items-center space-x-2 text-pnuGreen mb-3">
+            <span class="text-2xl">💪</span>
+            <span class="font-cute font-bold text-xl">S. 강점 (우리의 슈퍼 에너지)</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            대한민국 최초 종합국립대의 정통성과 든든한 동문 네트워크! 특히 탄탄한 연구 기반과 <strong>글로컬대학 30 선정</strong>으로 확보한 풍부한 재정은 미래를 여는 강력한 열쇠가 됩니다.
+          </p>
+        </div>
+
+        <!-- 약점 카드 -->
+        <div class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:shadow-lg hover:shadow-slate-100 transition-all duration-300">
+          <div class="flex items-center space-x-2 text-slate-500 mb-3">
+            <span class="text-2xl">😢</span>
+            <span class="font-cute font-bold text-xl">W. 약점 (함께 이겨낼 숙제들)</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            비수도권 지역 한계에 따른 우수 신입생 유치의 고민과 글로벌 인지도 향상 필요성, 부울경에 치우친 지역 의존도를 극복하기 위한 다변화가 필요해요.
+          </p>
+        </div>
+
+        <!-- 기회 카드 -->
+        <div class="bg-white p-5 rounded-2xl border-2 border-blue-200 hover:shadow-lg hover:shadow-blue-100 transition-all duration-300">
+          <div class="flex items-center space-x-2 text-pnuBlue mb-3">
+            <span class="text-2xl">⚡</span>
+            <span class="font-cute font-bold text-xl">O. 기회 (새롭게 피어나는 기적)</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            전 세대에 걸쳐 불고 있는 <strong>AI 융합 의생명 신기술 바람</strong>과 지자체 연계형 대학 연합화 전략! 80주년 맞이 동문들의 따뜻한 릴레이 기부와 응원의 눈망울들이 모이고 있어요.
+          </p>
+        </div>
+
+        <!-- 위협 카드 -->
+        <div class="bg-white p-5 rounded-2xl border-2 border-red-200 hover:shadow-lg hover:shadow-red-100 transition-all duration-300">
+          <div class="flex items-center space-x-2 text-red-500 mb-3">
+            <span class="text-2xl">🚨</span>
+            <span class="font-cute font-bold text-xl">T. 위협 (슬기롭고 단단하게!)</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            가속화되는 인구절벽 및 학령인구 급감 현상, 그리고 지방 거점 인재들의 수도권 유출 위기... 이를 격파하기 위해 전공 융합과 초양방향 소통 채널 도입이 매우 시급합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: FUTURE VISION (PDF 미래전략 핵심 보강) ================= -->
+  <section id="vision" class="py-12 px-4 bg-teal-50/40 border-t-2 border-dashed border-teal-100">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <span class="text-3xl">🚀</span>
+        <h2 class="text-3xl font-cute font-bold text-pnuGreen mt-1">미래 도약 보고서 속 4대 핵심 전략</h2>
+        <p class="text-slate-500 text-xs mt-1">대학과 지역, 세계를 하나로 연결하는 찬란한 마일스톤</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 전략 1 -->
+        <div class="bg-white p-5 rounded-3xl border border-teal-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-teal-100 text-pnuGreen flex items-center justify-center font-bold text-lg mb-3">1</div>
+            <h4 class="font-cute font-bold text-lg text-slate-800">에듀테크 기반 맞춤형 학습 플랫폼</h4>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              기존의 따분하고 일방향적인 주입식 강의실을 완전히 탈피합니다! 학생들의 개별 성취·피드백 빅데이터를 실시간 AI가 분석하여, 개인별 역량에 꼭 맞는 <strong>상호작용형 교육 시스템</strong>을 전격 구축합니다.
+            </p>
+          </div>
+          <span class="text-right text-xs font-cute text-teal-600 font-bold mt-4"># AI 맞춤형 학습 🤖</span>
+        </div>
+
+        <!-- 전략 2 -->
+        <div class="bg-white p-5 rounded-3xl border border-teal-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-blue-100 text-pnuBlue flex items-center justify-center font-bold text-lg mb-3">2</div>
+            <h4 class="font-cute font-bold text-lg text-slate-800">전 전공 필수 'AI & 디지털 미디어 리터러시'</h4>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              공학 전공생이 아니더라도 무관해요! <strong>인문학, 예술, 사회과학</strong>에 이르는 모든 부산대 학생들이 AI를 올바르고 똑똑하게 길들이고, 미디어를 통해 자신의 아이디어를 매끄럽게 세상에 퍼뜨리는 필수 교육을 받게 됩니다.
+            </p>
+          </div>
+          <span class="text-right text-xs font-cute text-pnuBlue font-bold mt-4"># 융합 교양의 필수화 ✍️</span>
+        </div>
+
+        <!-- 전략 3 -->
+        <div class="bg-white p-5 rounded-3xl border border-teal-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-pink-100 text-candyPink flex items-center justify-center font-bold text-lg mb-3">3</div>
+            <h4 class="font-cute font-bold text-lg text-slate-800">대학 전용 '메타버스 플랫폼' & 릴스 소통</h4>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              공식 문서 전달 방식의 벽을 허뭅니다! 유튜브 쇼츠, 인스타그램 릴스는 물론, <strong>학생 맞춤형 PNU 가상 캠퍼스 메타버스</strong>를 적극 도입하여, 전 세계 예비 효원인들이 국경 없이 함께 뛰어노는 광장을 마련합니다.
+            </p>
+          </div>
+          <span class="text-right text-xs font-cute text-candyPink font-bold mt-4"># MZ-알파 취향 소통 📱</span>
+        </div>
+
+        <!-- 전략 4 -->
+        <div class="bg-white p-5 rounded-3xl border border-teal-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg mb-3">4</div>
+            <h4 class="font-cute font-bold text-lg text-slate-800">지자체 밀착형 '디지털 공론장' 건립</h4>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              부울경 지역 청년 유출과 도시 재생 같은 차가운 난제들을 해결하기 위해 대학 중심의 미디어 공론장을 형성합니다. 학생들이 스스로 현장을 동영상과 데이터로 수집·분석하여, 지자체에 솔루션을 직접 던지는 리얼 <strong>'오픈 플랫폼'</strong>으로 변신합니다!
+            </p>
+          </div>
+          <span class="text-right text-xs font-cute text-amber-700 font-bold mt-4"># 지역의 구심점 🏛️</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4: 80주년 미니 퀴즈 대동제 ================= -->
+  <section id="game" class="py-12 px-4 bg-yellow-50/70 border-y-2 border-dashed border-amber-200">
+    <div class="max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border-4 border-amber-300 shadow-xl relative">
+      <div class="absolute -top-5 right-6 text-4xl">🎪</div>
+      <h3 class="font-cute font-bold text-2xl text-center text-amber-800 flex items-center justify-center space-x-2">
+        <span>🎮 미니 상식 퀴즈 대동제</span>
+      </h3>
+      <p class="text-center text-slate-500 text-xs mt-1">부산대 학생이라면 눈 감고도 풀 수 있는 왕쉬운 퀴즈!</p>
+
+      <div class="mt-6 p-4 bg-slate-50 rounded-2xl" id="quiz-container">
+        <!-- 퀴즈 문항 -->
+        <p class="font-cute font-bold text-lg text-slate-800 text-center" id="quiz-question">
+          Q. 부산대학교의 건학 이념 3가지 "진리, 자유, [ 이것 ]"에서 빈칸에 들어갈 알맞은 말은 무엇일까요?
+        </p>
+
+        <!-- 퀴즈 보기 -->
+        <div class="grid grid-cols-2 gap-3 mt-4" id="quiz-options">
+          <button onclick="checkAnswer('용기', false)" class="p-3 bg-white border border-slate-200 hover:bg-slate-100 hover:border-slate-400 font-cute font-bold rounded-xl text-slate-700 transition-all">
+            1번: 용기 (Courage)
+          </button>
+          <button onclick="checkAnswer('봉사', true)" class="p-3 bg-white border border-slate-200 hover:bg-teal-100 hover:border-teal-400 font-cute font-bold rounded-xl text-slate-700 transition-all">
+            2번: 봉사 (Service)
+          </button>
+        </div>
+
+        <!-- 퀴즈 결과창 -->
+        <div id="quiz-result" class="hidden mt-4 text-center p-3 rounded-xl font-cute font-bold"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5: 김우현의 100년 비전 (HIGHLIGHTED MAILBOX) ================= -->
+  <section id="woo-hyun" class="py-16 px-4 bg-teal-950 text-white relative overflow-hidden">
+    <!-- 배경 구름 둥실둥실 -->
+    <div class="absolute -bottom-10 left-10 text-9xl text-white/5 font-cute pointer-events-none select-none">☁️</div>
+    <div class="absolute -top-10 right-10 text-9xl text-white/5 font-cute pointer-events-none select-none">☁️</div>
+
+    <div class="max-w-3xl mx-auto relative z-10">
+      <div class="text-center mb-8">
+        <div class="inline-block bg-amber-400 text-slate-900 font-cute font-bold text-base px-4 py-1 rounded-full mb-3 shadow-md transform rotate-1">
+          💡 미디어커뮤니케이션학과의 청년 제안
+        </div>
+        <h2 class="text-3xl font-cute font-bold text-amber-300">김우현 학우의 100년 비전 '미디어 우체통'</h2>
+        <p class="text-teal-200 text-xs mt-1">지성과 실천력으로 무장한 청년의 생생한 목소리를 편지함에서 꺼내보세요!</p>
+      </div>
+
+      <!-- 우체통 디자인 봉투 카드들 -->
+      <div class="space-y-4 font-cute">
+        
+        <!-- 편지 1 -->
+        <div class="bg-white text-slate-800 rounded-3xl p-5 border-4 border-amber-300 shadow-lg transform transition-all hover:rotate-1">
+          <div class="flex items-center space-x-3 pb-3 border-b border-dashed border-teal-100 mb-3">
+            <span class="text-2xl">✉️</span>
+            <h4 class="font-bold text-xl text-pnuGreen">우편함 1 · 초연결 양방향 뉴미디어 소통망</h4>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            단순히 학교의 일정과 실적만을 전달하는 굳어있는 기존의 방식을 과감히 뛰어넘어야 할 때입니다! 
+            소셜 미디어를 고도의 감각으로 분석하여 <strong>"와, 부산대는 미디어 소통 능력이 정말 탁월하구나!"</strong>하는 명예로운 시그니처 브랜드를 세상에 뿌리내려야 합니다.
+          </p>
+        </div>
+
+        <!-- 편지 2 -->
+        <div class="bg-white text-slate-800 rounded-3xl p-5 border-4 border-amber-300 shadow-lg transform transition-all hover:-rotate-1">
+          <div class="flex items-center space-x-3 pb-3 border-b border-dashed border-teal-100 mb-3">
+            <span class="text-2xl">🤖</span>
+            <h4 class="font-bold text-xl text-pnuBlue">우편함 2 · 학과별 밀착 커스텀 AI 전공 심화</h4>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            기술의 소외를 방지하기 위해, 문학·미술·의료 등 <strong>모든 단과대학별 학문 도메인에 찰떡처럼 최적화된 고효율 실무 AI 리터러시 프로그램</strong>을 마련합니다. 이를 내재화한 학생들이 사회 곳곳에 나가 첨단 융합 지식을 멋지게 퍼뜨릴 핵심 엘리트가 됩니다.
+          </p>
+        </div>
+
+        <!-- 편지 3 -->
+        <div class="bg-white text-slate-800 rounded-3xl p-5 border-4 border-amber-300 shadow-lg transform transition-all hover:rotate-1">
+          <div class="flex items-center space-x-3 pb-3 border-b border-dashed border-teal-100 mb-3">
+            <span class="text-2xl">💡</span>
+            <h4 class="font-bold text-xl text-rose-600">우편함 3 · 지역 균형을 깨울 솔루션 공론장 구축</h4>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            우리 부산대는 부울경 심장이자 청년들의 등대입니다! 지역 경제 소멸이나 소외 현상 같은 차가운 문제들을 대학 주도의 미디어 플랫폼으로 이끌고 와, <strong>학생들이 직접 빅데이터 취재를 펼치며 솔루션을 기획·설계해내는 '행동하는 공론장'</strong>을 앞장서서 실천해 갈 것입니다!
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 6: INTERACTIVE CELEBRATION BOX ================= -->
+  <section class="py-16 px-4 bg-white relative">
+    <!-- 이펙트 전용 컨테이너 -->
+    <div id="confetti-container" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-100 text-pnuGreen rounded-full mb-4 shadow-sm animate-bounce">
+        <span class="text-4xl">🎂</span>
+      </div>
+      <h2 class="text-3xl font-cute font-bold text-slate-800">모두 모여라! 80주년 축하 놀이 한마당</h2>
+      <p class="text-slate-500 font-cute text-lg mt-2">
+        아래 버튼들을 눌러 신나게 응원을 날리고 동문들의 한줄 편지도 열어봐요!
+      </p>
+
+      <!-- 아기자기 축하 버튼 패널 -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto font-cute">
+        <!-- 축하 꽃가루 버튼 -->
+        <button id="btn-celebrate" class="w-full px-6 py-4 bg-pnuGreen hover:bg-pnuGreen-dark text-white font-bold text-xl rounded-2xl shadow-md transition-all duration-200 jelly-btn flex items-center justify-center space-x-2">
+          <span>🎉 80주년 함께 축하하기!</span>
+        </button>
+
+        <!-- 댓글 보기 토글 버튼 -->
+        <button id="btn-show-comments" class="w-full px-6 py-4 bg-pnuBlue hover:bg-pnuBlue-dark text-white font-bold text-xl rounded-2xl shadow-md transition-all duration-200 jelly-btn flex items-center justify-center space-x-2">
+          <span>💌 축하 댓글 보따리 열기</span>
+        </button>
+      </div>
+
+      <!-- 실시간 한줄 알리미 (아기자기 피드백) -->
+      <div id="toast-message" class="hidden mt-6 max-w-sm mx-auto bg-amber-400 text-slate-800 font-cute font-bold px-4 py-2.5 rounded-2xl shadow-md text-base animate-bounce">
+        앗싸! 폭죽이 예쁘게 팡팡 터져요! 🥳✨
+      </div>
+
+      <!-- ================= COMMENTS DISPLAY AREA (귀여운 편지 가판대 형태) ================= -->
+      <div id="comments-section" class="hidden mt-10 text-left bg-gradient-to-br from-teal-50/50 to-blue-50/50 border-2 border-dashed border-teal-200 rounded-3xl p-6 animate-fade-in font-cute">
+        <div class="flex items-center justify-between pb-4 border-b-2 border-dashed border-teal-100 mb-6">
+          <h3 class="font-bold text-slate-800 text-xl flex items-center space-x-2">
+            <span>📮 선배, 동기, 후배들의 감동 한줄 편지지</span>
+          </h3>
+          <span class="text-xs bg-pnuGreen text-white px-3 py-1 rounded-full font-bold">동문 메아리 수신 완료!</span>
+        </div>
+
+        <!-- 동적 댓글 리스트 박스 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="comments-grid">
+          <!-- JS로 풍성하게 채워질 예정 -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-teal-950 text-teal-300/60 py-10 px-4 border-t-2 border-dashed border-teal-900 text-center">
+    <div class="max-w-xl mx-auto space-y-2">
+      <h4 class="font-cute font-bold text-white text-2xl tracking-wide">🌳 부산대학교 80주년 사랑방</h4>
+      <p class="text-xs font-cute text-sm">해방의 터전에서 다가올 기적의 100년까지 늘 함께 걸어갑니다.</p>
+      <p class="text-xs text-teal-300/40 mt-3">© 2026 Pusan National University 80th Anniversary. 기획 및 다듬기: 김우현 & 동문 공동체</p>
+    </div>
+  </footer>
+
+  <!-- ================= IN-LINE JAVASCRIPT ================= -->
+  <script>
+    // 1. 아이콘 초기화 (Lucide)
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+
+    // 2. 모바일 토글 메뉴
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // 3. 축하 음악 재생/일시정지 제어 로직 (PNU.mp3)
+    const pnuAudio = document.getElementById('pnu-audio');
+    const btnPlayMusic = document.getElementById('btn-play-music');
+    const musicBtnText = document.getElementById('music-btn-text');
+    const musicBtnIcon = document.getElementById('music-btn-icon');
+    const note1 = document.getElementById('note-effect-1');
+    const note2 = document.getElementById('note-effect-2');
+    let isPlaying = false;
+
+    btnPlayMusic.addEventListener('click', () => {
+      if (!isPlaying) {
+        pnuAudio.play().then(() => {
+          isPlaying = true;
+          musicBtnText.innerText = "음악 일시정지";
+          musicBtnIcon.setAttribute('data-lucide', 'pause');
+          note1.classList.remove('hidden');
+          note2.classList.remove('hidden');
+          lucide.createIcons();
+        }).catch((err) => {
+          // 브라우저 차단 조치 등의 사유로 재생 불가 시 안내 메시지
+          console.warn("오디오 파일 로드 또는 재생 실패: PNU.mp3 파일을 확인해주세요.", err);
+          alert("음악 파일(PNU.mp3)을 재생할 수 없습니다. 파일 위치를 확인해주세요.");
+        });
+      } else {
+        pnuAudio.pause();
+        isPlaying = false;
+        musicBtnText.innerText = "부산대 축하 음악 듣기 (PNU.mp3)";
+        musicBtnIcon.setAttribute('data-lucide', 'music');
+        note1.classList.add('hidden');
+        note2.classList.add('hidden');
+        lucide.createIcons();
+      }
+    });
+
+    // 4. 미니 퀴즈 대동제 로직
+    function checkAnswer(answer, isCorrect) {
+      const resultBox = document.getElementById('quiz-result');
+      resultBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+      
+      if (isCorrect) {
+        resultBox.classList.add('bg-emerald-100', 'text-emerald-800');
+        resultBox.innerHTML = `🎉 딩동댕 정답이에요! "봉사(Service)"를 통한 따뜻한 사랑 실천이야말로 부산대의 영원한 모토랍니다!`;
+        // 정답 시 신나는 미니 이펙트 소형 폭죽
+        for(let i=0; i<15; i++) {
+          createEmojiParticle(window.innerWidth / 2, window.innerHeight / 2 + window.scrollY);
+        }
+      } else {
+        resultBox.classList.add('bg-rose-100', 'text-rose-800');
+        resultBox.innerHTML = `🥺 아쉬워요! 정답은 2번 "봉사"입니다. 다시 한번 맞혀볼까요?`;
+      }
+    }
+
+    // 5. CSV 데이터 기반 아기자기한 축하 댓글 리스트
+    const commentsData = [
+      {
+        author: "🐣 @27학번새내기_민이",
+        text: "27학번으로 곧 입학할 예비 독수리입니다! 멋진 선배님들 품에서 씩씩하게 공부할게요 부산대 사랑해요!!",
+        keyword: "신입생 응원",
+        emoji: "✨"
+      },
+      {
+        author: "⭐ @황성호동문",
+        text: "개교 80주년 소식에 가슴이 울컥하네요. 그때 새벽벌 도서관에서 밤샘하던 추억이 고스란히 지나갑니다.",
+        keyword: "추억, 축하",
+        emoji: "📚"
+      },
+      {
+        author: "💡 @한국전기연구원팀",
+        text: "전쟁통 속에서도 기적처럼 학문의 줄기를 틔웠던 굳센 부산대! 그 굳센 불씨가 다가올 1000년까지 이어지길!",
+        keyword: "역사/정통",
+        emoji: "🔥"
+      },
+      {
+        author: "🦅 @골수PNU팬",
+        text: "역사를 한눈에 보는 순간 내 청춘이 고스란히 묻어있어 자부심을 느낍니다. 우리 학교가 최고입니다!",
+        keyword: "자긍심",
+        emoji: "💖"
+      },
+      {
+        author: "🎉 @김재관동기회",
+        text: "80년이라는 긴 역사 동안 수많은 큰 일꾼들을 길러내주어 감사해요. 미래의 백년 도약도 뜨겁게 지지합니다!",
+        keyword: "미래 지향",
+        emoji: "🚀"
+      },
+      {
+        author: "🌸 @손수민미디어과",
+        text: "캠퍼스 구석구석 싱그러움과 웅장함이 가득 담긴 80주년 축하 피드네요! 보는 내내 웃음꽃이 피어났습니다.",
+        keyword: "응원",
+        emoji: "🥰"
+      },
+      {
+        author: "🥳 @고봉수졸업생",
+        text: "지방 국립대학의 든든한 맏형! 부산대의 영원한 미래 발자취에 늘 함께 서서 박수를 보내겠습니다.",
+        keyword: "동문사랑",
+        emoji: "👏"
+      },
+      {
+        author: "💪 @박원재해병",
+        text: "젊음과 정의의 살아있는 역사! 패기 있게 더 멀리 더 높이 활공할 부산대 독수리를 늘 힘차게 밀어주겠습니다!",
+        keyword: "열정 가득",
+        emoji: "🏆"
+      }
+    ];
+
+    // 6. 댓글 가판대 열기 기능
+    const btnShowComments = document.getElementById('btn-show-comments');
+    const commentsSection = document.getElementById('comments-section');
+    const commentsGrid = document.getElementById('comments-grid');
+    let isCommentsVisible = false;
+
+    btnShowComments.addEventListener('click', () => {
+      isCommentsVisible = !isCommentsVisible;
+      if (isCommentsVisible) {
+        commentsGrid.innerHTML = '';
+        commentsData.forEach(comment => {
+          const card = document.createElement('div');
+          card.className = "bg-white p-5 rounded-3xl border-2 border-teal-100 hover:border-teal-300 shadow-sm transition-all duration-300 hover:scale-[1.02]";
+          card.innerHTML = `
+            <div class="flex items-start space-x-2">
+              <span class="text-2xl">${comment.emoji}</span>
+              <div>
+                <p class="text-sm text-slate-700 leading-relaxed font-bold text-[15px]">
+                  "${comment.text}"
+                </p>
+                <div class="flex items-center space-x-2 mt-3 pt-2 border-t border-slate-100 text-xs">
+                  <span class="font-bold text-slate-500">${comment.author}</span>
+                  <span class="px-2 py-0.5 bg-teal-50 text-pnuGreen rounded-full text-[10px] font-bold"># ${comment.keyword}</span>
+                </div>
+              </div>
+            </div>
+          `;
+          commentsGrid.appendChild(card);
+        });
+        commentsSection.classList.remove('hidden');
+        btnShowComments.innerHTML = `<span>닫기 🎈</span>`;
+        commentsSection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        commentsSection.classList.add('hidden');
+        btnShowComments.innerHTML = `<span>💌 축하 댓글 보따리 열기</span>`;
+      }
+    });
+
+    // 7. 아기자기 귀여운 이모지 요정 폭죽 로직
+    const btnCelebrate = document.getElementById('btn-celebrate');
+    const confettiContainer = document.getElementById('confetti-container');
+    const toastMessage = document.getElementById('toast-message');
+
+    btnCelebrate.addEventListener('click', (e) => {
+      toastMessage.classList.remove('hidden');
+      setTimeout(() => {
+        toastMessage.classList.add('hidden');
+      }, 3000);
+
+      // 마우스 클릭 위치 주변으로 귀여운 이모지 별똥별 대량 방출
+      const clickX = e.clientX || window.innerWidth / 2;
+      const clickY = (e.clientY + window.scrollY) || (window.innerHeight / 2 + window.scrollY);
+
+      for (let i = 0; i < 40; i++) {
+        createEmojiParticle(clickX, clickY);
+      }
+    });
+
+    function createEmojiParticle(x, y) {
+      const emojis = ['🎈', '🦅', '✨', '🌸', '🎓', '🎂', '🎉', '🍀', '💡', '💙', '💚'];
+      const p = document.createElement('div');
+      p.className = 'emoji-particle';
+      p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      
+      confettiContainer.appendChild(p);
+
+      // 귀여운 사방 날아가기 애니메이션 (물리 모션 효과)
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = Math.random() * 8 + 4;
+      const gravity = 0.25;
+      
+      let vx = Math.cos(angle) * velocity;
+      let vy = Math.sin(angle) * velocity - 6; // 살짝 위로 솟아오름
+      let currX = x;
+      let currY = y;
+      let opacity = 1;
+      let scale = Math.random() * 0.4 + 0.8;
+
+      const run = setInterval(() => {
+        vy += gravity;
+        currX += vx;
+        currY += vy;
+        opacity -= 0.015;
+        scale -= 0.005;
+
+        p.style.left = currX + 'px';
+        p.style.top = currY + 'px';
+        p.style.opacity = opacity;
+        p.style.transform = `scale(${scale})`;
+
+        if (opacity <= 0) {
+          clearInterval(run);
+          p.remove();
+        }
+      }, 16);
+    }
+  </script>
+</body>
+</html>
