@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초고령사회 3중고와 디지털 소통 전략</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&display=swap');
+        body { font-family: 'Pretendard', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
 
+<nav class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-indigo-700">초고령사회 3중고 분석 및 전략</h1>
+        <div class="space-x-6 text-sm font-semibold text-slate-600">
+            <a href="#intro" class="hover:text-indigo-600">문제 현황</a>
+            <a href="#mechanism" class="hover:text-indigo-600">인과 메커니즘</a>
+            <a href="#strategy" class="hover:text-indigo-600">커뮤니케이션 전략</a>
+            <a href="#data" class="hover:text-indigo-600">심층 데이터</a>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-6 py-12 space-y-24">
+    
+    <!-- 1. 서론: 문제의 심각성 -->
+    <section id="intro" class="space-y-6">
+        <div class="bg-indigo-900 text-white p-12 rounded-3xl shadow-2xl">
+            <h2 class="text-4xl font-bold mb-6">초고령사회, 고독사라는 구조적 재난</h2>
+            <p class="text-lg text-indigo-200 leading-relaxed max-w-4xl">
+                대한민국은 현재 인구 고령화가 세계에서 가장 빠르게 진행 중입니다. 2024년 기준 노인 인구 1,375만 명 돌파와 함께, 독거 노인 가구가 228만 가구에 도달하며 '사회적 관계망의 단절'이 일상화되었습니다. 본 보고서는 이러한 인구 통계학적 변화가 어떻게 '노인 고독사'라는 극단적인 결과로 이어지는지 분석하고, 이를 해결하기 위한 디지털 기반 소통 전략을 제시합니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. 인과 메커니즘 -->
+    <section id="mechanism" class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+            <div class="text-indigo-600 font-bold mb-2">Step 01. 인구 구조의 양적 팽창</div>
+            <h3 class="text-xl font-bold mb-4">베이비부머의 편입</h3>
+            <p class="text-slate-600">노인 인구의 급증은 돌봄, 의료, 주거 등 사회적 자원의 수요를 기하급수적으로 폭증시키며 인프라의 한계를 시험하고 있습니다.</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+            <div class="text-indigo-600 font-bold mb-2">Step 02. 독거 가구의 파편화</div>
+            <h3 class="text-xl font-bold mb-4">가족 기능의 해체</h3>
+            <p class="text-slate-600">전체 노인 가구 중 독거 비율이 10%를 돌파했습니다. 전통적인 가족 내 돌봄이 사라진 빈자리는 공적 시스템의 사각지대가 되었습니다.</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+            <div class="text-indigo-600 font-bold mb-2">Step 03. 극단적 사회적 고립</div>
+            <h3 class="text-xl font-bold mb-4">고독사의 일상화</h3>
+            <p class="text-slate-600">2024년 고독사 사망자 중 노인 비율이 50.2%로 과반을 점유했습니다. 특히 60대 신노년층이 가장 취약한 계층으로 드러났습니다.</p>
+        </div>
+    </section>
+
+    <!-- 3. 소통 강화 전략 (문서 기반 제언) -->
+    <section id="strategy" class="bg-indigo-50 p-12 rounded-3xl">
+        <h3 class="text-3xl font-bold mb-10 text-center">핵심 대안: 커뮤니케이션의 재구성</h3>
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="space-y-6">
+                <h4 class="text-2xl font-bold text-indigo-900">디지털 기기를 활용한 상시 소통망</h4>
+                <p class="text-slate-700 leading-relaxed">
+                    노인 인구의 휴대폰 보급률이 98.8%에 달한다는 점은 고독사 해결의 중요한 기술적 실마리입니다. 
+                    단순한 통화를 넘어, AI 기반의 안부 확인, 비대면 상담 서비스 등 휴대폰을 중심으로 한 일상적 연결망을 구축해야 합니다.
+                </p>
+                <div class="bg-white p-6 rounded-2xl border border-indigo-100">
+                    <p class="font-semibold text-indigo-800 italic">"정부와 기업은 앱 개발과 정책적 지원을 통해 면대면 커뮤니케이션의 공백을 디지털 소통으로 즉각 메워야 합니다."</p>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-lg">
+                <h4 class="font-bold mb-6 text-center">연도별 휴대폰 보유율 현황 (%)</h4>
+                <canvas id="phoneChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 심층 데이터 -->
+    <section id="data" class="grid md:grid-cols-2 gap-12">
+        <div class="bg-white p-8 rounded-3xl shadow-lg">
+            <h3 class="font-bold text-xl mb-6">전국 노인 인구 추이 (만 명)</h3>
+            <canvas id="popChart"></canvas>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-lg">
+            <h3 class="font-bold text-xl mb-6">60대 이상 고독사 수치 증가</h3>
+            <canvas id="deathChart"></canvas>
+        </div>
+    </section>
+</main>
+
+<script>
+    // 1. 휴대폰 보유율 (노인 휴대폰.csv)
+    new Chart(document.getElementById('phoneChart'), {
+        type: 'bar',
+        data: {
+            labels: ['2021', '2022', '2023', '2024'],
+            datasets: [{
+                label: '전체 휴대폰 보유율 (%)',
+                data: [97.4, 97.9, 98.3, 98.8],
+                backgroundColor: '#6366f1'
+            }]
+        },
+        options: { scales: { y: { min: 90 } } }
+    });
+
+    // 2. 노인 인구 (노인인구.csv)
+    new Chart(document.getElementById('popChart'), {
+        type: 'line',
+        data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+                label: '전국 노인 인구(만)',
+                data: [1162, 1226, 1280, 1331, 1375],
+                borderColor: '#4f46e5',
+                fill: true,
+                backgroundColor: 'rgba(79, 70, 229, 0.1)'
+            }]
+        }
+    });
+
+    // 3. 고독사 (노인 고독사.csv)
+    new Chart(document.getElementById('deathChart'), {
+        type: 'bar',
+        data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [
+                { label: '60대', data: [924, 981, 1110, 1146, 1271], backgroundColor: '#e11d48' },
+                { label: '70대', data: [384, 421, 433, 470, 497], backgroundColor: '#f43f5e' }
+            ]
+        },
+        options: { scales: { y: { stacked: true } } }
+    });
+</script>
+</body>
+</html>
