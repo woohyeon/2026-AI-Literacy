@@ -56,7 +56,7 @@
         </div>
     </section>
 
-    <!-- 3. 소통 강화 전략 (문서 기반 제언) -->
+    <!-- 3. 소통 강화 전략 -->
     <section id="strategy" class="bg-indigo-50 p-12 rounded-3xl">
         <h3 class="text-3xl font-bold mb-10 text-center">핵심 대안: 커뮤니케이션의 재구성</h3>
         <div class="grid md:grid-cols-2 gap-12">
@@ -88,10 +88,17 @@
             <canvas id="deathChart"></canvas>
         </div>
     </section>
+
+    <!-- 보고서 다운로드 버튼 -->
+    <section class="flex justify-center py-10">
+        <a href="woo.pdf" download="woo.pdf" class="px-10 py-4 bg-indigo-700 text-white font-bold rounded-full hover:bg-indigo-800 transition shadow-lg text-lg">
+            보고서 다운로드 (PDF)
+        </a>
+    </section>
 </main>
 
 <script>
-    // 1. 휴대폰 보유율 (노인 휴대폰.csv)
+    // 1. 휴대폰 보유율
     new Chart(document.getElementById('phoneChart'), {
         type: 'bar',
         data: {
@@ -105,7 +112,7 @@
         options: { scales: { y: { min: 90 } } }
     });
 
-    // 2. 노인 인구 (노인인구.csv)
+    // 2. 노인 인구
     new Chart(document.getElementById('popChart'), {
         type: 'line',
         data: {
@@ -120,7 +127,7 @@
         }
     });
 
-    // 3. 고독사 (노인 고독사.csv)
+    // 3. 고독사
     new Chart(document.getElementById('deathChart'), {
         type: 'bar',
         data: {
